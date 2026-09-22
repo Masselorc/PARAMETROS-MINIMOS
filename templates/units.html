@@ -51,7 +51,7 @@
           <th data-sort-type="text">Situação</th>
           <th data-sort-type="number">Nota final</th>
           <th data-sort-type="text">Classificação</th>
-          <th data-sort-type="text">Ações</th>
+          <th class="col-actions" data-sort-type="text">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -62,7 +62,7 @@
           <td>{{ r.situacao|e }}</td>
           <td class="number" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
           <td>{{ r.classification|e }}</td>
-          <td data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}" aria-label="Abrir avaliação de {{ r.unidade_label|e }}">Abrir avaliação</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}" aria-label="Abrir avaliação de {{ r.unidade_label|e }}">Abrir avaliação</a>{% endif %}</td>
+          <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}" aria-label="Detalhar avaliação de {{ r.unidade_label|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}" aria-label="Detalhar avaliação de {{ r.unidade_label|e }}">Detalhar</a>{% endif %}</td>
         </tr>
         {% else %}
         <tr><td colspan="6"><div class="empty"><p>Nenhuma unidade encontrada.</p></div></td></tr>

@@ -96,7 +96,7 @@
           <td class="number col-num" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
           <td class="col-score" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
           <td class="col-classification">{{ r.classification|e }}</td>
-          <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}">Abrir avaliação</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a>{% endif %}</td>
+          <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}">Detalhar</a>{% endif %}</td>
         </tr>
         {% else %}
         <tr><td colspan="13"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
