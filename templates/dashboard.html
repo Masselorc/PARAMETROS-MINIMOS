@@ -52,52 +52,52 @@
   <p class="muted" data-static-count>{{ rows|length }} unidades</p>
 
   <div class="table-wrap">
-    <table>
+    <table class="dashboard-table">
       <thead>
         <tr>
-          <th data-sort-type="text">UF</th>
-          <th data-sort-type="text">Unidade avaliada</th>
-          <th data-sort-type="number" data-sort-label="Institucionalização" aria-label="Institucionalização (máximo 15 pontos, requisito formal)">
+          <th class="col-uf" data-sort-type="text">UF</th>
+          <th class="col-unit" data-sort-type="text">Unidade avaliada</th>
+          <th class="col-dim" data-sort-type="number" data-sort-label="Institucionalização" aria-label="Institucionalização (máximo 15 pontos, requisito formal)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Institucionalização (máx. 15 pts · requisito formal)" title="Institucionalização">Inst</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Autonomia técnica e funcional" aria-label="Autonomia técnica e funcional (máximo 15 pontos, piso 7,5)">
+          <th class="col-dim" data-sort-type="number" data-sort-label="Autonomia técnica e funcional" aria-label="Autonomia técnica e funcional (máximo 15 pontos, piso 7,5)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Autonomia técnica e funcional (máx. 15 pts · piso 7,5)" title="Autonomia técnica e funcional">Aut</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Imparcialidade, sigilo e proteção" aria-label="Imparcialidade, sigilo e proteção (máximo 15 pontos, piso 7,5)">
+          <th class="col-dim" data-sort-type="number" data-sort-label="Imparcialidade, sigilo e proteção" aria-label="Imparcialidade, sigilo e proteção (máximo 15 pontos, piso 7,5)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Imparcialidade, sigilo e proteção (máx. 15 pts · piso 7,5)" title="Imparcialidade, sigilo e proteção">Imp</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Acessibilidade e atendimento humanizado" aria-label="Acessibilidade e atendimento humanizado (máximo 15 pontos, piso 7,5)">
+          <th class="col-dim" data-sort-type="number" data-sort-label="Acessibilidade e atendimento humanizado" aria-label="Acessibilidade e atendimento humanizado (máximo 15 pontos, piso 7,5)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Acessibilidade e atendimento humanizado (máx. 15 pts · piso 7,5)" title="Acessibilidade e atendimento humanizado">Aces</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Transparência e publicidade" aria-label="Transparência e publicidade (máximo 15 pontos, piso 7,5)">
+          <th class="col-dim" data-sort-type="number" data-sort-label="Transparência e publicidade" aria-label="Transparência e publicidade (máximo 15 pontos, piso 7,5)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Transparência e publicidade (máx. 15 pts · piso 7,5)" title="Transparência e publicidade">Trans</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Integração tecnológica" aria-label="Integração tecnológica (máximo 25 pontos, piso 12,5)">
+          <th class="col-dim" data-sort-type="number" data-sort-label="Integração tecnológica" aria-label="Integração tecnológica (máximo 25 pontos, piso 12,5)">
             <abbr class="abbr-tooltip" tabindex="0" data-tooltip="Integração tecnológica (máx. 25 pts · piso 12,5)" title="Integração tecnológica">Integ</abbr>
           </th>
-          <th data-sort-type="number" data-sort-label="Nota-base" aria-label="Nota-base: soma das dimensões regulares (máximo 100 pontos)">Nota-base</th>
-          <th data-sort-type="number" data-sort-label="Bônus" aria-label="Bônus de maturidade aplicado (máximo 10 pontos)">Bônus</th>
-          <th data-sort-type="number" data-sort-label="Nota final /100" aria-label="Nota final representada em barra proporcional de 0 a 100">Nota final /100</th>
-          <th data-sort-type="text">Classificação</th>
-          <th data-sort-type="text">Ações</th>
+          <th class="col-num" data-sort-type="number" data-sort-label="Nota-base" aria-label="Nota-base: soma das dimensões regulares (máximo 100 pontos)">Nota-base</th>
+          <th class="col-num" data-sort-type="number" data-sort-label="Bônus" aria-label="Bônus de maturidade aplicado (máximo 10 pontos)">Bônus</th>
+          <th class="col-score" data-sort-type="number" data-sort-label="Nota final /100" aria-label="Nota final representada em barra proporcional de 0 a 100">Nota final /100</th>
+          <th class="col-classification" data-sort-type="text">Classificação</th>
+          <th class="col-actions" data-sort-type="text">Ações</th>
         </tr>
       </thead>
       <tbody>
         {% for r in rows %}
         <tr class="{% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}row-following-minimums{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}row-below-essential-minimum{% elif r.classification == 'Não instituída' %}row-not-instituted{% endif %}" data-sort-row data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}">
-          <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
-          <td>{{ r.unidade_label|e }}</td>
-          <td class="number" data-sort-value="{{ r.inst if r.inst is not none else '' }}">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.aut if r.aut is not none else '' }}">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.imp if r.imp is not none else '' }}">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.aces if r.aces is not none else '' }}">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.trans if r.trans is not none else '' }}">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.integ if r.integ is not none else '' }}">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
-          <td class="number" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
-          <td data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
-          <td>{{ r.classification|e }}</td>
-          <td data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}">Abrir avaliação</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a>{% endif %}</td>
+          <td class="col-uf"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
+          <td class="col-unit">{{ r.unidade_label|e }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.inst if r.inst is not none else '' }}">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.aut if r.aut is not none else '' }}">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.imp if r.imp is not none else '' }}">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.aces if r.aces is not none else '' }}">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.trans if r.trans is not none else '' }}">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
+          <td class="number col-dim" data-sort-value="{{ r.integ if r.integ is not none else '' }}">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
+          <td class="number col-num" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
+          <td class="number col-num" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
+          <td class="col-score" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
+          <td class="col-classification">{{ r.classification|e }}</td>
+          <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}">Abrir avaliação</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a>{% endif %}</td>
         </tr>
         {% else %}
         <tr><td colspan="13"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
