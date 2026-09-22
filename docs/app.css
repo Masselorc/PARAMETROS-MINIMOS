@@ -162,4 +162,10 @@ a.snapshot-download{display:inline-flex;align-items:center;min-height:44px;paddi
 a.snapshot-download:hover{background:#edf3f4}
 .sort-button{display:inline-grid;place-items:center;width:20px;min-width:20px;min-height:20px;margin-left:4px;padding:0;border:0;border-radius:4px;background:transparent;color:var(--muted);font-size:.72rem;line-height:1;vertical-align:middle}
 .sort-button:hover{background:#eaf1f3;color:var(--brand-dark)}
+table tbody tr.row-following-minimums>td{background:#eaf5ee}
+table tbody tr.row-following-minimums:hover>td{background:#dceee2}
+table tbody tr.row-below-essential-minimum>td{background:#fff4dc}
+table tbody tr.row-below-essential-minimum:hover>td{background:#ffedc4}
+table tbody tr.row-not-instituted>td{background:#fcecef}
+table tbody tr.row-not-instituted:hover>td{background:#f8dfe3}
 @media(max-width:900px){.qcols{grid-template-columns:1fr}.qcard-head{flex-wrap:wrap}}
