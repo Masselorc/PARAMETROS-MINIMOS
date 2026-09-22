@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Unidades Federativas — Parâmetros Mínimos{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Parâmetros Mínimos</div>
+    <h1>Unidades Federativas</h1>
+    <p class="muted">Unidades de avaliação — o Espírito Santo possui duas unidades avaliadas separadamente.</p>
+  </div>
+</div>
+<section class="section" aria-label="Unidades avaliadas">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>UF</th>
+          <th>Unidade</th>
+          <th>Situação</th>
+          <th>Nota final</th>
+          <th>Classificação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td><span class="uf-code">{{ r.uf|e }}</span></td>
+          <td>{{ r.unidade_label|e }}</td>
+          <td>{{ r.situacao|e }}</td>
+          <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+          <td>{{ r.classification|e }}</td>
+          <td><a href="/unidades/{{ r.entity_key|e }}">Abrir</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6"><div class="empty"><p>Nenhuma unidade encontrada.</p></div></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

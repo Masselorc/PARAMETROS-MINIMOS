@@ -13,6 +13,20 @@ $RECYCLE.BIN/
 
 # Ambientes virtuais e dependências
 .env
+.venv/
 __pycache__/
 *.pyc
+.pytest_cache/
+
+# Lock local do Excel (runtime)
+.dados.lock
+
+# Dados operacionais locais (não versionar)
+ANEXOS/
+BACKUPS/
+EXPORTACOES/
+DADOS_tmp_validacao.xlsx
+
+# Especificação do sistema (documento interno de trabalho)
+ESPECIFICACAO_SISTEMA_PARAMETROS_MINIMOS.md
 

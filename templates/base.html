@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Parâmetros Mínimos das Ouvidorias de Serviços Penais{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="topbar">
+  <a class="brand" href="/">
+    <span class="brand-mark" aria-hidden="true">P</span>
+    <span>Parâmetros Mínimos<small>ONASP / 2026</small></span>
+  </a>
+  <span class="local-label">● Ambiente local</span>
+</header>
+<div class="shell">
+  <aside class="sidebar" aria-label="Navegação principal">
+    {% set _path = request.url.path if request is defined and request else "" %}
+    <a class="nav-link{% if _path == '/' %} active{% endif %}" href="/">Visão Geral</a>
+    <a class="nav-link{% if _path.startswith('/unidades') %} active{% endif %}" href="/unidades">Unidades Federativas</a>
+    <a class="nav-link{% if _path.startswith('/relatorios') %} active{% endif %}" href="/relatorios">Relatórios</a>
+    <a class="nav-link{% if _path.startswith('/metodologia') %} active{% endif %}" href="/metodologia">Metodologia</a>
+    <div class="side-context">
+      <span class="section-label">Processo</span>
+      <p>SEI 08016.027689/2025-19</p>
+      <p>IN nº 75/2026</p>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="{{ url_for('static', path='app.js') }}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

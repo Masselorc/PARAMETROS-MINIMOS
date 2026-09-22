@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Erro — Parâmetros Mínimos{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Erro</h1>
+    <p class="muted">{{ message|e }}</p>
+  </div>
+</div>
+<section class="section" aria-label="Detalhe do erro">
+  <div class="section-body">
+    {% if detail %}
+    <pre>{{ detail|e }}</pre>
+    {% endif %}
+    <p><a href="/">Voltar para a Visão Geral</a></p>
+  </div>
+</section>
+{% endblock %}

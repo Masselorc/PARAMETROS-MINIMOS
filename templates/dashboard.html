@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Visão Geral — Parâmetros Mínimos{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Parâmetros Mínimos das Ouvidorias de Serviços Penais</h1>
+    <p class="muted">Monitoramento de aderência à IN GABSEC/SENAPPEN/MJSP nº 75/2026</p>
+  </div>
+</div>
+
+<div class="stats" role="list" aria-label="Resumo da avaliação">
+  <div class="stat" role="listitem"><strong>{{ cards.unidades }}</strong><span>Unidades de avaliação</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.instituidas }}</strong><span>Instituídas</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.nao_instituidas }}</strong><span>Não instituídas</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.sem_evidencia }}</strong><span>Sem evidência institucional</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.elevada }}</strong><span>Aderência elevada</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.satisfatoria }}</strong><span>Aderência satisfatória</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.parcial }}</strong><span>Aderência parcial</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.baixa_insuficiente }}</strong><span>Baixa/insuficiente aderência</span></div>
+</div>
+
+<section class="section" aria-label="Unidades avaliadas">
+  <form class="filters" method="get" action="/">
+    <label class="search">Buscar
+      <input type="search" name="q" value="{{ filters.q|default('', true)|e }}" placeholder="UF ou unidade…">
+    </label>
+    <label>Situação institucional
+      <select name="situacao">
+        <option value=""{% if not filters.situacao %} selected{% endif %}>Todas</option>
+        <option value="Instituída"{% if filters.situacao == "Instituída" %} selected{% endif %}>Instituída</option>
+        <option value="Não instituída"{% if filters.situacao == "Não instituída" %} selected{% endif %}>Não instituída</option>
+        <option value="Sem evidência"{% if filters.situacao == "Sem evidência" %} selected{% endif %}>Sem evidência</option>
+      </select>
+    </label>
+    <label>Classificação
+      <select name="classificacao">
+        <option value=""{% if not filters.classificacao %} selected{% endif %}>Todas</option>
+        <option value="elevada"{% if filters.classificacao == "elevada" %} selected{% endif %}>Elevada aderência</option>
+        <option value="satisfatoria"{% if filters.classificacao == "satisfatoria" %} selected{% endif %}>Aderência satisfatória</option>
+        <option value="parcial"{% if filters.classificacao == "parcial" %} selected{% endif %}>Aderência parcial</option>
+        <option value="baixa"{% if filters.classificacao == "baixa" %} selected{% endif %}>Baixa aderência</option>
+        <option value="insuficiente"{% if filters.classificacao == "insuficiente" %} selected{% endif %}>Aderência insuficiente (trava)</option>
+        <option value="nao_instituida"{% if filters.classificacao == "nao_instituida" %} selected{% endif %}>Não instituída</option>
+        <option value="sem_evidencia"{% if filters.classificacao == "sem_evidencia" %} selected{% endif %}>Sem evidência</option>
+      </select>
+    </label>
+    <label>Nota mín.
+      <input type="number" name="nota_min" min="0" max="100" step="0.1" value="{{ filters.nota_min|e }}">
+    </label>
+    <label>Nota máx.
+      <input type="number" name="nota_max" min="0" max="100" step="0.1" value="{{ filters.nota_max|e }}">
+    </label>
+    <div><button class="primary" type="submit">Filtrar</button></div>
+  </form>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>UF</th>
+          <th>Unidade avaliada</th>
+          <th>Inst</th>
+          <th>Aut</th>
+          <th>Imp</th>
+          <th>Aces</th>
+          <th>Trans</th>
+          <th>Integ</th>
+          <th>Nota-base</th>
+          <th>Bônus</th>
+          <th>Final</th>
+          <th>Classificação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td><span class="uf-code">{{ r.uf|e }}</span></td>
+          <td>{{ r.unidade_label|e }}</td>
+          <td class="number">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
+          <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+          <td>{{ r.classification|e }}</td>
+          <td><a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="13"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
