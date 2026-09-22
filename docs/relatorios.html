@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatórios — Parâmetros Mínimos</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="topbar">
+  <a class="brand" href="/">
+    <span class="brand-mark" aria-hidden="true">P</span>
+    <span>Parâmetros Mínimos<small>ONASP / 2026</small></span>
+  </a>
+  <span class="local-label">● Ambiente local</span>
+</header>
+<div class="shell">
+  <aside class="sidebar" aria-label="Navegação principal">
+    
+    <a class="nav-link active" href="/">Visão Geral</a>
+    <a class="nav-link" href="/unidades">Unidades Federativas</a>
+    <a class="nav-link" href="/relatorios">Relatórios</a>
+    <a class="nav-link" href="/metodologia">Metodologia</a>
+    <div class="side-context">
+      <span class="section-label">Processo</span>
+      <p>SEI 08016.027689/2025-19</p>
+      <p>IN nº 75/2026</p>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Página estática de demonstração — o sistema completo roda localmente (uvicorn app:app --host 127.0.0.1 --port 8000) com leitura/edição do DADOS.xlsx.</p></div></div>
+    
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Parâmetros Mínimos</div>
+    <h1>Relatórios</h1>
+    <p class="muted">Relatório geral e relatórios individuais por UF / unidade avaliada. Os relatórios são derivados — nunca utilize o arquivo exportado como nova fonte de dados.</p>
+  </div>
+</div>
+
+<section class="section" aria-label="Relatório geral">
+  <div class="section-head"><h2>Relatório geral</h2></div>
+  <div class="section-body">
+    <form id="general-filters" class="filters" method="get" action="/api/relatorios/geral.pdf" style="border-bottom:0;padding-left:0;padding-right:0;">
+      <label>Situação institucional
+        <select name="situacao">
+          <option value="">Todas as unidades</option>
+          <option value="Instituída">Apenas instituídas</option>
+          <option value="Não instituída">Apenas não instituídas</option>
+        </select>
+      </label>
+      <label>Classificação
+        <select name="classificacao">
+          <option value="">Todas</option>
+          <option value="elevada">Elevada aderência</option>
+          <option value="satisfatoria">Aderência satisfatória</option>
+          <option value="parcial">Aderência parcial</option>
+          <option value="baixa">Baixa aderência</option>
+          <option value="insuficiente">Aderência insuficiente (trava)</option>
+          <option value="nao_instituida">Não instituída</option>
+          <option value="sem_evidencia">Sem evidência</option>
+        </select>
+      </label>
+      <label>Nota mín.
+        <input type="number" name="nota_min" min="0" max="100" step="0.1">
+      </label>
+      <label>Nota máx.
+        <input type="number" name="nota_max" min="0" max="100" step="0.1">
+      </label>
+    </form>
+    <div class="page-actions">
+      <a id="general-pdf" class="button" href="/api/relatorios/geral.pdf"><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="general-xlsx" class="button" href="/api/relatorios/geral.xlsx"><button type="button">Gerar XLSX</button></a>
+    </div>
+    <p class="source">Os links acima aplicam os filtros informados.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Relatório individual">
+  <div class="section-head"><h2>Relatório individual</h2></div>
+  <div class="section-body">
+    <label for="unit-select">UF / unidade avaliada
+      <select id="unit-select" name="entity_key">
+        
+        <option value="AC">AC — Acre</option>
+        
+        <option value="AL">AL — Alagoas</option>
+        
+        <option value="AP">AP — Amapá</option>
+        
+        <option value="AM">AM — Amazonas</option>
+        
+        <option value="BA">BA — Bahia</option>
+        
+        <option value="CE">CE — Ceará</option>
+        
+        <option value="DF">DF — Distrito Federal</option>
+        
+        <option value="ES_PP">ES — Espírito Santo — Polícia Penal</option>
+        
+        <option value="ES_SEJUS">ES — Espírito Santo — SEJUS/ES</option>
+        
+        <option value="GO">GO — Goiás</option>
+        
+        <option value="MA">MA — Maranhão</option>
+        
+        <option value="MT">MT — Mato Grosso</option>
+        
+        <option value="MS">MS — Mato Grosso do Sul</option>
+        
+        <option value="MG">MG — Minas Gerais</option>
+        
+        <option value="PA">PA — Pará</option>
+        
+        <option value="PB">PB — Paraíba</option>
+        
+        <option value="PR">PR — Paraná</option>
+        
+        <option value="PE">PE — Pernambuco</option>
+        
+        <option value="PI">PI — Piauí</option>
+        
+        <option value="RJ">RJ — Rio de Janeiro</option>
+        
+        <option value="RN">RN — Rio Grande do Norte</option>
+        
+        <option value="RS">RS — Rio Grande do Sul</option>
+        
+        <option value="RO">RO — Rondônia</option>
+        
+        <option value="RR">RR — Roraima</option>
+        
+        <option value="SC">SC — Santa Catarina</option>
+        
+        <option value="SP">SP — São Paulo</option>
+        
+        <option value="SE">SE — Sergipe</option>
+        
+        <option value="TO">TO — Tocantins</option>
+        
+      </select>
+    </label>
+    <div class="page-actions" style="margin-top:16px;">
+      <a id="individual-pdf" href="#"><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="individual-xlsx" href="#"><button type="button">Gerar XLSX</button></a>
+    </div>
+    <p class="source">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
+  </div>
+</section>
+
+  </main>
+</div>
+<script src="app.js" defer></script>
+
+<script>
+(function () {
+  var gf = document.getElementById("general-filters");
+  var pdf = document.getElementById("general-pdf");
+  var xlsx = document.getElementById("general-xlsx");
+  function query() {
+    if (!gf) return "";
+    var params = new URLSearchParams(new FormData(gf));
+    for (const [k, v] of Array.from(params.entries())) { if (!v) params.delete(k); }
+    var s = params.toString();
+    return s ? ("?" + s) : "";
+  }
+  if (gf) {
+    gf.addEventListener("input", function () {
+      if (pdf) pdf.href = "/api/relatorios/geral.pdf" + query();
+      if (xlsx) xlsx.href = "/api/relatorios/geral.xlsx" + query();
+    });
+  }
+  var sel = document.getElementById("unit-select");
+  var ipdf = document.getElementById("individual-pdf");
+  var ixlsx = document.getElementById("individual-xlsx");
+  function sync() {
+    if (!sel) return;
+    var ek = encodeURIComponent(sel.value);
+    if (ipdf) ipdf.href = "/api/relatorios/" + ek + ".pdf";
+    if (ixlsx) ixlsx.href = "/api/relatorios/" + ek + ".xlsx";
+  }
+  if (sel) { sel.addEventListener("change", sync); sync(); }
+})();
+</script>
+
+</body>
+</html>

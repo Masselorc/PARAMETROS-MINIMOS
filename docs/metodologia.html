@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metodologia — Parâmetros Mínimos</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="topbar">
+  <a class="brand" href="/">
+    <span class="brand-mark" aria-hidden="true">P</span>
+    <span>Parâmetros Mínimos<small>ONASP / 2026</small></span>
+  </a>
+  <span class="local-label">● Ambiente local</span>
+</header>
+<div class="shell">
+  <aside class="sidebar" aria-label="Navegação principal">
+    
+    <a class="nav-link active" href="/">Visão Geral</a>
+    <a class="nav-link" href="/unidades">Unidades Federativas</a>
+    <a class="nav-link" href="/relatorios">Relatórios</a>
+    <a class="nav-link" href="/metodologia">Metodologia</a>
+    <div class="side-context">
+      <span class="section-label">Processo</span>
+      <p>SEI 08016.027689/2025-19</p>
+      <p>IN nº 75/2026</p>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Página estática de demonstração — o sistema completo roda localmente (uvicorn app:app --host 127.0.0.1 --port 8000) com leitura/edição do DADOS.xlsx.</p></div></div>
+    
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Parâmetros Mínimos · ONASP / 2026</div>
+    <h1>Metodologia de Monitoramento dos Parâmetros Mínimos das Ouvidorias de Serviços Penais</h1>
+    <p class="muted">Texto institucional integral — referência: Processo SEI nº 08016.027689/2025-19 · IN GABSEC/SENAPPEN/MJSP nº 75, de 8 de abril de 2026 · Doc. SEI 37070578.</p>
+  </div>
+</div>
+
+<div class="report">
+<section class="section" aria-label="Apresentação">
+  <div class="section-head"><h2>1. Apresentação</h2></div>
+  <div class="section-body">
+    <p>Este sistema foi desenvolvido para apoiar o monitoramento da institucionalização, da estruturação e das condições de funcionamento das Ouvidorias de Serviços Penais dos Estados e do Distrito Federal.</p>
+    <p>A ferramenta articula três componentes principais: as metas e diretrizes do Plano Nacional Pena Justa relacionadas às ouvidorias de serviços penais; os parâmetros mínimos estabelecidos pela Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75, de 8 de abril de 2026; e as informações produzidas no diagnóstico nacional realizado pela Ouvidoria Nacional de Serviços Penais — ONASP junto às Unidades Federativas.</p>
+    <p>O objetivo não é substituir a análise técnica nem declarar, de forma automática, a regularidade jurídica de uma Ouvidoria. A finalidade é organizar evidências, permitir comparação padronizada entre as unidades avaliadas, acompanhar a evolução da política pública e identificar de forma objetiva os pontos que demandam fortalecimento institucional.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Relação com o Plano Nacional Pena Justa">
+  <div class="section-head"><h2>2. Relação com o Plano Nacional Pena Justa</h2></div>
+  <div class="section-body">
+    <p>O fortalecimento das ouvidorias de serviços penais integra a agenda de implementação do Plano Nacional Pena Justa.</p>
+    <p>A matriz de implementação do Plano contém previsões diretamente relacionadas à atuação da ONASP e à estruturação das ouvidorias estaduais de serviços penais, especialmente:</p>
+    <p><strong>Indicador 2.4.2.1.1.1 — Elaboração de parâmetros para a criação de ouvidorias estaduais autônomas dos serviços penais.</strong></p>
+    <p>Esse indicador corresponde à etapa de definição de referência técnica nacional para orientar a criação e a estruturação das ouvidorias de serviços penais.</p>
+    <p><strong>Indicador 2.4.2.1.2.1 — Estabelecimento de ouvidorias estaduais criadas, seguindo os parâmetros.</strong></p>
+    <p>Esse indicador avança da definição dos parâmetros para sua implementação, permitindo acompanhar a criação e a estruturação das Ouvidorias de Serviços Penais conforme o referencial estabelecido.</p>
+    <p>A lógica do monitoramento adotado neste sistema decorre dessa sequência: primeiro se definem parâmetros objetivos; depois se verifica, de forma estruturada e documentada, o nível de institucionalização e de aderência das unidades estaduais e distrital.</p>
+    <p>A metodologia também se relaciona ao objetivo de fortalecer canais efetivos de manifestação, transparência, participação social, proteção de informações sensíveis, tratamento de denúncias e capacidade institucional das Ouvidorias de Serviços Penais.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Processo de construção do referencial">
+  <div class="section-head"><h2>3. Processo de construção do referencial</h2></div>
+  <div class="section-body">
+    <p>A construção do referencial de monitoramento não decorreu exclusivamente da publicação de uma norma.</p>
+    <p>O processo foi precedido por atividades de diagnóstico, identificação de assimetrias federativas e levantamento das condições materiais, tecnológicas, normativas e operacionais das Ouvidorias de Serviços Penais.</p>
+    <p>Ao longo de 2025, a ONASP sistematizou necessidades relacionadas ao funcionamento das ouvidorias, identificando a importância de definir parâmetros mínimos e de estruturar ações federais capazes de apoiar os Estados e o Distrito Federal.</p>
+    <p>Em janeiro de 2026, foi realizado diagnóstico nacional junto às Unidades Federativas, com levantamento estruturado de informações sobre institucionalização, organização administrativa, infraestrutura, tecnologia, canais de atendimento, recursos humanos, fluxos de trabalho, segurança da informação, públicos atendidos e práticas de monitoramento.</p>
+    <p>As respostas do diagnóstico constituem a principal base factual utilizada nesta ferramenta.</p>
+    <p>Para assegurar rastreabilidade, as informações provenientes do diagnóstico encontram-se associadas à referência documental <strong>Doc. SEI 37070578</strong>, sem prejuízo da inclusão de documentos específicos adicionais para cada pergunta ou critério avaliado.</p>
+    <p>O sistema preserva a resposta originalmente prestada pela unidade federativa e a apresenta ao lado da avaliação técnica correspondente.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Instrução Normativa nº 75/2026">
+  <div class="section-head"><h2>4. Instrução Normativa nº 75/2026</h2></div>
+  <div class="section-body">
+    <p>A Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75, de 8 de abril de 2026, instituiu parâmetros para criação e estruturação das Ouvidorias de Serviços Penais.</p>
+    <p>A norma consta do Processo SEI nº 08016.027689/2025-19.</p>
+    <p>A Instrução Normativa estabelece referência mínima para formalização, composição e funcionamento inicial das Ouvidorias de Serviços Penais, observadas a autonomia dos entes federativos e as especificidades locais.</p>
+    <p>Entre os parâmetros estruturantes previstos na norma estão:</p>
+    <ul>
+      <li>autonomia técnica e funcional;</li>
+      <li>imparcialidade e proteção da identidade;</li>
+      <li>acessibilidade e atendimento humanizado;</li>
+      <li>transparência e publicidade;</li>
+      <li>integração tecnológica.</li>
+    </ul>
+    <p>Além desses eixos, a norma estabelece que a criação da Ouvidoria de Serviços Penais deve ser formalizada por ato normativo específico, define elementos mínimos do ato, trata de infraestrutura, canais de atendimento, segurança da informação, composição da equipe, designação do Ouvidor, fluxos de tratamento das manifestações, registro, protocolo, relatórios e outras condições necessárias ao funcionamento da unidade.</p>
+    <p>A metodologia deste sistema transforma esses parâmetros normativos em critérios de monitoramento, utilizando perguntas do diagnóstico capazes de fornecer evidência objetiva sobre cada aspecto.</p>
+    <p>A pontuação, os pesos e as faixas de classificação utilizados pelo sistema são instrumentos metodológicos de monitoramento da ONASP. Eles não integram o texto da Instrução Normativa e não devem ser interpretados como sanção, certificação jurídica ou requisito criado pela própria norma.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Estrutura da avaliação">
+  <div class="section-head"><h2>5. Estrutura da avaliação</h2></div>
+  <div class="section-body">
+    <p>Para fins de monitoramento, o sistema utiliza seis dimensões de pontuação-base.</p>
+    <p>Cinco delas correspondem diretamente aos principais eixos estruturantes previstos no art. 4º da Instrução Normativa nº 75/2026.</p>
+    <p>A institucionalização foi segregada como dimensão própria porque a existência de ato normativo específico constitui condição antecedente para a própria existência formal da Ouvidoria de Serviços Penais, nos termos do art. 6º da norma.</p>
+    <p>As dimensões são:</p>
+    <ol>
+      <li>Institucionalização;</li>
+      <li>Autonomia técnica e funcional;</li>
+      <li>Imparcialidade, sigilo e proteção;</li>
+      <li>Acessibilidade e atendimento humanizado;</li>
+      <li>Transparência e publicidade;</li>
+      <li>Integração tecnológica.</li>
+    </ol>
+    <p>A pontuação-base máxima é de 100 pontos.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Pesos das dimensões">
+  <div class="section-head"><h2>6. Pesos das dimensões</h2></div>
+  <div class="section-body">
+    <p>A metodologia atribui o mesmo peso de 15 pontos às dimensões institucionais de institucionalização, autonomia, imparcialidade, acessibilidade e transparência.</p>
+    <p>A dimensão de integração tecnológica recebe peso de 25 pontos.</p>
+    <p>A distribuição é:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimensão</th><th>Pontuação máxima</th></tr></thead>
+        <tbody>
+          <tr><td>Institucionalização</td><td class="number">15</td></tr>
+          <tr><td>Autonomia técnica e funcional</td><td class="number">15</td></tr>
+          <tr><td>Imparcialidade, sigilo e proteção</td><td class="number">15</td></tr>
+          <tr><td>Acessibilidade e atendimento humanizado</td><td class="number">15</td></tr>
+          <tr><td>Transparência e publicidade</td><td class="number">15</td></tr>
+          <tr><td>Integração tecnológica</td><td class="number">25</td></tr>
+          <tr><td><strong>Total</strong></td><td class="number"><strong>100</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A maior ponderação da integração tecnológica é uma opção metodológica do monitoramento, adotada em razão do papel transversal da tecnologia para o registro, o protocolo, a rastreabilidade, a proteção da informação, o acompanhamento das manifestações e o funcionamento dos canais institucionais.</p>
+    <p>Essa ponderação não significa que a Instrução Normativa estabeleça hierarquia jurídica entre os parâmetros.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Institucionalização">
+  <div class="section-head"><h2>7. Institucionalização</h2></div>
+  <div class="section-body">
+    <p>A institucionalização corresponde à existência de ato normativo específico que cria ou institui a Ouvidoria de Serviços Penais ou núcleo especializado.</p>
+    <p>Esse critério vale 15 pontos.</p>
+    <p>Além de produzir pontuação, funciona como requisito de entrada da avaliação.</p>
+    <p>Quando não existe ato de instituição, a unidade deve ser apresentada como <strong>“Não instituída”</strong>.</p>
+    <p>Nessa situação, a existência de estrutura física, equipamentos, canais ou boas práticas não substitui a formalização institucional exigida pela norma.</p>
+    <p>A finalidade dessa regra é separar duas perguntas distintas:</p>
+    <ul>
+      <li>a Ouvidoria existe formalmente?</li>
+      <li>se existe, em que medida sua estrutura e funcionamento aderem aos parâmetros avaliados?</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-label="Autonomia técnica e funcional">
+  <div class="section-head"><h2>8. Autonomia técnica e funcional</h2></div>
+  <div class="section-body">
+    <p>A dimensão de autonomia avalia a posição institucional da Ouvidoria, a existência e designação formal do Ouvidor e as condições normativas e operacionais necessárias para atuação sem interferência indevida.</p>
+    <p>São consideradas informações sobre:</p>
+    <ul>
+      <li>vinculação institucional;</li>
+      <li>designação do Ouvidor;</li>
+      <li>conteúdo do ato de criação;</li>
+      <li>fluxo interno de trabalho;</li>
+      <li>prazos e qualidade das respostas.</li>
+    </ul>
+    <p>A dimensão vale até 15 pontos.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Imparcialidade, sigilo e proteção">
+  <div class="section-head"><h2>9. Imparcialidade, sigilo e proteção</h2></div>
+  <div class="section-body">
+    <p>Essa dimensão avalia as condições destinadas à proteção da identidade do manifestante, ao tratamento de denúncias graves ou sensíveis e à preservação do sigilo das informações.</p>
+    <p>São observados:</p>
+    <ul>
+      <li>registro, protocolo e classificação das manifestações;</li>
+      <li>tratamento de denúncias graves e sensíveis;</li>
+      <li>recursos de segurança da informação;</li>
+      <li>compromisso de sigilo da equipe.</li>
+    </ul>
+    <p>A dimensão vale até 15 pontos.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Acessibilidade e atendimento humanizado">
+  <div class="section-head"><h2>10. Acessibilidade e atendimento humanizado</h2></div>
+  <div class="section-body">
+    <p>A acessibilidade é avaliada considerando a existência de canais institucionais, condições adequadas de atendimento e capacidade de alcançar os públicos relacionados aos serviços penais.</p>
+    <p>São considerados:</p>
+    <ul>
+      <li>e-mail institucional exclusivo;</li>
+      <li>linha telefônica funcional;</li>
+      <li>canais eletrônicos;</li>
+      <li>endereço postal;</li>
+      <li>espaço físico;</li>
+      <li>públicos previstos normativamente;</li>
+      <li>públicos efetivamente atendidos.</li>
+    </ul>
+    <p>A dimensão vale até 15 pontos.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Transparência e publicidade">
+  <div class="section-head"><h2>11. Transparência e publicidade</h2></div>
+  <div class="section-body">
+    <p>Essa dimensão busca verificar se a Ouvidoria possui mecanismos de visibilidade institucional, divulgação de seus canais e atribuições e produção de informações sobre suas atividades.</p>
+    <p>São considerados:</p>
+    <ul>
+      <li>placas e cartazes;</li>
+      <li>definição das competências da Ouvidoria no ato normativo;</li>
+      <li>monitoramento, relatórios e recomendações.</li>
+    </ul>
+    <p>A dimensão vale até 15 pontos.</p>
+    <p>A ferramenta deve registrar que alguns elementos de transparência previstos na IN podem demandar verificação documental adicional, especialmente quando a resposta do diagnóstico não comprovar integralmente a publicação ou atualização das informações em portal institucional.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Integração tecnológica">
+  <div class="section-head"><h2>12. Integração tecnológica</h2></div>
+  <div class="section-body">
+    <p>A integração tecnológica recebe peso máximo de 25 pontos.</p>
+    <p>São avaliados:</p>
+    <ul>
+      <li>sistema ou canal eletrônico para registro e gestão;</li>
+      <li>protocolo;</li>
+      <li>rastreabilidade;</li>
+      <li>acompanhamento do fluxo;</li>
+      <li>segurança da informação;</li>
+      <li>autenticação e controle de acesso;</li>
+      <li>disponibilidade de computadores;</li>
+      <li>impressoras multifuncionais;</li>
+      <li>scanners;</li>
+      <li>smartphones.</li>
+    </ul>
+    <p>A opção por peso superior decorre da função transversal desses recursos no funcionamento cotidiano da Ouvidoria e na capacidade de manter registros seguros, rastreáveis e acessíveis.</p>
+    <p>Alguns recursos, como impressora multifuncional e aparelho celular institucional, aparecem na IN como recursos recomendados. Sua utilização na pontuação decorre da metodologia de monitoramento e deve ser interpretada nesse contexto.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Critérios de pontuação das perguntas">
+  <div class="section-head"><h2>13. Critérios de pontuação das perguntas</h2></div>
+  <div class="section-body">
+    <p>Para os critérios ordinários, utilizam-se quatro estados:</p>
+    <p><strong>Atende:</strong> a evidência demonstra atendimento suficiente ao critério. A pergunta recebe 100% de sua pontuação.</p>
+    <p><strong>Parcial:</strong> existe atendimento incompleto, limitado ou intermediário. A pergunta recebe 50% da pontuação.</p>
+    <p><strong>Não atende:</strong> a evidência demonstra ausência do requisito. A pontuação é zero.</p>
+    <p><strong>Sem evidência:</strong> não há informação suficiente para concluir pelo atendimento. A pontuação é zero.</p>
+    <p>A condição “Sem evidência” não deve ser convertida automaticamente em “Não atende”, pois ausência de documentação e ausência material do requisito são situações distintas.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Bônus de maturidade">
+  <div class="section-head"><h2>14. Bônus de maturidade</h2></div>
+  <div class="section-body">
+    <p>Além dos 100 pontos-base, o sistema reconhece algumas características adicionais de maturidade institucional.</p>
+    <p>O bônus máximo disponível é de 10 pontos:</p>
+    <ul>
+      <li>uso do Fala.BR: até 3 pontos;</li>
+      <li>mandato fixo do Ouvidor: 1 ponto;</li>
+      <li>dedicação exclusiva da equipe: 1 ponto;</li>
+      <li>qualificação ou perfil preferencial do Ouvidor: 1 ponto;</li>
+      <li>WhatsApp institucional: 1 ponto;</li>
+      <li>outros canais eletrônicos institucionais: 1 ponto;</li>
+      <li>materiais adicionais de divulgação e educação em direitos: 2 pontos.</li>
+    </ul>
+    <p>O bônus é compensatório.</p>
+    <p>Ele somente pode preencher a diferença entre a nota-base e 100.</p>
+    <p>Assim, uma unidade que possua 96 pontos-base e 8 pontos de bônus disponíveis receberá apenas 4 pontos de bônus aplicado, alcançando nota final 100.</p>
+    <p>O bônus não permite nota superior a 100.</p>
+    <p>O bônus também não corrige a ausência completa de uma dimensão essencial.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Trava de dimensão essencial zerada">
+  <div class="section-head"><h2>15. Trava de dimensão essencial zerada</h2></div>
+  <div class="section-body">
+    <p>A metodologia considera que uma Ouvidoria formalmente instituída não deve ser classificada como satisfatória ou elevada se uma dimensão essencial estiver completamente ausente.</p>
+    <p>Por isso, quando Autonomia, Imparcialidade, Acessibilidade, Transparência ou Integração Tecnológica obtiver pontuação igual a zero, a classificação será:</p>
+    <p><strong>Instituída — aderência insuficiente (dimensão essencial zerada).</strong></p>
+    <p>Essa regra busca evitar que desempenho elevado em algumas áreas compense integralmente a inexistência de uma dimensão estrutural da Ouvidoria.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Classificação da aderência">
+  <div class="section-head"><h2>16. Classificação da aderência</h2></div>
+  <div class="section-body">
+    <p>Para unidades formalmente instituídas e sem dimensão essencial zerada, a nota final é classificada da seguinte forma:</p>
+    <ul>
+      <li>abaixo de 50 pontos: <strong>Instituída — baixa aderência</strong>;</li>
+      <li>de 50 até abaixo de 70 pontos: <strong>Instituída — aderência parcial</strong>;</li>
+      <li>de 70 até abaixo de 90 pontos: <strong>Instituída — aderência satisfatória</strong>;</li>
+      <li>de 90 a 100 pontos: <strong>Instituída — elevada aderência</strong>.</li>
+    </ul>
+    <p>As faixas são instrumento gerencial da metodologia.</p>
+    <p>Elas não constituem classificação prevista textualmente na IN nº 75/2026.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Evidências e rastreabilidade">
+  <div class="section-head"><h2>17. Evidências e rastreabilidade</h2></div>
+  <div class="section-body">
+    <p>Toda avaliação deve ser sustentada por evidência.</p>
+    <p>O sistema apresenta, para cada pergunta:</p>
+    <ul>
+      <li>resposta do diagnóstico;</li>
+      <li>fundamento normativo;</li>
+      <li>avaliação atribuída;</li>
+      <li>evidência textual;</li>
+      <li>documentos anexados.</li>
+    </ul>
+    <p>A referência <strong>Doc. SEI 37070578</strong> identifica a fonte documental geral das respostas utilizadas na matriz atual.</p>
+    <p>Sempre que houver documento mais específico — por exemplo, portaria, decreto, resolução, ato de designação, relatório, print de sistema, página institucional ou outro documento comprobatório — ele poderá ser anexado diretamente à pergunta correspondente.</p>
+    <p>A inclusão de documentos específicos fortalece a rastreabilidade e permite revisar a avaliação sem depender da memória do avaliador.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Atualização da avaliação">
+  <div class="section-head"><h2>18. Atualização da avaliação</h2></div>
+  <div class="section-body">
+    <p>O monitoramento deve ser compreendido como processo contínuo.</p>
+    <p>A situação de uma Ouvidoria pode mudar com:</p>
+    <ul>
+      <li>publicação de novo ato normativo;</li>
+      <li>alteração da vinculação institucional;</li>
+      <li>designação de novo Ouvidor;</li>
+      <li>implantação de sistemas;</li>
+      <li>criação de canais;</li>
+      <li>aquisição de equipamentos;</li>
+      <li>formalização de fluxos;</li>
+      <li>capacitação da equipe;</li>
+      <li>produção de relatórios;</li>
+      <li>adoção de mecanismos de segurança.</li>
+    </ul>
+    <p>Por isso, o sistema deve permitir atualizar a avaliação preservando registros suficientes para identificar o que foi alterado.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Limites da metodologia">
+  <div class="section-head"><h2>19. Limites da metodologia</h2></div>
+  <div class="section-body">
+    <p>A pontuação não substitui análise jurídica.</p>
+    <p>A pontuação não certifica conformidade integral com toda a legislação aplicável.</p>
+    <p>A pontuação não transforma recomendação da IN em obrigação jurídica.</p>
+    <p>A pontuação não deve ser utilizada isoladamente para responsabilização.</p>
+    <p>A ferramenta é um instrumento de governança, monitoramento, priorização, planejamento e acompanhamento da Política de Fortalecimento das Ouvidorias de Serviços Penais.</p>
+    <div class="info">As pontuações, pesos e faixas de classificação constituem metodologia de monitoramento da ONASP e não integram o texto da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026. A avaliação deve ser interpretada em conjunto com as evidências registradas no sistema.</div>
+  </div>
+</section>
+</div>
+
+  </main>
+</div>
+<script src="app.js" defer></script>
+
+</body>
+</html>
