@@ -56,6 +56,13 @@
             var maxTxt = scoreEl.textContent.split("/")[1] || "";
             scoreEl.textContent = fmt(data.score) + " /" + maxTxt;
           }
+          // total da dimensao: soma client-side a partir dos cartoes visiveis
+          var panel = card.closest("[data-dim-panel]");
+          if (panel) {
+            var dimName = panel.getAttribute("data-dim-panel");
+            var badge = document.querySelector('[data-dim-total="' + dimName + '"]');
+            if (badge) badge.textContent = fmt(data.dimension_score);
+          }
           var set = function (id, v) {
             var el = document.getElementById(id);
             if (el) el.textContent = fmt(v);
@@ -64,8 +71,11 @@
           set("bonus-avail", data.bonus_available);
           set("bonus-applied", data.bonus_applied);
           set("final-score", data.final_score);
+          set("final-score-head", data.final_score);
           var cls = document.getElementById("classification");
           if (cls && data.classification) cls.textContent = data.classification;
+          var clsHead = document.getElementById("classification-head");
+          if (clsHead && data.classification) clsHead.textContent = data.classification;
           if (msg) msg.textContent = "Alteração salva.";
           toast("Alteração salva.");
         })

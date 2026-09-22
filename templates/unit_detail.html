@@ -6,7 +6,7 @@
   <div>
     <div class="eyebrow"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (entity.flag or 'br') + '.svg') }}" alt="Bandeira de {{ entity.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ entity.uf|e }}</span></span></div>
     <h1>{{ entity.uf|e }} — {{ entity.unidade_label|e }}</h1>
-    <p class="muted">{{ result.situacao|e }}</p>
+    <p class="muted">{{ result.situacao|e }} · Nota final: <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong> · <span id="classification-head">{{ result.classification|e }}</span></p>
   </div>
 </div>
 
@@ -24,79 +24,137 @@
   </div>
 </section>
 
+<nav class="tabs" aria-label="Dimensões da avaliação" data-dim-tabs>
+  {% for dim in dimensions %}
+  <a href="#dim-{{ loop.index0 }}" data-dim-tab="{{ dim.sheet_name|e }}"{% if loop.first %} class="active" aria-current="page"{% endif %}>{{ dim.dimension_name|e }} <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span></a>
+  {% endfor %}
+</nav>
+
 {% for dim in dimensions %}
-<section class="section" aria-label="{{ dim.dimension_name|e }}">
-  <div class="section-head">
-    <h2>{{ dim.dimension_name|e }}</h2>
-    <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span>
-  </div>
+<section class="section dim-panel" id="dim-{{ loop.index0 }}" data-dim-panel="{{ dim.sheet_name|e }}"{% if not loop.first %} hidden{% endif %} aria-label="{{ dim.dimension_name|e }}">
   <div class="section-body">
     {% for q in dim.questions %}
-    <article class="row-card" data-occurrence="{{ q.occurrence_key|e }}">
-      <div class="row-card-head">
-        <h3>{{ q.question_code|e }} — {{ q.question_title|e }}</h3>
+    <article class="qcard" data-occurrence="{{ q.occurrence_key|e }}">
+      <div class="qcard-head">
+        <div>
+          <span class="qcode">{{ q.question_code|e }}</span>
+          <h3>{{ q.question_title|e }}</h3>
+          <p class="muted">{{ q.item_name|e }} · Peso máximo: {{ q.max_display|e }}</p>
+        </div>
+        <span class="qscore" data-score-for="{{ q.occurrence_key|e }}">{{ q.score|e }} / {{ q.max_display|e }}</span>
       </div>
-      <p class="muted">{{ q.item_name|e }}</p>
-      <p class="muted">Peso máximo: {{ q.max_display|e }}</p>
-      <dl class="row-grid">
-        <div><dt>Resposta do diagnóstico</dt><dd>{{ q.resposta|e }}</dd></div>
-        <div><dt>Fundamentação</dt><dd>{{ q.fundamentacao|e }}</dd></div>
-        <div><dt>Critério</dt><dd>{{ q.criterio|e }}</dd></div>
-      </dl>
-      <div class="forms-grid">
-        <label>Avaliação
-          <select data-status-select>
-            {% for opt in q.status_options %}
-            <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
-            {% endfor %}
-          </select>
-        </label>
-        <p>Pontuação: <span data-score-for="{{ q.occurrence_key|e }}">{{ q.score|e }} / {{ q.max_display|e }}</span></p>
-      </div>
-      <label>Evidência / observação
-        <textarea data-evidence rows="3">{{ q.evidence_text|e }}</textarea>
-      </label>
-      <div class="page-actions">
-        <button type="button" class="primary" data-save data-entity="{{ entity.entity_key|e }}" data-occurrence="{{ q.occurrence_key|e }}">Salvar avaliação</button>
-      </div>
-      <small data-msg aria-live="polite"></small>
-
-      {% if q.attachments %}
-      <ul>
-        {% for a in q.attachments %}
-        <li>
-          {{ a.original_filename|e }}
-          <a href="/anexos/{{ a.id|e }}/abrir">Abrir</a>
-          <a href="/anexos/{{ a.id|e }}/baixar">Baixar</a>
-          <form method="post" action="/api/anexos/{{ a.id|e }}/desvincular" data-confirm="Desvincular este documento?">
-            <button type="submit" class="quiet danger">Desvincular</button>
-          </form>
-        </li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
-        <label>Anexar documento
-          <input type="file" name="file">
-        </label>
-        <label>Notas do anexo
-          <input type="text" name="notes" value="">
-        </label>
-        <button type="submit">Anexar</button>
-      </form>
-
-      <details>
-        <summary>Corrigir resposta do diagnóstico</summary>
-        <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/corrigir-resposta" data-confirm="Confirmar a correção da resposta do diagnóstico?">
-          <label>Nova resposta do diagnóstico
-            <textarea name="resposta" rows="3">{{ q.resposta|e }}</textarea>
+      <div class="qcols">
+        <div class="qcol">
+          <h4>Resposta do diagnóstico</h4>
+          <p class="texto-oficial">{{ q.resposta|e or "Sem resposta no diagnóstico" }}</p>
+          <details>
+            <summary>Corrigir resposta do diagnóstico</summary>
+            <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/corrigir-resposta" data-confirm="Confirmar a correção da resposta do diagnóstico?">
+              <label>Nova resposta do diagnóstico
+                <textarea name="resposta" rows="3">{{ q.resposta|e }}</textarea>
+              </label>
+              <button type="submit" class="quiet">Corrigir resposta do diagnóstico</button>
+            </form>
+          </details>
+        </div>
+        <div class="qcol">
+          <h4>Avaliação</h4>
+          <label class="quiet-label">Status
+            <select data-status-select>
+              {% for opt in q.status_options %}
+              <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
+              {% endfor %}
+            </select>
           </label>
-          <button type="submit" class="quiet">Corrigir resposta do diagnóstico</button>
-        </form>
+          <label>Evidência / observação
+            <textarea data-evidence rows="3">{{ q.evidence_text|e }}</textarea>
+          </label>
+          <div class="page-actions">
+            <button type="button" class="primary" data-save data-entity="{{ entity.entity_key|e }}" data-occurrence="{{ q.occurrence_key|e }}">Salvar avaliação</button>
+          </div>
+          <small data-msg aria-live="polite"></small>
+        </div>
+      </div>
+      <details class="qmeta">
+        <summary>Fundamentação e critério</summary>
+        <p><strong>Fundamentação:</strong> {{ q.fundamentacao|e }}</p>
+        <p><strong>Critério:</strong> {{ q.criterio|e }}</p>
       </details>
+      <div class="qdocs">
+        <h4>Documentos</h4>
+        {% if q.attachments %}
+        <ul>
+          {% for a in q.attachments %}
+          <li>
+            {{ a.original_filename|e }}
+            <a href="/anexos/{{ a.id|e }}/abrir">Abrir</a>
+            <a href="/anexos/{{ a.id|e }}/baixar">Baixar</a>
+            <form method="post" action="/api/anexos/{{ a.id|e }}/desvincular" data-confirm="Desvincular este documento?">
+              <button type="submit" class="quiet danger">Desvincular</button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">Nenhum documento anexado.</p>
+        {% endif %}
+        <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
+          <label>Anexar documento
+            <input type="file" name="file">
+          </label>
+          <label>Notas do anexo
+            <input type="text" name="notes" value="">
+          </label>
+          <button type="submit">Anexar</button>
+        </form>
+      </div>
     </article>
     {% endfor %}
   </div>
 </section>
 {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var tabs = Array.from(document.querySelectorAll("[data-dim-tab]"));
+  var panels = Array.from(document.querySelectorAll("[data-dim-panel]"));
+  if (!tabs.length || !panels.length) return;
+  function activate(name, focus) {
+    tabs.forEach(function (a) {
+      var on = a.getAttribute("data-dim-tab") === name;
+      if (on) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
+      else { a.classList.remove("active"); a.removeAttribute("aria-current"); }
+    });
+    panels.forEach(function (p) {
+      p.hidden = p.getAttribute("data-dim-panel") !== name;
+    });
+    if (focus) {
+      var link = tabs.find(function (a) { return a.getAttribute("data-dim-tab") === name; });
+      if (link) link.focus();
+    }
+  }
+  function fromHash() {
+    var h = (location.hash || "").replace("#", "");
+    var panel = document.getElementById(h);
+    if (panel && panel.hasAttribute("data-dim-panel")) {
+      activate(panel.getAttribute("data-dim-panel"), false);
+      return;
+    }
+    var first = panels[0];
+    if (first) activate(first.getAttribute("data-dim-panel"), false);
+  }
+  tabs.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      var name = a.getAttribute("data-dim-tab");
+      var panel = panels.find(function (p) { return p.getAttribute("data-dim-panel") === name; });
+      if (panel && panel.id) history.replaceState(null, "", "#" + panel.id);
+      activate(name, false);
+    });
+  });
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>
 {% endblock %}
