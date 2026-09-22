@@ -332,7 +332,7 @@
                       </div>
                       <div class="report-meta-row" style="margin-top:6px;">
                         <span class="report-meta-lbl">Fundamentação:</span>
-                        <div class="report-meta-val" style="font-size:.75rem;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;">{{ q.fundamentacao or "Não informada" }}</div>
+                        <div class="report-meta-val" style="font-size:.75rem;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;">{% if q.fundamentacao %}<a href="https://sei.mj.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=38337209&amp;id_documento=39918839" target="_blank" rel="noopener noreferrer" style="color:var(--brand);text-decoration:underline;" title="Consultar dispositivo na IN nº 75/2026 no SEI/MJSP">{{ q.fundamentacao|e }}</a>{% else %}Não informada{% endif %}</div>
                       </div>
                     </td>
                     <td>

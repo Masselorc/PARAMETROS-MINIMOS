@@ -38,6 +38,8 @@ NOTA_METODOLOGICA = (
 
 
 LOGO_PATH = Path(__file__).resolve().parent.parent / "static" / "logos" / "logo_senappen_mjsp_gov_horizontal.png"
+SEI_PROCESSO_URL = "https://sei.mj.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=38337209"
+IN_75_URL = "https://sei.mj.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=38337209&amp;id_documento=39918839"
 
 
 def _stamp() -> str:
@@ -188,7 +190,11 @@ def _methodology_flow(styles) -> list:
         Spacer(1, 0.8 * mm),
         Paragraph("<b>METODOLOGIA DE MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</b>", annex_header_style),
         Spacer(1, 0.8 * mm),
-        Paragraph("<b>Referência:</b> Processo SEI nº 08016.027689/2025-19 · IN GABSEC/SENAPPEN/MJSP nº 75/2026 · Doc. SEI 37070578", annex_ref_style),
+        Paragraph(
+            f"<b>Referência:</b> Processo <a href='{SEI_PROCESSO_URL}' color='#155b67'><u>SEI nº 08016.027689/2025-19</u></a> · "
+            f"<a href='{IN_75_URL}' color='#155b67'><u>IN GABSEC/SENAPPEN/MJSP nº 75/2026</u></a> · Doc. SEI 37070578",
+            annex_ref_style
+        ),
         Spacer(1, 2 * mm),
 
         Paragraph("<b>1. Apresentação e Finalidade</b>", h2_style),
@@ -402,10 +408,16 @@ def generate_unit_pdf(entity_key: str) -> Path:
         qdata = []
         for q in dim["questions"]:
             docs = ", ".join(a["original_filename"] for a in q["attachments"]) or "—"
+            raw_fund = (q.get("fundamentacao") or "").strip()
+            if raw_fund:
+                escaped_fund = raw_fund[:200].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                fund_link = f"<a href='{IN_75_URL}' color='#155b67'><u>{escaped_fund}</u></a>"
+            else:
+                fund_link = "—"
             qdata.append([
                 Paragraph(f"<b>{q['question_code']}</b><br/>{q['question_title'][:200]}"
                           f"<br/>Item: {q['item_name'][:120]}", styles["Normal"]),
-                Paragraph(f"Resp: {(q['resposta'] or '')[:500]}<br/>Fund: {q['fundamentacao'][:200]}"
+                Paragraph(f"Resp: {(q['resposta'] or '')[:500]}<br/>Fund: {fund_link}"
                           f"<br/>Aval: {q['status']} ({q['score']}/{q['max_display']})"
                           f"<br/>Evid: {(q['evidence_text'] or '')[:500]}"
                           f"<br/>Docs: {docs[:300]}", styles["Normal"]),
