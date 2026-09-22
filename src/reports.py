@@ -19,7 +19,6 @@ from .config import (
     DIMENSION_NAMES,
     EXPORTACOES_DIR,
     GLOBAL_BASE_MINIMUM,
-    WORKBOOK_FILENAME,
 )
 from .workbook_service import read_unit_detail
 
@@ -117,7 +116,7 @@ def _header_flow(styles, report_subtitle: str = "") -> list:
     now = datetime.now().strftime("%d/%m/%Y %H:%M")
     flows.append(Paragraph(
         f"Referência: IN GABSEC/SENAPPEN/MJSP nº 75/2026 — metodologia ONASP. "
-        f"Dados: {WORKBOOK_FILENAME}. Gerado em {now}.", header_ref_style))
+        f"Gerado em {now}.", header_ref_style))
     flows.append(Spacer(1, 3.5 * mm))
     return flows
 
