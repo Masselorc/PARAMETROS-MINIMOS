@@ -127,6 +127,12 @@ button.pad-analyze{min-height:34px;padding:4px 10px;font-size:.8125rem}
 .uf-cell .uf-code{font-weight:700}
 .page-head .eyebrow .uf-cell .uf-flag{width:36px;height:26px}
 
+/* Barra da nota final no dashboard (espelha o dataBar do 08_Resumo). */
+.score-cell{display:flex;align-items:center;gap:8px;min-width:140px}
+.score-bar{flex:1 1 auto;height:14px;border-radius:7px;background:#e8edef;overflow:hidden}
+.score-fill{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,#b565a7,#7b2d8e)}
+.score-value{flex:0 0 auto;font-variant-numeric:tabular-nums;font-weight:600}
+
 /* Pagina de avaliacao: cartao minimalista por pergunta + abas por dimensao. */
 .tabs .badge{margin-left:8px}
 .dim-panel[hidden]{display:none}

@@ -65,6 +65,7 @@
           <th>Nota-base</th>
           <th>Bônus</th>
           <th>Final</th>
+          <th>Nota final /100</th>
           <th>Classificação</th>
           <th>Ações</th>
         </tr>
@@ -83,11 +84,12 @@
           <td class="number">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
           <td class="number">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
           <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+          <td>{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
           <td>{{ r.classification|e }}</td>
           <td><a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a></td>
         </tr>
         {% else %}
-        <tr><td colspan="13"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
+        <tr><td colspan="14"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
         {% endfor %}
       </tbody>
     </table>
