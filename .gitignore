@@ -21,7 +21,8 @@ __pycache__/
 # Lock local do Excel (runtime)
 .dados.lock
 
-# Dados operacionais locais (não versionar)
+# Arquivos operacionais gerados localmente (não versionar).
+# DADOS.xlsx é a fonte principal e permanece versionado; só o temporário é ignorado.
 ANEXOS/
 BACKUPS/
 EXPORTACOES/
@@ -29,4 +30,3 @@ DADOS_tmp_validacao.xlsx
 
 # Especificação do sistema (documento interno de trabalho)
 ESPECIFICACAO_SISTEMA_PARAMETROS_MINIMOS.md
-

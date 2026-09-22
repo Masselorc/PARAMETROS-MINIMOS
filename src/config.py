@@ -66,7 +66,7 @@ BASE_WEIGHTS = {
 
 BONUS_MAX = 10
 
-# Pisos mínimos por dimensão essencial (50% do máximo) e nota-base global
+# Pisos mínimos por dimensão essencial (50% do máximo) e nota final global
 # mínima para "seguir os parâmetros mínimos". A Institucionalização é
 # binária (15 = instituída) e não usa piso percentual.
 DIMENSION_MINIMUMS = {

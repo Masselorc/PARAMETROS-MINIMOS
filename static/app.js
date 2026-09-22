@@ -83,8 +83,8 @@
           if (clsHead && data.classification) clsHead.textContent = data.classification;
           var meets = document.getElementById("meets-minimum");
           if (meets) {
-            if (data.meets_minimum_parameters === true) meets.textContent = "Sim — M1-11 = Sim, nota-base ≥ 70 e todas as dimensões essenciais ≥ 50%";
-            else if (data.meets_minimum_parameters === false) meets.textContent = "Não — ver pisos por dimensão e nota-base abaixo";
+            if (data.meets_minimum_parameters === true) meets.textContent = "Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%";
+            else if (data.meets_minimum_parameters === false) meets.textContent = "Não — ver pisos dimensionais e nota final abaixo";
           }
           if (msg) msg.textContent = "Alteração salva.";
           toast("Alteração salva.");

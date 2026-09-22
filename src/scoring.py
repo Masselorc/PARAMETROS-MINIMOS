@@ -55,11 +55,11 @@ def dimensions_below_minimum(dim_scores: dict) -> list[str]:
     ]
 
 
-def meets_minimum_parameters(situacao: str, base_score: float, dim_scores: dict) -> bool:
-    """True somente para instituída com nota-base>=70 e pisos dimensionais."""
+def meets_minimum_parameters(situacao: str, final_score: float, dim_scores: dict) -> bool:
+    """True para instituída com nota final>=70 e pisos dimensionais atendidos."""
     if situacao != "Instituída":
         return False
-    if float(base_score or 0) < GLOBAL_BASE_MINIMUM:
+    if float(final_score or 0) < GLOBAL_BASE_MINIMUM:
         return False
     return not dimensions_below_minimum(dim_scores)
 
@@ -70,7 +70,7 @@ def classify(
     situacao: str,
     dim_scores: dict,
 ) -> dict:
-    """Pisos de 50% por dimensão essencial + nota-base>=70. Bonus não decide."""
+    """Pisos de 50% por dimensão e nota final>=70; bônus conta só para o total."""
     if situacao != "Instituída":
         return {
             "base_score": None,
@@ -85,10 +85,10 @@ def classify(
     below = dimensions_below_minimum(dim_scores)
     bonus_applied = min(float(bonus_available or 0), max(0.0, 100.0 - base))
     final_score = min(100.0, base + bonus_applied)
-    meets = not below and base >= GLOBAL_BASE_MINIMUM
+    meets = meets_minimum_parameters(situacao, final_score, dim_scores)
     if below:
         classification = "Instituída — abaixo do mínimo em dimensão essencial"
-    elif base < GLOBAL_BASE_MINIMUM:
+    elif final_score < GLOBAL_BASE_MINIMUM:
         classification = "Instituída — aderência global insuficiente"
     else:
         classification = "Instituída — seguindo os parâmetros mínimos"
@@ -128,4 +128,4 @@ def validate_weights() -> None:
         assert abs(minimum - BASE_WEIGHTS[sheet] / 2.0) < 1e-6, (
             f"Piso de {sheet} deve ser 50% do máximo ({BASE_WEIGHTS[sheet]})"
         )
-    assert GLOBAL_BASE_MINIMUM == 70, "Nota-base mínima global deve ser 70"
+    assert GLOBAL_BASE_MINIMUM == 70, "Nota final mínima global deve ser 70"

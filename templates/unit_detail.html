@@ -15,14 +15,14 @@
   <div class="section-body">
     <dl class="data-grid">
       <div><dt>Situação institucional</dt><dd>{{ result.situacao|e }}</dd></div>
-      <div><dt>Nota-base (verifica os parâmetros mínimos)</dt><dd id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</dd></div>
+      <div><dt>Nota-base (pontuação regular)</dt><dd id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</dd></div>
       <div><dt>Bônus disponível (maturidade)</dt><dd id="bonus-avail">{{ "%.1f"|format(result.bonus_available) if result.bonus_available is not none else "—" }}</dd></div>
       <div><dt>Bônus aplicado</dt><dd id="bonus-applied">{{ "%.1f"|format(result.bonus_applied) if result.bonus_applied is not none else "—" }}</dd></div>
-      <div><dt>Nota final (maturidade)</dt><dd id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</dd></div>
+      <div><dt>Nota final (inclui bônus; mínimo global 70)</dt><dd id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</dd></div>
       <div class="wide"><dt>Classificação</dt><dd id="classification">{{ result.classification|e }}</dd></div>
-      <div class="wide"><dt>Segue os parâmetros mínimos</dt><dd id="meets-minimum">{% if result.meets_minimum_parameters %}Sim — M1-11 = Sim, nota-base ≥ 70 e todas as dimensões essenciais ≥ 50%{% else %}Não — ver pisos por dimensão e nota-base abaixo{% endif %}</dd></div>
+      <div class="wide"><dt>Segue os parâmetros mínimos</dt><dd id="meets-minimum">{% if result.meets_minimum_parameters %}Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%{% else %}Não — ver pisos dimensionais e nota final abaixo{% endif %}</dd></div>
     </dl>
-    <p class="source">Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026. O bônus não conta para atingir a nota-base mínima de 70 nem os pisos dimensionais.</p>
+    <p class="source">Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026. O bônus aplicado conta para atingir a nota final mínima de 70, mas não altera nem substitui os pisos dimensionais de 50%.</p>
   </div>
 </section>
 

@@ -126,9 +126,8 @@ def generate_unit_pdf(entity_key: str) -> Path:
     )
     story.append(Paragraph(
         f"{dimension_results} | "
-        f"Nota-base (parâmetros mínimos, mínimo {GLOBAL_BASE_MINIMUM}): {_fmt(res['base_score'])} | "
-        f"Bônus disponível: {_fmt(res['bonus_available'])} | "
-        f"Bônus aplicado: {_fmt(res['bonus_applied'])} | Nota final: {_fmt(res['final_score'])} | "
+        f"Nota-base: {_fmt(res['base_score'])} | Bônus disponível: {_fmt(res['bonus_available'])} | "
+        f"Bônus aplicado: {_fmt(res['bonus_applied'])} | Nota final (mínimo global {GLOBAL_BASE_MINIMUM}): {_fmt(res['final_score'])} | "
         f"Segue os parâmetros mínimos: {'Sim' if res['meets_minimum_parameters'] else 'Não'} | "
         f"Classificação: {res['classification']}", styles["Normal"]))
     for dim in detail["dimensions"]:
@@ -206,7 +205,7 @@ def generate_unit_xlsx(entity_key: str) -> Path:
     for k in ("situacao", "base_score", "bonus_available", "bonus_applied",
               "final_score", "meets_minimum_parameters", "classification"):
         ws.append([k, res.get(k)])
-    ws.append(["global_base_minimum", GLOBAL_BASE_MINIMUM])
+    ws.append(["global_final_minimum", GLOBAL_BASE_MINIMUM])
     for sheet in BASE_WEIGHTS:
         ws.append([f"minimo_{sheet}", DIMENSION_MINIMUMS.get(sheet, "")])
     ws.append(["uf", ent["uf"]])

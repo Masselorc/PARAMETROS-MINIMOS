@@ -523,7 +523,7 @@ def read_unit_detail(entity_key: str) -> dict:
             "final_score": cls["final_score"],
             "meets_minimum_parameters": cls["meets_minimum_parameters"],
             "dimensions_below_minimum": cls["dimensions_below_minimum"],
-            "global_base_minimum": GLOBAL_BASE_MINIMUM,
+            "global_final_minimum": GLOBAL_BASE_MINIMUM,
             "classification": cls["classification"],
         }
         return {"entity": ent, "dimensions": dimensions, "result": result}

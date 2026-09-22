@@ -1,4 +1,4 @@
-"""Pontuacao: Atende=100%, Parcial=50%; pisos 50% + base>=70; 5 classificações."""
+"""Pontuacao: Atende=100%, Parcial=50%; pisos 50% + nota final>=70."""
 from src.config import DIMENSION_MINIMUMS, GLOBAL_BASE_MINIMUM
 from src.scoring import (
     classify,
@@ -56,10 +56,23 @@ def test_bonus_limited_to_100():
     assert r["final_score"] <= 100
 
 
-def test_bonus_nao_decide_parametros_minimos():
-    # base 68 + bônus 7 => final 75, mas segue global insuficiente
+def test_bonus_contribui_para_minimo_global():
+    # Base 68 + bônus aplicado 7 => nota final 75; pisos dimensionais passam.
     r = classify(68, 7, "Instituída", _full_dims())
     assert r["final_score"] == 75
+    assert r["meets_minimum_parameters"] is True
+    assert r["classification"] == "Instituída — seguindo os parâmetros mínimos"
+    # Exemplo de AL: base 68,5 + bônus aplicado 6 = nota final 74,5.
+    alagoas = classify(68.5, 6, "Instituída", _full_dims())
+    assert alagoas["final_score"] == 74.5
+    assert alagoas["meets_minimum_parameters"] is True
+    assert alagoas["classification"] == "Instituída — seguindo os parâmetros mínimos"
+
+
+def test_bonus_insuficiente_mantem_global_insuficiente():
+    # Base 60 + bônus 5 => nota final 65, ainda abaixo do limiar de 70.
+    r = classify(60, 5, "Instituída", _full_dims())
+    assert r["final_score"] == 65
     assert r["meets_minimum_parameters"] is False
     assert r["classification"] == "Instituída — aderência global insuficiente"
 
@@ -93,7 +106,8 @@ def test_cinco_casos_classificacao():
     assert classify(0, 0, "Instituição não comprovada", {})["classification"] == "Instituição não comprovada"
     low = dict(_min_dims()); low["02_Autonomia"] = 7.4
     assert classify(70, 0, "Instituída", low)["classification"] == "Instituída — abaixo do mínimo em dimensão essencial"
-    assert classify(69.9, 10, "Instituída", _min_dims())["classification"] == "Instituída — aderência global insuficiente"
+    assert classify(69.9, 0, "Instituída", _min_dims())["classification"] == "Instituída — aderência global insuficiente"
+    assert classify(69.9, 0.1, "Instituída", _min_dims())["classification"] == "Instituída — seguindo os parâmetros mínimos"
     r = classify(70, 5, "Instituída", _min_dims())
     assert r["classification"] == "Instituída — seguindo os parâmetros mínimos"
     assert r["meets_minimum_parameters"] is True
@@ -108,6 +122,7 @@ def test_pisos_sao_metade_do_maximo():
     assert dimensions_below_minimum(_min_dims()) == []
     low = dict(_min_dims()); low["06_Integração Tec"] = 12.4
     assert dimensions_below_minimum(low) == ["06_Integração Tec"]
+    # O argumento de meets_minimum_parameters e a nota final (com bonus aplicado).
     assert meets_minimum_parameters("Instituída", 70, _min_dims()) is True
     assert meets_minimum_parameters("Instituída", 70, low) is False
     assert meets_minimum_parameters("Instituída", 69.9, _min_dims()) is False

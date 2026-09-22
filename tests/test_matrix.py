@@ -108,9 +108,13 @@ def test_new_classification_cases_use_only_base_score():
     below = classify(85, 5, "Instituída", low)
     assert below["classification"] == "Instituída — abaixo do mínimo em dimensão essencial"
     assert below["meets_minimum_parameters"] is False
-    # bônus levando final a 75 não muda a insuficiência global da base 68
-    insufficient = classify(68, 7, "Instituída", full)
-    assert insufficient["final_score"] == 75
+    # O bônus aplicado participa do mínimo global pela nota final.
+    following = classify(68, 7, "Instituída", full)
+    assert following["final_score"] == 75
+    assert following["meets_minimum_parameters"] is True
+    assert following["classification"] == "Instituída — seguindo os parâmetros mínimos"
+    insufficient = classify(60, 5, "Instituída", full)
+    assert insufficient["final_score"] == 65
     assert insufficient["classification"] == "Instituída — aderência global insuficiente"
     ok = classify(70, 4, "Instituída", minimums)
     assert ok["classification"] == "Instituída — seguindo os parâmetros mínimos"
