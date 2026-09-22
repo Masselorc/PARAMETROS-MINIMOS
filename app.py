@@ -29,6 +29,7 @@ from src.workbook_service import (
     parse_entities,
     read_summary,
     read_unit_detail,
+    summarize_uf_indicator,
     update_assessment,
     validate_startup,
 )
@@ -81,16 +82,25 @@ def _filters(request: Request) -> dict:
 
 
 CLASSIFICATION_ALIASES = {
-    "elevada": "Instituída — elevada aderência",
-    "satisfatoria": "Instituída — aderência satisfatória",
-    "satisfatória": "Instituída — aderência satisfatória",
-    "parcial": "Instituída — aderência parcial",
-    "baixa": "Instituída — baixa aderência",
-    "insuficiente": "Instituída — aderência insuficiente (dimensão essencial zerada)",
+    "seguindo": "Instituída — seguindo os parâmetros mínimos",
+    "seguindo_minimos": "Instituída — seguindo os parâmetros mínimos",
+    "abaixo_dimensao": "Instituída — abaixo do mínimo em dimensão essencial",
+    "abaixo_minimo_dimensao": "Instituída — abaixo do mínimo em dimensão essencial",
+    "global_insuficiente": "Instituída — aderência global insuficiente",
+    "aderencia_global_insuficiente": "Instituída — aderência global insuficiente",
     "nao_instituida": "Não instituída",
     "não_instituída": "Não instituída",
-    "sem_evidencia": "Sem evidência",
-    "sem_evidência": "Sem evidência",
+    "nao_comprovada": "Instituição não comprovada",
+    "instituicao_nao_comprovada": "Instituição não comprovada",
+    # aliases legados (matriz anterior as novas faixas)
+    "elevada": "Instituída — seguindo os parâmetros mínimos",
+    "satisfatoria": "Instituída — seguindo os parâmetros mínimos",
+    "satisfatória": "Instituída — seguindo os parâmetros mínimos",
+    "parcial": "Instituída — aderência global insuficiente",
+    "baixa": "Instituída — aderência global insuficiente",
+    "insuficiente": "Instituída — abaixo do mínimo em dimensão essencial",
+    "sem_evidencia": "Instituição não comprovada",
+    "sem_evidência": "Instituição não comprovada",
 }
 
 
@@ -191,7 +201,15 @@ def api_health():
 def api_resumo():
     _guard_startup()
     rows, cards = read_summary()
-    return {"cards": cards, "rows": rows}
+    return {"cards": cards, "rows": rows, "uf_indicator": summarize_uf_indicator(rows)}
+
+
+@app.get("/api/indicador-pena-justa")
+def api_indicador_pena_justa():
+    """Indicador 2.4.2.1.2.1 por UF (ES aparece com 2 unidades, sem consolidar)."""
+    _guard_startup()
+    rows, _ = read_summary()
+    return summarize_uf_indicator(rows)
 
 
 @app.get("/api/unidades")

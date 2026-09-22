@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -32,11 +33,14 @@ from .config import (
     DB_ANEXOS_HEADERS,
     DB_AUDITORIA_HEADERS,
     DB_EVIDENCIAS_HEADERS,
+    DIMENSION_MINIMUMS,
     DIMENSION_NAMES,
     DIMENSION_SHEETS,
     EVIDENCE_INITIAL_TEXT,
+    EXPECTED_QUESTION_WEIGHTS,
     EXPECTED_SHEETS,
     EXPORTACOES_DIR,
+    GLOBAL_BASE_MINIMUM,
     LOCK_PATH,
     WORKBOOK_PATH,
 )
@@ -264,6 +268,33 @@ def parse_all_questions(wb) -> dict[str, list[dict]]:
     return result
 
 
+def validate_question_uniqueness(all_questions: dict[str, list[dict]]) -> list[str]:
+    """Retorna erros claros para codigos usados mais de uma vez na matriz."""
+    locations: dict[str, list[str]] = defaultdict(list)
+    for sheet, questions in all_questions.items():
+        for question in questions:
+            locations[question["question_code"]].append(sheet)
+
+    errors = []
+    for code, sheets in locations.items():
+        if len(sheets) <= 1:
+            continue
+        unique_sheets = list(dict.fromkeys(sheets))
+        if len(unique_sheets) > 1:
+            names = "; ".join(DIMENSION_NAMES.get(s, s) for s in unique_sheets)
+            errors.append(
+                f"Pergunta duplicada na matriz: {code} aparece em mais de uma dimensão "
+                f"({names})."
+            )
+        else:
+            name = DIMENSION_NAMES.get(unique_sheets[0], unique_sheets[0])
+            errors.append(
+                f"Pergunta duplicada na matriz: {code} aparece mais de uma vez "
+                f"na dimensão {name}."
+            )
+    return errors
+
+
 def evidences_map(wb) -> dict[tuple[str, str], str]:
     """(entity_key, occurrence_key) -> evidence_text (DB_EVIDENCIAS)."""
     if "DB_EVIDENCIAS" not in wb.sheetnames:
@@ -374,7 +405,8 @@ def read_summary() -> tuple[list[dict], dict]:
                 "bonus_applied": None if cls["bonus_applied"] is None else round(cls["bonus_applied"], 2),
                 "final_score": None if cls["final_score"] is None else round(cls["final_score"], 2),
                 "situacao": situacao,
-                "trava": cls["trava"],
+                "meets_minimum_parameters": cls["meets_minimum_parameters"],
+                "dimensions_below_minimum": cls["dimensions_below_minimum"],
                 "classification": cls["classification"],
             })
         cards = build_cards(rows)
@@ -391,15 +423,37 @@ def build_cards(rows: list[dict]) -> dict:
         "unidades": len(rows),
         "instituidas": count(lambda r: r["situacao"] == "Instituída"),
         "nao_instituidas": count(lambda r: r["situacao"] == "Não instituída"),
-        "sem_evidencia": count(lambda r: r["situacao"] == "Sem evidência"),
-        "elevada": count(lambda r: r["classification"] == "Instituída — elevada aderência"),
-        "satisfatoria": count(lambda r: r["classification"] == "Instituída — aderência satisfatória"),
-        "parcial": count(lambda r: r["classification"] == "Instituída — aderência parcial"),
-        "baixa_insuficiente": count(
-            lambda r: r["classification"]
-            in ("Instituída — baixa aderência",
-                "Instituída — aderência insuficiente (dimensão essencial zerada)")
+        "nao_comprovadas": count(lambda r: r["situacao"] == "Instituição não comprovada"),
+        "seguindo_minimos": count(lambda r: r["meets_minimum_parameters"]),
+        "abaixo_dimensao": count(
+            lambda r: r["classification"] == "Instituída — abaixo do mínimo em dimensão essencial"
         ),
+        "global_insuficiente": count(
+            lambda r: r["classification"] == "Instituída — aderência global insuficiente"
+        ),
+    }
+
+
+def summarize_uf_indicator(rows: list[dict]) -> dict:
+    """Indicador Pena Justa por UF: 28 unidades avaliadas, ES conta como 1 UF.
+
+    Retorna contagens por UF sem inventar regra de consolidação: o ES aparece
+    com as duas unidades listadas separadamente para decisão posterior.
+    """
+    by_uf: dict[str, dict] = {}
+    for r in rows:
+        by_uf.setdefault(r["uf"], []).append(r)
+    return {
+        "unidades_avaliacao": len(rows),
+        "ufs_distintas": len(by_uf),
+        "por_uf": {
+            uf: {
+                "unidades": [u["entity_key"] for u in units],
+                "instituidas": sum(1 for u in units if u["situacao"] == "Instituída"),
+                "seguindo_minimos": sum(1 for u in units if u["meets_minimum_parameters"]),
+            }
+            for uf, units in sorted(by_uf.items())
+        },
     }
 
 
@@ -444,13 +498,17 @@ def read_unit_detail(entity_key: str) -> dict:
                 })
             if sheet != "07_Maturidade":
                 dim_scores[sheet] = total
+            score = round(total, 2)
+            dim_min = DIMENSION_MINIMUMS.get(sheet)
             dimensions.append({
                 "sheet_name": sheet,
                 "dimension_name": DIMENSION_NAMES.get(sheet, sheet),
-                "total": round(total, 2),
+                "total": score,
                 # alias p/ template (unit_detail usa dim.dimension_score)
-                "dimension_score": round(total, 2),
+                "dimension_score": score,
                 "max": BASE_WEIGHTS.get(sheet, BONUS_MAX if sheet == "07_Maturidade" else 0),
+                "minimum": dim_min,
+                "meets_minimum": None if dim_min is None else score >= dim_min,
                 "questions": qs,
             })
         situacao = situacao_from_status(inst_status)
@@ -463,7 +521,9 @@ def read_unit_detail(entity_key: str) -> dict:
             "bonus_available": cls["bonus_available"],
             "bonus_applied": cls["bonus_applied"],
             "final_score": cls["final_score"],
-            "trava": cls["trava"],
+            "meets_minimum_parameters": cls["meets_minimum_parameters"],
+            "dimensions_below_minimum": cls["dimensions_below_minimum"],
+            "global_base_minimum": GLOBAL_BASE_MINIMUM,
             "classification": cls["classification"],
         }
         return {"entity": ent, "dimensions": dimensions, "result": result}
@@ -682,12 +742,14 @@ def update_assessment(entity_key: str, occurrence_key: str,
     # recalcula fora do lock
     detail = read_unit_detail(entity_key)
     # localiza pergunta atualizada
-    score = dim_total = None
+    score = dim_total = dim_min = dim_meets = None
     for dim in detail["dimensions"]:
         for qq in dim["questions"]:
             if qq["occurrence_key"] == occurrence_key:
                 score = qq["score"]
                 dim_total = dim["total"]
+                dim_min = dim.get("minimum")
+                dim_meets = dim.get("meets_minimum")
     r = detail["result"]
     return {
         "ok": True,
@@ -695,10 +757,14 @@ def update_assessment(entity_key: str, occurrence_key: str,
         "occurrence_key": occurrence_key,
         "score": score,
         "dimension_score": dim_total,
+        "dimension_minimum": dim_min,
+        "dimension_meets_minimum": dim_meets,
         "base_score": r["base_score"],
         "bonus_available": r["bonus_available"],
         "bonus_applied": r["bonus_applied"],
         "final_score": r["final_score"],
+        "meets_minimum_parameters": r["meets_minimum_parameters"],
+        "dimensions_below_minimum": r["dimensions_below_minimum"],
         "classification": r["classification"],
     }
 
@@ -765,6 +831,28 @@ def validate_startup() -> list[str]:
         if len(entities) != 28:
             errors.append(f"Esperadas 28 unidades de avaliação, encontradas {len(entities)}.")
         all_q = parse_all_questions(wb)
+        errors.extend(validate_question_uniqueness(all_q))
+
+        # Confere codigos e pesos oficiais sem fixar nenhuma coluna da planilha.
+        for sheet in DIMENSION_SHEETS:
+            expected = EXPECTED_QUESTION_WEIGHTS[sheet]
+            actual: dict[str, list[dict]] = defaultdict(list)
+            for question in all_q[sheet]:
+                actual[question["question_code"]].append(question)
+            for code in expected.keys() - actual.keys():
+                errors.append(f"Pergunta configurada ausente em {sheet}: {code}.")
+            for code in actual.keys() - expected.keys():
+                errors.append(f"Pergunta não prevista na matriz em {sheet}: {code}.")
+            for code in expected.keys() & actual.keys():
+                if len(actual[code]) != 1:
+                    continue  # ja reportado pela validacao de duplicidade
+                weight = actual[code][0]["weight"]
+                if abs(weight - expected[code]) > 1e-6:
+                    errors.append(
+                        f"Peso incorreto para {code} em {sheet}: "
+                        f"{weight:g}, esperado {expected[code]:g}."
+                    )
+
         # pesos conferidos contra 00_Metodologia
         try:
             ws0 = wb["00_Metodologia"]

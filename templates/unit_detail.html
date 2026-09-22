@@ -6,7 +6,7 @@
   <div>
     <div class="eyebrow"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (entity.flag or 'br') + '.svg') }}" alt="Bandeira de {{ entity.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ entity.uf|e }}</span></span></div>
     <h1>{{ entity.uf|e }} — {{ entity.unidade_label|e }}</h1>
-    <p class="muted">{{ result.situacao|e }} · Nota final: <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong> · <span id="classification-head">{{ result.classification|e }}</span></p>
+    <p class="muted">{{ result.situacao|e }} · Nota-base: <strong>{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</strong> · Nota final: <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong> · <span id="classification-head">{{ result.classification|e }}</span></p>
   </div>
 </div>
 
@@ -14,25 +14,28 @@
   <div class="section-head"><h2>Resultado</h2></div>
   <div class="section-body">
     <dl class="data-grid">
-      <div><dt>Nota-base</dt><dd id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</dd></div>
-      <div><dt>Bônus disponível</dt><dd id="bonus-avail">{{ "%.1f"|format(result.bonus_available) if result.bonus_available is not none else "—" }}</dd></div>
+      <div><dt>Situação institucional</dt><dd>{{ result.situacao|e }}</dd></div>
+      <div><dt>Nota-base (verifica os parâmetros mínimos)</dt><dd id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</dd></div>
+      <div><dt>Bônus disponível (maturidade)</dt><dd id="bonus-avail">{{ "%.1f"|format(result.bonus_available) if result.bonus_available is not none else "—" }}</dd></div>
       <div><dt>Bônus aplicado</dt><dd id="bonus-applied">{{ "%.1f"|format(result.bonus_applied) if result.bonus_applied is not none else "—" }}</dd></div>
-      <div><dt>Nota final</dt><dd id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</dd></div>
+      <div><dt>Nota final (maturidade)</dt><dd id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</dd></div>
       <div class="wide"><dt>Classificação</dt><dd id="classification">{{ result.classification|e }}</dd></div>
+      <div class="wide"><dt>Segue os parâmetros mínimos</dt><dd id="meets-minimum">{% if result.meets_minimum_parameters %}Sim — M1-11 = Sim, nota-base ≥ 70 e todas as dimensões essenciais ≥ 50%{% else %}Não — ver pisos por dimensão e nota-base abaixo{% endif %}</dd></div>
     </dl>
-    <p class="source">Pesos, faixas e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026.</p>
+    <p class="source">Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026. O bônus não conta para atingir a nota-base mínima de 70 nem os pisos dimensionais.</p>
   </div>
 </section>
 
 <nav class="tabs" aria-label="Dimensões da avaliação" data-dim-tabs>
   {% for dim in dimensions %}
-  <a href="#dim-{{ loop.index0 }}" data-dim-tab="{{ dim.sheet_name|e }}"{% if loop.first %} class="active" aria-current="page"{% endif %}>{{ dim.dimension_name|e }} <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span></a>
+  <a href="#dim-{{ loop.index0 }}" data-dim-tab="{{ dim.sheet_name|e }}"{% if loop.first %} class="active" aria-current="page"{% endif %}>{{ dim.dimension_name|e }} <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span>{% if dim.meets_minimum is not none %} <span class="badge" data-dim-floor="{{ dim.sheet_name|e }}">{% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}</span>{% endif %}</a>
   {% endfor %}
 </nav>
 
 {% for dim in dimensions %}
 <section class="section dim-panel" id="dim-{{ loop.index0 }}" data-dim-panel="{{ dim.sheet_name|e }}"{% if not loop.first %} hidden{% endif %} aria-label="{{ dim.dimension_name|e }}">
   <div class="section-body">
+    <p class="muted">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }} / {{ dim.max|e }}{% if dim.minimum is not none %} · Mínimo: {{ dim.minimum|e }} · {% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}{% endif %}</p>
     {% for q in dim.questions %}
     <article class="qcard" data-occurrence="{{ q.occurrence_key|e }}">
       <div class="qcard-head">

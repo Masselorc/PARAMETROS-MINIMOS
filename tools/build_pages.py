@@ -68,8 +68,8 @@ def main() -> None:
         shutil.copytree(flags_src, DOCS / "bandeiras", dirs_exist_ok=True)
 
     cards = {"unidades": 28, "instituidas": "—", "nao_instituidas": "—",
-             "sem_evidencia": "—", "elevada": "—", "satisfatoria": "—",
-             "parcial": "—", "baixa_insuficiente": "—"}
+             "nao_comprovadas": "—", "seguindo_minimos": "—",
+             "abaixo_dimensao": "—", "global_insuficiente": "—"}
 
     def _uf_flag(k: str) -> str:
         return "es" if k.startswith("ES_") else k.lower()

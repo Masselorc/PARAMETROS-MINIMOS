@@ -62,6 +62,11 @@
             var dimName = panel.getAttribute("data-dim-panel");
             var badge = document.querySelector('[data-dim-total="' + dimName + '"]');
             if (badge) badge.textContent = fmt(data.dimension_score);
+            var floor = document.querySelector('[data-dim-floor="' + dimName + '"]');
+            if (floor) {
+              if (data.dimension_meets_minimum === true) floor.textContent = "Piso atendido";
+              else if (data.dimension_meets_minimum === false) floor.textContent = "Abaixo do mínimo";
+            }
           }
           var set = function (id, v) {
             var el = document.getElementById(id);
@@ -76,6 +81,11 @@
           if (cls && data.classification) cls.textContent = data.classification;
           var clsHead = document.getElementById("classification-head");
           if (clsHead && data.classification) clsHead.textContent = data.classification;
+          var meets = document.getElementById("meets-minimum");
+          if (meets) {
+            if (data.meets_minimum_parameters === true) meets.textContent = "Sim — M1-11 = Sim, nota-base ≥ 70 e todas as dimensões essenciais ≥ 50%";
+            else if (data.meets_minimum_parameters === false) meets.textContent = "Não — ver pisos por dimensão e nota-base abaixo";
+          }
           if (msg) msg.textContent = "Alteração salva.";
           toast("Alteração salva.");
         })

@@ -33,10 +33,9 @@ def test_es_duplo_independente(tmp_path, monkeypatch):
         assert len(ents) == 28
         pp = next(e for e in ents if e["entity_key"] == "ES_PP")
         sej = next(e for e in ents if e["entity_key"] == "ES_SEJUS")
-        assert pp["row"] != sej["row"] or pp["unidade_label"] != sej["unidade_label"]
-        # diagnosticos distintos por unidade
-        ws = wb["01_Institucionalização"]
-        assert ws.cell(pp["row"], 4).value != ws.cell(sej["row"], 4).value or True
+        assert pp["row"] != sej["row"]
+        assert pp["entity_key"] != sej["entity_key"]
+        assert pp["unidade_label"] != sej["unidade_label"]
     finally:
         wb.close()
 

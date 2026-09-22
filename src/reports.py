@@ -12,7 +12,14 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
-from .config import EXPORTACOES_DIR, WORKBOOK_FILENAME
+from .config import (
+    BASE_WEIGHTS,
+    DIMENSION_MINIMUMS,
+    DIMENSION_NAMES,
+    EXPORTACOES_DIR,
+    GLOBAL_BASE_MINIMUM,
+    WORKBOOK_FILENAME,
+)
 from .workbook_service import read_unit_detail
 
 HEADER_LINES = [
@@ -70,10 +77,11 @@ def generate_general_pdf(rows: list[dict], cards: dict) -> Path:
     story.extend(_header_flow(styles))
     story.append(Paragraph("<b>Síntese</b>", styles["Heading2"]))
     story.append(Paragraph(
-        f"Unidades avaliadas: {cards['unidades']}. Instituídas: {cards['instituidas']}. "
-        f"Não instituídas: {cards['nao_instituidas']}. Sem evidência: {cards['sem_evidencia']}. "
-        f"Elevada: {cards['elevada']}. Satisfatória: {cards['satisfatoria']}. "
-        f"Parcial: {cards['parcial']}. Baixa/insuficiente: {cards['baixa_insuficiente']}.",
+        f"Unidades avaliadas: {cards['unidades']}. Ouvidorias instituídas: {cards['instituidas']}. "
+        f"Não instituídas: {cards['nao_instituidas']}. Instituição não comprovada: {cards['nao_comprovadas']}. "
+        f"Seguindo os parâmetros mínimos: {cards['seguindo_minimos']}. "
+        f"Abaixo do mínimo em dimensão essencial: {cards['abaixo_dimensao']}. "
+        f"Aderência global insuficiente: {cards['global_insuficiente']}.",
         styles["Normal"]))
     story.append(Spacer(1, 4 * mm))
     data = [["UF", "Unidade", "Inst", "Aut", "Imp", "Aces", "Trans", "Integ",
@@ -109,15 +117,19 @@ def generate_unit_pdf(entity_key: str) -> Path:
         f"<b>Situação:</b> {res['situacao']} &nbsp; "
         f"<b>Emitido em:</b> {datetime.now().strftime('%d/%m/%Y %H:%M')}", styles["Normal"]))
     story.append(Paragraph("<b>Resultado</b>", styles["Heading2"]))
+    dimension_results = " | ".join(
+        f"{dim['dimension_name']}: {_fmt(res['dim_scores'].get(dim['sheet_name']))}"
+        + (f" (mínimo {DIMENSION_MINIMUMS[dim['sheet_name']]:g})"
+           if dim["sheet_name"] in DIMENSION_MINIMUMS else "")
+        for dim in detail["dimensions"]
+        if dim["sheet_name"] in BASE_WEIGHTS
+    )
     story.append(Paragraph(
-        f"Institucionalização: {_fmt(res['dim_scores'].get('01_Institucionalização'))} | "
-        f"Autonomia: {_fmt(res['dim_scores'].get('02_Autonomia'))} | "
-        f"Imparcialidade: {_fmt(res['dim_scores'].get('03_Imparcialidade'))} | "
-        f"Acessibilidade: {_fmt(res['dim_scores'].get('04_Acessibilidade'))} | "
-        f"Transparência: {_fmt(res['dim_scores'].get('05_Transparência'))} | "
-        f"Integração tecnológica: {_fmt(res['dim_scores'].get('06_Integração Tec'))} | "
-        f"Nota-base: {_fmt(res['base_score'])} | Bônus disponível: {_fmt(res['bonus_available'])} | "
+        f"{dimension_results} | "
+        f"Nota-base (parâmetros mínimos, mínimo {GLOBAL_BASE_MINIMUM}): {_fmt(res['base_score'])} | "
+        f"Bônus disponível: {_fmt(res['bonus_available'])} | "
         f"Bônus aplicado: {_fmt(res['bonus_applied'])} | Nota final: {_fmt(res['final_score'])} | "
+        f"Segue os parâmetros mínimos: {'Sim' if res['meets_minimum_parameters'] else 'Não'} | "
         f"Classificação: {res['classification']}", styles["Normal"]))
     for dim in detail["dimensions"]:
         story.append(Paragraph(f"<b>{dim['dimension_name']}</b>", styles["Heading3"]))
@@ -162,15 +174,14 @@ def generate_general_xlsx(rows: list[dict], cards: dict) -> Path:
     for k, v in cards.items():
         ws.append([k, v])
     ws2 = wb.create_sheet("Resultados por unidade")
-    ws2.append(["UF", "Unidade", "Institucionalização", "Autonomia", "Imparcialidade",
-                "Acessibilidade", "Transparência", "Integração tecnológica",
-                "Nota-base", "Bônus", "Nota final", "Classificação"])
+    ws2.append(["UF", "Unidade"]
+               + [DIMENSION_NAMES[sheet] for sheet in BASE_WEIGHTS]
+               + ["Nota-base", "Bônus", "Nota final", "Classificação"])
     for r in rows:
         d = r["dim"]
-        ws2.append([r["uf"], r["unidade_label"],
-                    d.get("01_Institucionalização"), d.get("02_Autonomia"),
-                    d.get("03_Imparcialidade"), d.get("04_Acessibilidade"),
-                    d.get("05_Transparência"), d.get("06_Integração Tec"),
+        ws2.append([r["uf"], r["unidade_label"]]
+                   + [d.get(sheet) for sheet in BASE_WEIGHTS]
+                   + [
                     r["base_score"], r["bonus_applied"], r["final_score"],
                     r["classification"]])
     ws3 = wb.create_sheet("Metodologia resumida")
@@ -193,17 +204,20 @@ def generate_unit_xlsx(entity_key: str) -> Path:
     ws.title = "Resumo"
     ws.append(["Campo", "Valor"])
     for k in ("situacao", "base_score", "bonus_available", "bonus_applied",
-              "final_score", "classification"):
+              "final_score", "meets_minimum_parameters", "classification"):
         ws.append([k, res.get(k)])
+    ws.append(["global_base_minimum", GLOBAL_BASE_MINIMUM])
+    for sheet in BASE_WEIGHTS:
+        ws.append([f"minimo_{sheet}", DIMENSION_MINIMUMS.get(sheet, "")])
     ws.append(["uf", ent["uf"]])
     ws.append(["unidade", ent["unidade_label"]])
     ws.append(["nota_metodologica", NOTA_METODOLOGICA])
     ws2 = wb.create_sheet("Avaliação detalhada")
-    ws2.append(["Código", "Pergunta", "Item", "Resposta do diagnóstico",
+    ws2.append(["Dimensão", "Código", "Pergunta", "Item", "Resposta do diagnóstico",
                 "Fundamentação", "Avaliação", "Pontuação", "Evidência"])
     for dim in detail["dimensions"]:
         for q in dim["questions"]:
-            ws2.append([q["question_code"], q["question_title"], q["item_name"],
+            ws2.append([dim["dimension_name"], q["question_code"], q["question_title"], q["item_name"],
                         q["resposta"], q["fundamentacao"], q["status"],
                         q["score"], q["evidence_text"]])
     ws3 = wb.create_sheet("Anexos")

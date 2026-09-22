@@ -10,13 +10,12 @@
 
 <div class="stats" role="list" aria-label="Resumo da avaliação">
   <div class="stat" role="listitem"><strong>{{ cards.unidades }}</strong><span>Unidades de avaliação</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.instituidas }}</strong><span>Instituídas</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.instituidas }}</strong><span>Ouvidorias instituídas</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.seguindo_minimos }}</strong><span>Seguindo os parâmetros mínimos</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.abaixo_dimensao }}</strong><span>Abaixo do mínimo em dimensão</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.global_insuficiente }}</strong><span>Aderência global insuficiente</span></div>
   <div class="stat" role="listitem"><strong>{{ cards.nao_instituidas }}</strong><span>Não instituídas</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.sem_evidencia }}</strong><span>Sem evidência institucional</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.elevada }}</strong><span>Aderência elevada</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.satisfatoria }}</strong><span>Aderência satisfatória</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.parcial }}</strong><span>Aderência parcial</span></div>
-  <div class="stat" role="listitem"><strong>{{ cards.baixa_insuficiente }}</strong><span>Baixa/insuficiente aderência</span></div>
+  <div class="stat" role="listitem"><strong>{{ cards.nao_comprovadas }}</strong><span>Instituição não comprovada</span></div>
 </div>
 
 <section class="section" aria-label="Unidades avaliadas">
@@ -29,19 +28,17 @@
         <option value=""{% if not filters.situacao %} selected{% endif %}>Todas</option>
         <option value="Instituída"{% if filters.situacao == "Instituída" %} selected{% endif %}>Instituída</option>
         <option value="Não instituída"{% if filters.situacao == "Não instituída" %} selected{% endif %}>Não instituída</option>
-        <option value="Sem evidência"{% if filters.situacao == "Sem evidência" %} selected{% endif %}>Sem evidência</option>
+        <option value="Instituição não comprovada"{% if filters.situacao == "Instituição não comprovada" %} selected{% endif %}>Instituição não comprovada</option>
       </select>
     </label>
     <label>Classificação
       <select name="classificacao">
         <option value=""{% if not filters.classificacao %} selected{% endif %}>Todas</option>
-        <option value="elevada"{% if filters.classificacao == "elevada" %} selected{% endif %}>Elevada aderência</option>
-        <option value="satisfatoria"{% if filters.classificacao == "satisfatoria" %} selected{% endif %}>Aderência satisfatória</option>
-        <option value="parcial"{% if filters.classificacao == "parcial" %} selected{% endif %}>Aderência parcial</option>
-        <option value="baixa"{% if filters.classificacao == "baixa" %} selected{% endif %}>Baixa aderência</option>
-        <option value="insuficiente"{% if filters.classificacao == "insuficiente" %} selected{% endif %}>Aderência insuficiente (trava)</option>
+        <option value="seguindo"{% if filters.classificacao == "seguindo" %} selected{% endif %}>Seguindo os parâmetros mínimos</option>
+        <option value="abaixo_dimensao"{% if filters.classificacao == "abaixo_dimensao" %} selected{% endif %}>Abaixo do mínimo em dimensão essencial</option>
+        <option value="global_insuficiente"{% if filters.classificacao == "global_insuficiente" %} selected{% endif %}>Aderência global insuficiente</option>
         <option value="nao_instituida"{% if filters.classificacao == "nao_instituida" %} selected{% endif %}>Não instituída</option>
-        <option value="sem_evidencia"{% if filters.classificacao == "sem_evidencia" %} selected{% endif %}>Sem evidência</option>
+        <option value="nao_comprovada"{% if filters.classificacao == "nao_comprovada" %} selected{% endif %}>Instituição não comprovada</option>
       </select>
     </label>
     <label>Nota mín.

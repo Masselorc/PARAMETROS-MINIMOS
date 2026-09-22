@@ -46,10 +46,10 @@ DIMENSION_SHEETS = [
 # Nome amigavel por aba
 DIMENSION_NAMES = {
     "01_Institucionalização": "Institucionalização",
-    "02_Autonomia": "Autonomia",
-    "03_Imparcialidade": "Imparcialidade",
-    "04_Acessibilidade": "Acessibilidade",
-    "05_Transparência": "Transparência",
+    "02_Autonomia": "Autonomia técnica e funcional",
+    "03_Imparcialidade": "Imparcialidade, sigilo e proteção",
+    "04_Acessibilidade": "Acessibilidade e atendimento humanizado",
+    "05_Transparência": "Transparência e publicidade",
     "06_Integração Tec": "Integração tecnológica",
     "07_Maturidade": "Maturidade / bônus",
 }
@@ -65,6 +65,60 @@ BASE_WEIGHTS = {
 }
 
 BONUS_MAX = 10
+
+# Pisos mínimos por dimensão essencial (50% do máximo) e nota-base global
+# mínima para "seguir os parâmetros mínimos". A Institucionalização é
+# binária (15 = instituída) e não usa piso percentual.
+DIMENSION_MINIMUMS = {
+    "02_Autonomia": 7.5,
+    "03_Imparcialidade": 7.5,
+    "04_Acessibilidade": 7.5,
+    "05_Transparência": 7.5,
+    "06_Integração Tec": 12.5,
+}
+
+GLOBAL_BASE_MINIMUM = 70
+
+# Distribuicao oficial usada para validar os codigos e os pesos lidos dos
+# cabecalhos do DADOS.xlsx. Isto nao mapeia coordenadas de coluna.
+EXPECTED_QUESTION_WEIGHTS = {
+    "01_Institucionalização": {"M1-11": 15},
+    "02_Autonomia": {
+        "M3-56": 3,
+        "M3-57": 3,
+        "M1-12": 3,
+        "M4-67": 3,
+        "M4-68": 3,
+    },
+    "03_Imparcialidade": {"M4-69": 8, "M3-63": 7},
+    "04_Acessibilidade": {
+        "M2-41": 2,
+        "M2-43": 2,
+        "M2-47": 2,
+        "M2-16": 3,
+        "M1-13": 3,
+        "M4-64": 3,
+    },
+    "05_Transparência": {"M2-35": 5, "M4-71": 10},
+    "06_Integração Tec": {
+        "M2-45": 5,
+        "M4-66": 5,
+        "M2-37": 5,
+        "M2-17": 4,
+        "M2-19": 2,
+        "M2-21": 2,
+        "M2-27": 2,
+    },
+    "07_Maturidade": {
+        "M2-46": 3,
+        "M0-08": 1,
+        "M3-60": 1,
+        "M3-58": 1,
+        "M2-50": 1,
+        "M2-49": 1,
+        "M2-36": 2,
+    },
+}
 
 DB_EVIDENCIAS_HEADERS = [
     "id", "entity_key", "uf", "unidade_label", "sheet_name", "dimension_name",
