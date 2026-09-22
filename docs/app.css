@@ -1191,3 +1191,81 @@ main {
   visibility: visible;
   pointer-events: auto;
 }
+
+/* Badges / Selos no Cabeçalho da Página de Unidade */
+.page-head-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.head-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1px solid var(--line);
+  background: #f8fafb;
+  color: var(--ink);
+}
+.head-badge strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.head-badge-lbl {
+  color: var(--muted);
+  font-weight: 500;
+}
+.head-badge.badge-good {
+  background: var(--good-bg);
+  color: var(--good);
+  border-color: #bce3cb;
+}
+.head-badge.badge-good strong,
+.head-badge.badge-good span {
+  color: var(--good);
+}
+.head-badge.badge-warn {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-color: #f0dbaa;
+}
+.head-badge.badge-warn strong,
+.head-badge.badge-warn span {
+  color: var(--warn);
+}
+.head-badge.badge-info {
+  background: var(--info-bg);
+  color: var(--info);
+  border-color: #bed7ee;
+}
+.head-badge.badge-info strong,
+.head-badge.badge-info span {
+  color: var(--info);
+}
+.head-badge.badge-bad {
+  background: var(--bad-bg);
+  color: var(--bad);
+  border-color: #f3c2c7;
+}
+.head-badge.badge-bad strong,
+.head-badge.badge-bad span {
+  color: var(--bad);
+}
+.head-badge-final {
+  background: #edf5f6;
+  border-color: #bed2d7;
+  color: var(--brand-dark);
+}
+.head-badge-final strong {
+  color: var(--brand-dark);
+  font-size: .875rem;
+  font-weight: 700;
+}
+

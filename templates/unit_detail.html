@@ -6,7 +6,22 @@
   <div>
     <div class="eyebrow"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (entity.flag or 'br') + '.svg') }}" alt="Bandeira de {{ entity.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ entity.uf|e }}</span></span></div>
     <h1>{{ entity.uf|e }} — {{ entity.unidade_label|e }}</h1>
-    <p class="muted">{{ result.situacao|e }} · Nota-base: <strong>{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</strong> · Nota final: <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong> · <span id="classification-head">{{ result.classification|e }}</span></p>
+    <div class="page-head-badges">
+      <span class="head-badge head-badge-situacao {% if result.situacao == 'Instituída' %}badge-good{% elif result.situacao == 'Não instituída' %}badge-bad{% else %}badge-warn{% endif %}">
+        {{ result.situacao|e }}
+      </span>
+      <span class="head-badge head-badge-base">
+        <span class="head-badge-lbl">Nota-base:</span>
+        <strong>{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</strong>
+      </span>
+      <span class="head-badge head-badge-final">
+        <span class="head-badge-lbl">Nota final:</span>
+        <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong>
+      </span>
+      <span class="head-badge head-badge-class {% if result.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif result.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif result.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}">
+        <span id="classification-head">{{ result.classification|e }}</span>
+      </span>
+    </div>
   </div>
 </div>
 

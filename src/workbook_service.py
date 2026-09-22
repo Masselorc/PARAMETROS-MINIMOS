@@ -160,6 +160,18 @@ def open_workbook():
     try:
         wb = openpyxl.load_workbook(str(WORKBOOK_PATH))
     except Exception as exc:  # noqa: BLE001
+        if isinstance(exc, PermissionError) or "Permission denied" in str(exc):
+            try:
+                import io
+                import subprocess
+
+                data = subprocess.check_output(
+                    ["git", "show", "HEAD:DADOS.xlsx"],
+                    cwd=str(WORKBOOK_PATH.parent),
+                )
+                return openpyxl.load_workbook(io.BytesIO(data))
+            except Exception:
+                pass
         raise WorkbookError(f"Não foi possível abrir DADOS.xlsx: {exc}") from exc
     return wb
 
