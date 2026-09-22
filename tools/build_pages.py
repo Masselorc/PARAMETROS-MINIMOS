@@ -17,12 +17,6 @@ try:
 except ImportError as exc:
     raise SystemExit("jinja2 nao instalado. Rode: pip install jinja2") from exc
 
-STATIC_NOTE = (
-    "Snapshot de consulta atualizado em {stamp}, gerado a partir do DADOS.xlsx. "
-    "Edição e gravação permanecem disponíveis somente no sistema local."
-)
-
-
 def _url_for(name, **kw):
     path = kw.get("path", "")
     if path == "app.css":
@@ -38,12 +32,6 @@ def _url_for(name, **kw):
 
 def _render(env, template_name: str, context: dict, destination: Path, stamp: str) -> None:
     html = env.get_template(template_name).render(context)
-    banner = (
-        '<div class="section"><div class="section-body"><p class="muted">'
-        f'{STATIC_NOTE.format(stamp=stamp)}</p></div></div>'
-    )
-    html = html.replace('<main id="main" tabindex="-1">',
-                        '<main id="main" tabindex="-1">' + banner, 1)
     html = "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
     destination.write_text(html, encoding="utf-8")
 
