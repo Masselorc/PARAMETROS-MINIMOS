@@ -1,7 +1,6 @@
 @echo off
-chcp 65001 >nul
 cd /d "%~dp0"
-title Parâmetros Mínimos — ONASP (http://127.0.0.1:8000)
+title Parametros Minimos - ONASP (http://127.0.0.1:8000)
 
 if not exist "DADOS.xlsx" (
   echo [ERRO] DADOS.xlsx nao encontrado nesta pasta.
