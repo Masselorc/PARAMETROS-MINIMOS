@@ -17,7 +17,8 @@
     var table = header.closest("table");
     var column = header.cellIndex;
     var type = header.getAttribute("data-sort-type");
-    var label = header.textContent.trim();
+    var abbrEl = header.querySelector("abbr");
+    var label = header.getAttribute("data-sort-label") || (abbrEl ? abbrEl.getAttribute("title") : "") || header.textContent.trim();
     var button = document.createElement("button");
     button.type = "button";
     button.className = "sort-button";

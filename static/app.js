@@ -56,6 +56,13 @@
             var maxTxt = scoreEl.textContent.split("/")[1] || "";
             scoreEl.textContent = fmt(data.score) + " /" + maxTxt;
           }
+          // Sincroniza a nota exibida na sub-aba da pergunta ativa
+          var qtabScore = document.querySelector('[data-qtab-score="' + occurrence + '"]');
+          if (qtabScore && data.score !== undefined && data.score !== null) {
+            var qParts = qtabScore.textContent.split("/");
+            var qMax = qParts[1] ? qParts[1].trim() : "";
+            qtabScore.textContent = fmt(data.score) + " / " + qMax;
+          }
           // total da dimensao: soma client-side a partir dos cartoes visiveis
           var panel = card.closest("[data-dim-panel]");
           if (panel) {

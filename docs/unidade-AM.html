@@ -32,7 +32,7 @@
       <p>IN nº 75/2026</p>
     </div>
   </aside>
-  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 18:17, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 19:14, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
 
 <a class="back" href="index.html">← Voltar para a Visão Geral</a>
 <div class="page-head">
@@ -59,30 +59,144 @@
   </div>
 </section>
 
-<nav class="tabs" aria-label="Dimensões da avaliação" data-dim-tabs>
+<nav class="tabs dim-tabs" role="tablist" aria-label="Dimensões da avaliação" data-dim-tabs>
 
-  <a href="#dim-0" data-dim-tab="01_Institucionalização" class="active" aria-current="page">Institucionalização <span class="badge" data-dim-total="01_Institucionalização">15.0</span></a>
+  <a href="#dim-0"
+     id="tab-dim-0"
+     class="dim-tab active"
+     role="tab"
+     aria-selected="true"
+     aria-controls="dim-0"
+     tabindex="0"
+     data-dim-tab="01_Institucionalização">
+    Institucionalização
+    <span class="badge" data-dim-total="01_Institucionalização">15.0</span>
 
-  <a href="#dim-1" data-dim-tab="02_Autonomia">Autonomia técnica e funcional <span class="badge" data-dim-total="02_Autonomia">15.0</span> <span class="badge" data-dim-floor="02_Autonomia">Piso atendido</span></a>
+  </a>
 
-  <a href="#dim-2" data-dim-tab="03_Imparcialidade">Imparcialidade, sigilo e proteção <span class="badge" data-dim-total="03_Imparcialidade">15.0</span> <span class="badge" data-dim-floor="03_Imparcialidade">Piso atendido</span></a>
+  <a href="#dim-1"
+     id="tab-dim-1"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-1"
+     tabindex="-1"
+     data-dim-tab="02_Autonomia">
+    Autonomia técnica e funcional
+    <span class="badge" data-dim-total="02_Autonomia">15.0</span>
 
-  <a href="#dim-3" data-dim-tab="04_Acessibilidade">Acessibilidade e atendimento humanizado <span class="badge" data-dim-total="04_Acessibilidade">11.5</span> <span class="badge" data-dim-floor="04_Acessibilidade">Piso atendido</span></a>
+    <span class="badge" data-dim-floor="02_Autonomia">Piso atendido</span>
 
-  <a href="#dim-4" data-dim-tab="05_Transparência">Transparência e publicidade <span class="badge" data-dim-total="05_Transparência">15.0</span> <span class="badge" data-dim-floor="05_Transparência">Piso atendido</span></a>
+  </a>
 
-  <a href="#dim-5" data-dim-tab="06_Integração Tec">Integração tecnológica <span class="badge" data-dim-total="06_Integração Tec">25.0</span> <span class="badge" data-dim-floor="06_Integração Tec">Piso atendido</span></a>
+  <a href="#dim-2"
+     id="tab-dim-2"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-2"
+     tabindex="-1"
+     data-dim-tab="03_Imparcialidade">
+    Imparcialidade, sigilo e proteção
+    <span class="badge" data-dim-total="03_Imparcialidade">15.0</span>
 
-  <a href="#dim-6" data-dim-tab="07_Maturidade">Maturidade / bônus <span class="badge" data-dim-total="07_Maturidade">9.0</span></a>
+    <span class="badge" data-dim-floor="03_Imparcialidade">Piso atendido</span>
+
+  </a>
+
+  <a href="#dim-3"
+     id="tab-dim-3"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-3"
+     tabindex="-1"
+     data-dim-tab="04_Acessibilidade">
+    Acessibilidade e atendimento humanizado
+    <span class="badge" data-dim-total="04_Acessibilidade">11.5</span>
+
+    <span class="badge" data-dim-floor="04_Acessibilidade">Piso atendido</span>
+
+  </a>
+
+  <a href="#dim-4"
+     id="tab-dim-4"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-4"
+     tabindex="-1"
+     data-dim-tab="05_Transparência">
+    Transparência e publicidade
+    <span class="badge" data-dim-total="05_Transparência">15.0</span>
+
+    <span class="badge" data-dim-floor="05_Transparência">Piso atendido</span>
+
+  </a>
+
+  <a href="#dim-5"
+     id="tab-dim-5"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-5"
+     tabindex="-1"
+     data-dim-tab="06_Integração Tec">
+    Integração tecnológica
+    <span class="badge" data-dim-total="06_Integração Tec">25.0</span>
+
+    <span class="badge" data-dim-floor="06_Integração Tec">Piso atendido</span>
+
+  </a>
+
+  <a href="#dim-6"
+     id="tab-dim-6"
+     class="dim-tab"
+     role="tab"
+     aria-selected="false"
+     aria-controls="dim-6"
+     tabindex="-1"
+     data-dim-tab="07_Maturidade">
+    Maturidade / bônus
+    <span class="badge" data-dim-total="07_Maturidade">9.0</span>
+
+  </a>
 
 </nav>
 
 
-<section class="section dim-panel" id="dim-0" data-dim-panel="01_Institucionalização" aria-label="Institucionalização">
+
+<section class="section dim-panel" id="dim-0" data-dim-panel="01_Institucionalização" role="tabpanel" aria-labelledby="tab-dim-0" aria-label="Institucionalização">
   <div class="section-body">
     <p class="muted">15.0 / 15</p>
 
-    <article class="qcard" data-occurrence="01_Institucionalização:M1-11">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Institucionalização" data-q-tabs>
+
+      <a href="#dim-0/M1-11"
+         id="tab-q-M1-11"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M1-11"
+         tabindex="0"
+         data-q-tab="M1-11"
+         data-occurrence="01_Institucionalização:M1-11">
+        <span class="qtab-code">[ M1-11 ]</span>
+        <span class="qtab-title" title="Existe ato normativo específico que cria a Ouvidoria de Serviços Penais ou núcleo especializado?">Existe ato normativo específico que cria a Ouvidoria de Serviços Penais ou núcleo especializado?</span>
+        <span class="badge qtab-score" data-qtab-score="01_Institucionalização:M1-11">15 / 15</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M1-11"
+             role="tabpanel"
+             aria-labelledby="tab-q-M1-11"
+             tabindex="0"
+             data-occurrence="01_Institucionalização:M1-11"
+             data-q-panel="M1-11">
       <div class="qcard-head">
         <div>
           <span class="qcode">M1-11</span>
@@ -122,11 +236,94 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-1" data-dim-panel="02_Autonomia" hidden aria-label="Autonomia técnica e funcional">
+
+<section class="section dim-panel" id="dim-1" data-dim-panel="02_Autonomia" hidden role="tabpanel" aria-labelledby="tab-dim-1" aria-label="Autonomia técnica e funcional">
   <div class="section-body">
     <p class="muted">15.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
 
-    <article class="qcard" data-occurrence="02_Autonomia:M3-56">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Autonomia técnica e funcional" data-q-tabs>
+
+      <a href="#dim-1/M3-56"
+         id="tab-q-M3-56"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M3-56"
+         tabindex="0"
+         data-q-tab="M3-56"
+         data-occurrence="02_Autonomia:M3-56">
+        <span class="qtab-code">[ M3-56 ]</span>
+        <span class="qtab-title" title="Vinculação institucional da Ouvidoria de Serviços Penais">Vinculação institucional da Ouvidoria de Serviços Penais</span>
+        <span class="badge qtab-score" data-qtab-score="02_Autonomia:M3-56">3 / 3</span>
+      </a>
+
+      <a href="#dim-1/M3-57"
+         id="tab-q-M3-57"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M3-57"
+         tabindex="-1"
+         data-q-tab="M3-57"
+         data-occurrence="02_Autonomia:M3-57">
+        <span class="qtab-code">[ M3-57 ]</span>
+        <span class="qtab-title" title="Existência e designação do(a) Ouvidor(a) de Serviços Penais">Existência e designação do(a) Ouvidor(a) de Serviços Penais</span>
+        <span class="badge qtab-score" data-qtab-score="02_Autonomia:M3-57">3 / 3</span>
+      </a>
+
+      <a href="#dim-1/M1-12"
+         id="tab-q-M1-12"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M1-12"
+         tabindex="-1"
+         data-q-tab="M1-12"
+         data-occurrence="02_Autonomia:M1-12">
+        <span class="qtab-code">[ M1-12 ]</span>
+        <span class="qtab-title" title="Conteúdo do ato de criação da Ouvidoria de Serviços Penais">Conteúdo do ato de criação da Ouvidoria de Serviços Penais</span>
+        <span class="badge qtab-score" data-qtab-score="02_Autonomia:M1-12">3 / 3</span>
+      </a>
+
+      <a href="#dim-1/M4-67"
+         id="tab-q-M4-67"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M4-67"
+         tabindex="-1"
+         data-q-tab="M4-67"
+         data-occurrence="02_Autonomia:M4-67">
+        <span class="qtab-code">[ M4-67 ]</span>
+        <span class="qtab-title" title="Fluxo de trabalho interno da Ouvidoria de Serviços Penais">Fluxo de trabalho interno da Ouvidoria de Serviços Penais</span>
+        <span class="badge qtab-score" data-qtab-score="02_Autonomia:M4-67">3 / 3</span>
+      </a>
+
+      <a href="#dim-1/M4-68"
+         id="tab-q-M4-68"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M4-68"
+         tabindex="-1"
+         data-q-tab="M4-68"
+         data-occurrence="02_Autonomia:M4-68">
+        <span class="qtab-code">[ M4-68 ]</span>
+        <span class="qtab-title" title="Prazos e qualidade da resposta às manifestações">Prazos e qualidade da resposta às manifestações</span>
+        <span class="badge qtab-score" data-qtab-score="02_Autonomia:M4-68">3 / 3</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M3-56"
+             role="tabpanel"
+             aria-labelledby="tab-q-M3-56"
+             tabindex="0"
+             data-occurrence="02_Autonomia:M3-56"
+             data-q-panel="M3-56">
       <div class="qcard-head">
         <div>
           <span class="qcode">M3-56</span>
@@ -163,7 +360,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="02_Autonomia:M3-57">
+    <article class="qcard"
+             id="qpanel-M3-57"
+             role="tabpanel"
+             aria-labelledby="tab-q-M3-57"
+             tabindex="0"
+             data-occurrence="02_Autonomia:M3-57"
+             data-q-panel="M3-57" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M3-57</span>
@@ -200,7 +403,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="02_Autonomia:M1-12">
+    <article class="qcard"
+             id="qpanel-M1-12"
+             role="tabpanel"
+             aria-labelledby="tab-q-M1-12"
+             tabindex="0"
+             data-occurrence="02_Autonomia:M1-12"
+             data-q-panel="M1-12" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M1-12</span>
@@ -237,7 +446,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="02_Autonomia:M4-67">
+    <article class="qcard"
+             id="qpanel-M4-67"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-67"
+             tabindex="0"
+             data-occurrence="02_Autonomia:M4-67"
+             data-q-panel="M4-67" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-67</span>
@@ -274,7 +489,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="02_Autonomia:M4-68">
+    <article class="qcard"
+             id="qpanel-M4-68"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-68"
+             tabindex="0"
+             data-occurrence="02_Autonomia:M4-68"
+             data-q-panel="M4-68" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-68</span>
@@ -314,11 +535,52 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-2" data-dim-panel="03_Imparcialidade" hidden aria-label="Imparcialidade, sigilo e proteção">
+
+<section class="section dim-panel" id="dim-2" data-dim-panel="03_Imparcialidade" hidden role="tabpanel" aria-labelledby="tab-dim-2" aria-label="Imparcialidade, sigilo e proteção">
   <div class="section-body">
     <p class="muted">15.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
 
-    <article class="qcard" data-occurrence="03_Imparcialidade:M4-69">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Imparcialidade, sigilo e proteção" data-q-tabs>
+
+      <a href="#dim-2/M4-69"
+         id="tab-q-M4-69"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M4-69"
+         tabindex="0"
+         data-q-tab="M4-69"
+         data-occurrence="03_Imparcialidade:M4-69">
+        <span class="qtab-code">[ M4-69 ]</span>
+        <span class="qtab-title" title="Tratamento de denúncias graves e sensíveis">Tratamento de denúncias graves e sensíveis</span>
+        <span class="badge qtab-score" data-qtab-score="03_Imparcialidade:M4-69">8 / 8</span>
+      </a>
+
+      <a href="#dim-2/M3-63"
+         id="tab-q-M3-63"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M3-63"
+         tabindex="-1"
+         data-q-tab="M3-63"
+         data-occurrence="03_Imparcialidade:M3-63">
+        <span class="qtab-code">[ M3-63 ]</span>
+        <span class="qtab-title" title="Compromisso de sigilo da equipe">Compromisso de sigilo da equipe</span>
+        <span class="badge qtab-score" data-qtab-score="03_Imparcialidade:M3-63">7 / 7</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M4-69"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-69"
+             tabindex="0"
+             data-occurrence="03_Imparcialidade:M4-69"
+             data-q-panel="M4-69">
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-69</span>
@@ -355,7 +617,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="03_Imparcialidade:M3-63">
+    <article class="qcard"
+             id="qpanel-M3-63"
+             role="tabpanel"
+             aria-labelledby="tab-q-M3-63"
+             tabindex="0"
+             data-occurrence="03_Imparcialidade:M3-63"
+             data-q-panel="M3-63" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M3-63</span>
@@ -395,11 +663,108 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-3" data-dim-panel="04_Acessibilidade" hidden aria-label="Acessibilidade e atendimento humanizado">
+
+<section class="section dim-panel" id="dim-3" data-dim-panel="04_Acessibilidade" hidden role="tabpanel" aria-labelledby="tab-dim-3" aria-label="Acessibilidade e atendimento humanizado">
   <div class="section-body">
     <p class="muted">11.5 / 15 · Mínimo: 7.5 · Piso atendido</p>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M2-41">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Acessibilidade e atendimento humanizado" data-q-tabs>
+
+      <a href="#dim-3/M2-41"
+         id="tab-q-M2-41"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M2-41"
+         tabindex="0"
+         data-q-tab="M2-41"
+         data-occurrence="04_Acessibilidade:M2-41">
+        <span class="qtab-code">[ M2-41 ]</span>
+        <span class="qtab-title" title="E-mail institucional exclusivo">E-mail institucional exclusivo</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M2-41">2 / 2</span>
+      </a>
+
+      <a href="#dim-3/M2-43"
+         id="tab-q-M2-43"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-43"
+         tabindex="-1"
+         data-q-tab="M2-43"
+         data-occurrence="04_Acessibilidade:M2-43">
+        <span class="qtab-code">[ M2-43 ]</span>
+        <span class="qtab-title" title="Linha telefônica funcional de uso restrito">Linha telefônica funcional de uso restrito</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M2-43">0 / 2</span>
+      </a>
+
+      <a href="#dim-3/M2-47"
+         id="tab-q-M2-47"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-47"
+         tabindex="-1"
+         data-q-tab="M2-47"
+         data-occurrence="04_Acessibilidade:M2-47">
+        <span class="qtab-code">[ M2-47 ]</span>
+        <span class="qtab-title" title="Endereço postal próprio ou referência clara">Endereço postal próprio ou referência clara</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M2-47">2 / 2</span>
+      </a>
+
+      <a href="#dim-3/M2-16"
+         id="tab-q-M2-16"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-16"
+         tabindex="-1"
+         data-q-tab="M2-16"
+         data-occurrence="04_Acessibilidade:M2-16">
+        <span class="qtab-code">[ M2-16 ]</span>
+        <span class="qtab-title" title="Espaço físico da Ouvidoria">Espaço físico da Ouvidoria</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M2-16">1.5 / 3</span>
+      </a>
+
+      <a href="#dim-3/M1-13"
+         id="tab-q-M1-13"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M1-13"
+         tabindex="-1"
+         data-q-tab="M1-13"
+         data-occurrence="04_Acessibilidade:M1-13">
+        <span class="qtab-code">[ M1-13 ]</span>
+        <span class="qtab-title" title="Públicos atendidos no plano normativo">Públicos atendidos no plano normativo</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M1-13">3 / 3</span>
+      </a>
+
+      <a href="#dim-3/M4-64"
+         id="tab-q-M4-64"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M4-64"
+         tabindex="-1"
+         data-q-tab="M4-64"
+         data-occurrence="04_Acessibilidade:M4-64">
+        <span class="qtab-code">[ M4-64 ]</span>
+        <span class="qtab-title" title="Públicos atendidos na prática">Públicos atendidos na prática</span>
+        <span class="badge qtab-score" data-qtab-score="04_Acessibilidade:M4-64">3 / 3</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M2-41"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-41"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M2-41"
+             data-q-panel="M2-41">
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-41</span>
@@ -436,7 +801,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M2-43">
+    <article class="qcard"
+             id="qpanel-M2-43"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-43"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M2-43"
+             data-q-panel="M2-43" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-43</span>
@@ -473,7 +844,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M2-47">
+    <article class="qcard"
+             id="qpanel-M2-47"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-47"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M2-47"
+             data-q-panel="M2-47" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-47</span>
@@ -510,7 +887,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M2-16">
+    <article class="qcard"
+             id="qpanel-M2-16"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-16"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M2-16"
+             data-q-panel="M2-16" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-16</span>
@@ -547,7 +930,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M1-13">
+    <article class="qcard"
+             id="qpanel-M1-13"
+             role="tabpanel"
+             aria-labelledby="tab-q-M1-13"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M1-13"
+             data-q-panel="M1-13" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M1-13</span>
@@ -584,7 +973,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="04_Acessibilidade:M4-64">
+    <article class="qcard"
+             id="qpanel-M4-64"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-64"
+             tabindex="0"
+             data-occurrence="04_Acessibilidade:M4-64"
+             data-q-panel="M4-64" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-64</span>
@@ -624,11 +1019,52 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-4" data-dim-panel="05_Transparência" hidden aria-label="Transparência e publicidade">
+
+<section class="section dim-panel" id="dim-4" data-dim-panel="05_Transparência" hidden role="tabpanel" aria-labelledby="tab-dim-4" aria-label="Transparência e publicidade">
   <div class="section-body">
     <p class="muted">15.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
 
-    <article class="qcard" data-occurrence="05_Transparência:M2-35">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Transparência e publicidade" data-q-tabs>
+
+      <a href="#dim-4/M2-35"
+         id="tab-q-M2-35"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M2-35"
+         tabindex="0"
+         data-q-tab="M2-35"
+         data-occurrence="05_Transparência:M2-35">
+        <span class="qtab-code">[ M2-35 ]</span>
+        <span class="qtab-title" title="Placas e cartazes da Ouvidoria">Placas e cartazes da Ouvidoria</span>
+        <span class="badge qtab-score" data-qtab-score="05_Transparência:M2-35">5 / 5</span>
+      </a>
+
+      <a href="#dim-4/M4-71"
+         id="tab-q-M4-71"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M4-71"
+         tabindex="-1"
+         data-q-tab="M4-71"
+         data-occurrence="05_Transparência:M4-71">
+        <span class="qtab-code">[ M4-71 ]</span>
+        <span class="qtab-title" title="Monitoramento, relatórios e recomendações">Monitoramento, relatórios e recomendações</span>
+        <span class="badge qtab-score" data-qtab-score="05_Transparência:M4-71">10 / 10</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M2-35"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-35"
+             tabindex="0"
+             data-occurrence="05_Transparência:M2-35"
+             data-q-panel="M2-35">
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-35</span>
@@ -665,7 +1101,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="05_Transparência:M4-71">
+    <article class="qcard"
+             id="qpanel-M4-71"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-71"
+             tabindex="0"
+             data-occurrence="05_Transparência:M4-71"
+             data-q-panel="M4-71" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-71</span>
@@ -705,11 +1147,122 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-5" data-dim-panel="06_Integração Tec" hidden aria-label="Integração tecnológica">
+
+<section class="section dim-panel" id="dim-5" data-dim-panel="06_Integração Tec" hidden role="tabpanel" aria-labelledby="tab-dim-5" aria-label="Integração tecnológica">
   <div class="section-body">
     <p class="muted">25.0 / 25 · Mínimo: 12.5 · Piso atendido</p>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-45">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Integração tecnológica" data-q-tabs>
+
+      <a href="#dim-5/M2-45"
+         id="tab-q-M2-45"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M2-45"
+         tabindex="0"
+         data-q-tab="M2-45"
+         data-occurrence="06_Integração Tec:M2-45">
+        <span class="qtab-code">[ M2-45 ]</span>
+        <span class="qtab-title" title="Sistemas ou canais eletrônicos utilizados para registro e gestão">Sistemas ou canais eletrônicos utilizados para registro e gestão</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-45">5 / 5</span>
+      </a>
+
+      <a href="#dim-5/M4-66"
+         id="tab-q-M4-66"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M4-66"
+         tabindex="-1"
+         data-q-tab="M4-66"
+         data-occurrence="06_Integração Tec:M4-66">
+        <span class="qtab-code">[ M4-66 ]</span>
+        <span class="qtab-title" title="Registro, protocolo e classificação das manifestações">Registro, protocolo e classificação das manifestações</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M4-66">5 / 5</span>
+      </a>
+
+      <a href="#dim-5/M2-37"
+         id="tab-q-M2-37"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-37"
+         tabindex="-1"
+         data-q-tab="M2-37"
+         data-occurrence="06_Integração Tec:M2-37">
+        <span class="qtab-code">[ M2-37 ]</span>
+        <span class="qtab-title" title="Recursos específicos de segurança da informação">Recursos específicos de segurança da informação</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-37">5 / 5</span>
+      </a>
+
+      <a href="#dim-5/M2-17"
+         id="tab-q-M2-17"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-17"
+         tabindex="-1"
+         data-q-tab="M2-17"
+         data-occurrence="06_Integração Tec:M2-17">
+        <span class="qtab-code">[ M2-17 ]</span>
+        <span class="qtab-title" title="Quantidade atualmente disponível de computadores com acesso à internet">Quantidade atualmente disponível de computadores com acesso à internet</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-17">4 / 4</span>
+      </a>
+
+      <a href="#dim-5/M2-19"
+         id="tab-q-M2-19"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-19"
+         tabindex="-1"
+         data-q-tab="M2-19"
+         data-occurrence="06_Integração Tec:M2-19">
+        <span class="qtab-code">[ M2-19 ]</span>
+        <span class="qtab-title" title="Impressoras multifuncionais atualmente disponíveis">Impressoras multifuncionais atualmente disponíveis</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-19">2 / 2</span>
+      </a>
+
+      <a href="#dim-5/M2-21"
+         id="tab-q-M2-21"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-21"
+         tabindex="-1"
+         data-q-tab="M2-21"
+         data-occurrence="06_Integração Tec:M2-21">
+        <span class="qtab-code">[ M2-21 ]</span>
+        <span class="qtab-title" title="Scanners atualmente disponíveis">Scanners atualmente disponíveis</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-21">2 / 2</span>
+      </a>
+
+      <a href="#dim-5/M2-27"
+         id="tab-q-M2-27"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-27"
+         tabindex="-1"
+         data-q-tab="M2-27"
+         data-occurrence="06_Integração Tec:M2-27">
+        <span class="qtab-code">[ M2-27 ]</span>
+        <span class="qtab-title" title="Smartphones atualmente disponíveis">Smartphones atualmente disponíveis</span>
+        <span class="badge qtab-score" data-qtab-score="06_Integração Tec:M2-27">2 / 2</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M2-45"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-45"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-45"
+             data-q-panel="M2-45">
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-45</span>
@@ -746,7 +1299,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M4-66">
+    <article class="qcard"
+             id="qpanel-M4-66"
+             role="tabpanel"
+             aria-labelledby="tab-q-M4-66"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M4-66"
+             data-q-panel="M4-66" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M4-66</span>
@@ -783,7 +1342,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-37">
+    <article class="qcard"
+             id="qpanel-M2-37"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-37"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-37"
+             data-q-panel="M2-37" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-37</span>
@@ -820,7 +1385,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-17">
+    <article class="qcard"
+             id="qpanel-M2-17"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-17"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-17"
+             data-q-panel="M2-17" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-17</span>
@@ -857,7 +1428,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-19">
+    <article class="qcard"
+             id="qpanel-M2-19"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-19"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-19"
+             data-q-panel="M2-19" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-19</span>
@@ -894,7 +1471,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-21">
+    <article class="qcard"
+             id="qpanel-M2-21"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-21"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-21"
+             data-q-panel="M2-21" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-21</span>
@@ -931,7 +1514,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="06_Integração Tec:M2-27">
+    <article class="qcard"
+             id="qpanel-M2-27"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-27"
+             tabindex="0"
+             data-occurrence="06_Integração Tec:M2-27"
+             data-q-panel="M2-27" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-27</span>
@@ -971,11 +1560,122 @@
   </div>
 </section>
 
-<section class="section dim-panel" id="dim-6" data-dim-panel="07_Maturidade" hidden aria-label="Maturidade / bônus">
+
+<section class="section dim-panel" id="dim-6" data-dim-panel="07_Maturidade" hidden role="tabpanel" aria-labelledby="tab-dim-6" aria-label="Maturidade / bônus">
   <div class="section-body">
     <p class="muted">9.0 / 10</p>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M2-46">
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Maturidade / bônus" data-q-tabs>
+
+      <a href="#dim-6/M2-46"
+         id="tab-q-M2-46"
+         class="qtab active"
+         role="tab"
+         aria-selected="true"
+         aria-controls="qpanel-M2-46"
+         tabindex="0"
+         data-q-tab="M2-46"
+         data-occurrence="07_Maturidade:M2-46">
+        <span class="qtab-code">[ M2-46 ]</span>
+        <span class="qtab-title" title="Uso do canal Fala.BR (+3)">Uso do canal Fala.BR (+3)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M2-46">3 / 3</span>
+      </a>
+
+      <a href="#dim-6/M0-08"
+         id="tab-q-M0-08"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M0-08"
+         tabindex="-1"
+         data-q-tab="M0-08"
+         data-occurrence="07_Maturidade:M0-08">
+        <span class="qtab-code">[ M0-08 ]</span>
+        <span class="qtab-title" title="Designação por mandato (+1)">Designação por mandato (+1)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M0-08">0 / 1</span>
+      </a>
+
+      <a href="#dim-6/M3-60"
+         id="tab-q-M3-60"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M3-60"
+         tabindex="-1"
+         data-q-tab="M3-60"
+         data-occurrence="07_Maturidade:M3-60">
+        <span class="qtab-code">[ M3-60 ]</span>
+        <span class="qtab-title" title="Dedicação da equipe (+1)">Dedicação da equipe (+1)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M3-60">1 / 1</span>
+      </a>
+
+      <a href="#dim-6/M3-58"
+         id="tab-q-M3-58"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M3-58"
+         tabindex="-1"
+         data-q-tab="M3-58"
+         data-occurrence="07_Maturidade:M3-58">
+        <span class="qtab-code">[ M3-58 ]</span>
+        <span class="qtab-title" title="Requisitos de perfil para o cargo de Ouvidor (+1)">Requisitos de perfil para o cargo de Ouvidor (+1)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M3-58">1 / 1</span>
+      </a>
+
+      <a href="#dim-6/M2-50"
+         id="tab-q-M2-50"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-50"
+         tabindex="-1"
+         data-q-tab="M2-50"
+         data-occurrence="07_Maturidade:M2-50">
+        <span class="qtab-code">[ M2-50 ]</span>
+        <span class="qtab-title" title="WhatsApp institucional (+1)">WhatsApp institucional (+1)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M2-50">1 / 1</span>
+      </a>
+
+      <a href="#dim-6/M2-49"
+         id="tab-q-M2-49"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-49"
+         tabindex="-1"
+         data-q-tab="M2-49"
+         data-occurrence="07_Maturidade:M2-49">
+        <span class="qtab-code">[ M2-49 ]</span>
+        <span class="qtab-title" title="Outros canais eletrônicos institucionais (+1)">Outros canais eletrônicos institucionais (+1)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M2-49">1 / 1</span>
+      </a>
+
+      <a href="#dim-6/M2-36"
+         id="tab-q-M2-36"
+         class="qtab"
+         role="tab"
+         aria-selected="false"
+         aria-controls="qpanel-M2-36"
+         tabindex="-1"
+         data-q-tab="M2-36"
+         data-occurrence="07_Maturidade:M2-36">
+        <span class="qtab-code">[ M2-36 ]</span>
+        <span class="qtab-title" title="Materiais adicionais de divulgação e educação em direitos (+2)">Materiais adicionais de divulgação e educação em direitos (+2)</span>
+        <span class="badge qtab-score" data-qtab-score="07_Maturidade:M2-36">2 / 2</span>
+      </a>
+
+    </nav>
+
+
+    <article class="qcard"
+             id="qpanel-M2-46"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-46"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M2-46"
+             data-q-panel="M2-46">
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-46</span>
@@ -1012,7 +1712,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M0-08">
+    <article class="qcard"
+             id="qpanel-M0-08"
+             role="tabpanel"
+             aria-labelledby="tab-q-M0-08"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M0-08"
+             data-q-panel="M0-08" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M0-08</span>
@@ -1049,7 +1755,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M3-60">
+    <article class="qcard"
+             id="qpanel-M3-60"
+             role="tabpanel"
+             aria-labelledby="tab-q-M3-60"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M3-60"
+             data-q-panel="M3-60" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M3-60</span>
@@ -1086,7 +1798,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M3-58">
+    <article class="qcard"
+             id="qpanel-M3-58"
+             role="tabpanel"
+             aria-labelledby="tab-q-M3-58"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M3-58"
+             data-q-panel="M3-58" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M3-58</span>
@@ -1123,7 +1841,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M2-50">
+    <article class="qcard"
+             id="qpanel-M2-50"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-50"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M2-50"
+             data-q-panel="M2-50" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-50</span>
@@ -1160,7 +1884,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M2-49">
+    <article class="qcard"
+             id="qpanel-M2-49"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-49"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M2-49"
+             data-q-panel="M2-49" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-49</span>
@@ -1197,7 +1927,13 @@
       </div>
     </article>
 
-    <article class="qcard" data-occurrence="07_Maturidade:M2-36">
+    <article class="qcard"
+             id="qpanel-M2-36"
+             role="tabpanel"
+             aria-labelledby="tab-q-M2-36"
+             tabindex="0"
+             data-occurrence="07_Maturidade:M2-36"
+             data-q-panel="M2-36" hidden>
       <div class="qcard-head">
         <div>
           <span class="qcode">M2-36</span>
@@ -1245,42 +1981,216 @@
 
 <script>
 (function () {
-  var tabs = Array.from(document.querySelectorAll("[data-dim-tab]"));
-  var panels = Array.from(document.querySelectorAll("[data-dim-panel]"));
-  if (!tabs.length || !panels.length) return;
-  function activate(name, focus) {
-    tabs.forEach(function (a) {
-      var on = a.getAttribute("data-dim-tab") === name;
-      if (on) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
-      else { a.classList.remove("active"); a.removeAttribute("aria-current"); }
+  var dimTabs = Array.from(document.querySelectorAll("[data-dim-tab]"));
+  var dimPanels = Array.from(document.querySelectorAll("[data-dim-panel]"));
+  if (!dimTabs.length || !dimPanels.length) return;
+
+  function activateQuestion(panel, qCodeOrCard, focus) {
+    var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+    var qCards = Array.from(panel.querySelectorAll("[data-q-panel]"));
+    if (!qCards.length) return null;
+
+    var activeCard = null;
+    if (typeof qCodeOrCard === "string" && qCodeOrCard) {
+      var searchKey = qCodeOrCard.trim().toLowerCase();
+      activeCard = qCards.find(function (c) {
+        var code = (c.getAttribute("data-q-panel") || "").toLowerCase();
+        var occ = (c.getAttribute("data-occurrence") || "").toLowerCase();
+        return code === searchKey || occ === searchKey;
+      });
+    } else if (qCodeOrCard && qCodeOrCard.nodeType) {
+      activeCard = qCodeOrCard;
+    }
+    if (!activeCard) activeCard = qCards[0];
+
+    var activeCode = activeCard.getAttribute("data-q-panel");
+
+    qCards.forEach(function (card) {
+      card.hidden = (card !== activeCard);
     });
-    panels.forEach(function (p) {
-      p.hidden = p.getAttribute("data-dim-panel") !== name;
+
+    var activeTab = null;
+    qTabs.forEach(function (tab) {
+      var on = tab.getAttribute("data-q-tab") === activeCode;
+      if (on) {
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        tab.setAttribute("tabindex", "0");
+        activeTab = tab;
+      } else {
+        tab.classList.remove("active");
+        tab.setAttribute("aria-selected", "false");
+        tab.setAttribute("tabindex", "-1");
+      }
     });
-    if (focus) {
-      var link = tabs.find(function (a) { return a.getAttribute("data-dim-tab") === name; });
-      if (link) link.focus();
+
+    if (activeTab) {
+      if (typeof activeTab.scrollIntoView === "function") {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+      }
+      if (focus) {
+        activeTab.focus();
+      }
+    }
+    return activeCode;
+  }
+
+  function activate(dimIdent, qIdent, focus, updateUrl) {
+    var targetPanel = null;
+    if (dimIdent) {
+      var dKey = String(dimIdent).trim().toLowerCase();
+      targetPanel = dimPanels.find(function (p) {
+        var pid = (p.id || "").toLowerCase();
+        var sheet = (p.getAttribute("data-dim-panel") || "").toLowerCase();
+        return pid === dKey || pid === "dim-" + dKey || sheet === dKey;
+      });
+    }
+    if (!targetPanel) targetPanel = dimPanels[0];
+
+    var targetSheet = targetPanel.getAttribute("data-dim-panel");
+
+    var activeDimTab = null;
+    dimTabs.forEach(function (tab) {
+      var on = tab.getAttribute("data-dim-tab") === targetSheet;
+      if (on) {
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        tab.setAttribute("tabindex", "0");
+        activeDimTab = tab;
+      } else {
+        tab.classList.remove("active");
+        tab.setAttribute("aria-selected", "false");
+        tab.setAttribute("tabindex", "-1");
+      }
+    });
+
+    dimPanels.forEach(function (panel) {
+      panel.hidden = (panel !== targetPanel);
+    });
+
+    if (activeDimTab && typeof activeDimTab.scrollIntoView === "function") {
+      activeDimTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+    }
+
+    var activeQCode = activateQuestion(targetPanel, qIdent, focus === "question");
+
+    if (focus === "dim" && activeDimTab) {
+      activeDimTab.focus();
+    }
+
+    if (updateUrl !== false && targetPanel.id && activeQCode) {
+      var canonicalHash = "#" + targetPanel.id + "/" + encodeURIComponent(activeQCode);
+      if (location.hash !== canonicalHash) {
+        history.replaceState(null, "", canonicalHash);
+      }
     }
   }
+
   function fromHash() {
-    var h = (location.hash || "").replace("#", "");
-    var panel = document.getElementById(h);
-    if (panel && panel.hasAttribute("data-dim-panel")) {
-      activate(panel.getAttribute("data-dim-panel"), false);
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) {
+      var first = dimPanels[0];
+      if (first) activate(first.id, null, false, true);
       return;
     }
-    var first = panels[0];
-    if (first) activate(first.getAttribute("data-dim-panel"), false);
+    var parts = raw.split("/").map(function (s) {
+      return decodeURIComponent(s).trim();
+    });
+
+    // Se o hash contiver apenas 1 item e ele for o código de uma pergunta, localiza a dimensão correspondente
+    if (parts.length === 1 && parts[0]) {
+      var singleKey = parts[0].toLowerCase();
+      var foundPanel = dimPanels.find(function (p) {
+        return p.querySelector('[data-q-panel="' + parts[0] + '"]') ||
+               p.id.toLowerCase() === singleKey ||
+               (p.getAttribute("data-dim-panel") || "").toLowerCase() === singleKey;
+      });
+      if (foundPanel) {
+        var isDim = foundPanel.id.toLowerCase() === singleKey ||
+                    (foundPanel.getAttribute("data-dim-panel") || "").toLowerCase() === singleKey;
+        activate(foundPanel.id, isDim ? null : parts[0], false, true);
+        return;
+      }
+    }
+
+    var dimPart = parts[0] || "";
+    var qPart = parts[1] || "";
+    activate(dimPart, qPart, false, true);
   }
-  tabs.forEach(function (a) {
-    a.addEventListener("click", function (ev) {
+
+  dimTabs.forEach(function (tab) {
+    tab.addEventListener("click", function (ev) {
       ev.preventDefault();
-      var name = a.getAttribute("data-dim-tab");
-      var panel = panels.find(function (p) { return p.getAttribute("data-dim-panel") === name; });
-      if (panel && panel.id) history.replaceState(null, "", "#" + panel.id);
-      activate(name, false);
+      var sheet = tab.getAttribute("data-dim-tab");
+      activate(sheet, null, false, true);
     });
   });
+
+  dimPanels.forEach(function (panel) {
+    var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+    qTabs.forEach(function (qTab) {
+      qTab.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        var qCode = qTab.getAttribute("data-q-tab");
+        activateQuestion(panel, qCode, false);
+        if (panel.id && qCode) {
+          history.replaceState(null, "", "#" + panel.id + "/" + encodeURIComponent(qCode));
+        }
+      });
+    });
+  });
+
+  function attachKeyNav(container, getItems, onSelect) {
+    container.addEventListener("keydown", function (ev) {
+      var items = getItems();
+      var curIdx = items.indexOf(document.activeElement);
+      if (curIdx === -1) return;
+
+      var targetIdx = -1;
+      if (ev.key === "ArrowRight") {
+        targetIdx = (curIdx + 1) % items.length;
+      } else if (ev.key === "ArrowLeft") {
+        targetIdx = (curIdx - 1 + items.length) % items.length;
+      } else if (ev.key === "Home") {
+        targetIdx = 0;
+      } else if (ev.key === "End") {
+        targetIdx = items.length - 1;
+      } else if (ev.key === " " || ev.key === "Spacebar") {
+        ev.preventDefault();
+        onSelect(items[curIdx]);
+        return;
+      }
+
+      if (targetIdx !== -1) {
+        ev.preventDefault();
+        items[targetIdx].focus();
+        onSelect(items[targetIdx]);
+      }
+    });
+  }
+
+  var dimTablist = document.querySelector("[data-dim-tabs]");
+  if (dimTablist) {
+    attachKeyNav(dimTablist, function () { return dimTabs; }, function (tab) {
+      var sheet = tab.getAttribute("data-dim-tab");
+      activate(sheet, null, "dim", true);
+    });
+  }
+
+  dimPanels.forEach(function (panel) {
+    var qTablist = panel.querySelector("[data-q-tabs]");
+    if (qTablist) {
+      var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+      attachKeyNav(qTablist, function () { return qTabs; }, function (qTab) {
+        var qCode = qTab.getAttribute("data-q-tab");
+        activateQuestion(panel, qCode, true);
+        if (panel.id && qCode) {
+          history.replaceState(null, "", "#" + panel.id + "/" + encodeURIComponent(qCode));
+        }
+      });
+    }
+  });
+
   window.addEventListener("hashchange", fromHash);
   fromHash();
 })();

@@ -26,18 +26,58 @@
   </div>
 </section>
 
-<nav class="tabs" aria-label="Dimensões da avaliação" data-dim-tabs>
+<nav class="tabs dim-tabs" role="tablist" aria-label="Dimensões da avaliação" data-dim-tabs>
   {% for dim in dimensions %}
-  <a href="#dim-{{ loop.index0 }}" data-dim-tab="{{ dim.sheet_name|e }}"{% if loop.first %} class="active" aria-current="page"{% endif %}>{{ dim.dimension_name|e }} <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span>{% if dim.meets_minimum is not none %} <span class="badge" data-dim-floor="{{ dim.sheet_name|e }}">{% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}</span>{% endif %}</a>
+  <a href="#dim-{{ loop.index0 }}"
+     id="tab-dim-{{ loop.index0 }}"
+     class="dim-tab{% if loop.first %} active{% endif %}"
+     role="tab"
+     aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+     aria-controls="dim-{{ loop.index0 }}"
+     tabindex="{% if loop.first %}0{% else %}-1{% endif %}"
+     data-dim-tab="{{ dim.sheet_name|e }}">
+    {{ dim.dimension_name|e }}
+    <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span>
+    {% if dim.meets_minimum is not none %}
+    <span class="badge" data-dim-floor="{{ dim.sheet_name|e }}">{% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}</span>
+    {% endif %}
+  </a>
   {% endfor %}
 </nav>
 
 {% for dim in dimensions %}
-<section class="section dim-panel" id="dim-{{ loop.index0 }}" data-dim-panel="{{ dim.sheet_name|e }}"{% if not loop.first %} hidden{% endif %} aria-label="{{ dim.dimension_name|e }}">
+{% set dim_idx = loop.index0 %}
+<section class="section dim-panel" id="dim-{{ dim_idx }}" data-dim-panel="{{ dim.sheet_name|e }}"{% if not loop.first %} hidden{% endif %} role="tabpanel" aria-labelledby="tab-dim-{{ dim_idx }}" aria-label="{{ dim.dimension_name|e }}">
   <div class="section-body">
     <p class="muted">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }} / {{ dim.max|e }}{% if dim.minimum is not none %} · Mínimo: {{ dim.minimum|e }} · {% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}{% endif %}</p>
+
+    <!-- Sub-abas de perguntas da dimensão ativa -->
+    <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão {{ dim.dimension_name|e }}" data-q-tabs>
+      {% for q in dim.questions %}
+      <a href="#dim-{{ dim_idx }}/{{ q.question_code|e }}"
+         id="tab-q-{{ q.question_code|e }}"
+         class="qtab{% if loop.first %} active{% endif %}"
+         role="tab"
+         aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+         aria-controls="qpanel-{{ q.question_code|e }}"
+         tabindex="{% if loop.first %}0{% else %}-1{% endif %}"
+         data-q-tab="{{ q.question_code|e }}"
+         data-occurrence="{{ q.occurrence_key|e }}">
+        <span class="qtab-code">[ {{ q.question_code|e }} ]</span>
+        <span class="qtab-title" title="{{ q.question_title|e }}">{{ q.question_title|e }}</span>
+        <span class="badge qtab-score" data-qtab-score="{{ q.occurrence_key|e }}">{{ "%.1f"|format(q.score)|replace(".0", "") if q.score is not none else "—" }} / {{ "%.1f"|format(q.weight)|replace(".0", "") }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+
     {% for q in dim.questions %}
-    <article class="qcard" data-occurrence="{{ q.occurrence_key|e }}">
+    <article class="qcard"
+             id="qpanel-{{ q.question_code|e }}"
+             role="tabpanel"
+             aria-labelledby="tab-q-{{ q.question_code|e }}"
+             tabindex="0"
+             data-occurrence="{{ q.occurrence_key|e }}"
+             data-q-panel="{{ q.question_code|e }}"{% if not loop.first %} hidden{% endif %}>
       <div class="qcard-head">
         <div>
           <span class="qcode">{{ q.question_code|e }}</span>
@@ -129,42 +169,216 @@
 {% block scripts %}
 <script>
 (function () {
-  var tabs = Array.from(document.querySelectorAll("[data-dim-tab]"));
-  var panels = Array.from(document.querySelectorAll("[data-dim-panel]"));
-  if (!tabs.length || !panels.length) return;
-  function activate(name, focus) {
-    tabs.forEach(function (a) {
-      var on = a.getAttribute("data-dim-tab") === name;
-      if (on) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
-      else { a.classList.remove("active"); a.removeAttribute("aria-current"); }
+  var dimTabs = Array.from(document.querySelectorAll("[data-dim-tab]"));
+  var dimPanels = Array.from(document.querySelectorAll("[data-dim-panel]"));
+  if (!dimTabs.length || !dimPanels.length) return;
+
+  function activateQuestion(panel, qCodeOrCard, focus) {
+    var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+    var qCards = Array.from(panel.querySelectorAll("[data-q-panel]"));
+    if (!qCards.length) return null;
+
+    var activeCard = null;
+    if (typeof qCodeOrCard === "string" && qCodeOrCard) {
+      var searchKey = qCodeOrCard.trim().toLowerCase();
+      activeCard = qCards.find(function (c) {
+        var code = (c.getAttribute("data-q-panel") || "").toLowerCase();
+        var occ = (c.getAttribute("data-occurrence") || "").toLowerCase();
+        return code === searchKey || occ === searchKey;
+      });
+    } else if (qCodeOrCard && qCodeOrCard.nodeType) {
+      activeCard = qCodeOrCard;
+    }
+    if (!activeCard) activeCard = qCards[0];
+
+    var activeCode = activeCard.getAttribute("data-q-panel");
+
+    qCards.forEach(function (card) {
+      card.hidden = (card !== activeCard);
     });
-    panels.forEach(function (p) {
-      p.hidden = p.getAttribute("data-dim-panel") !== name;
+
+    var activeTab = null;
+    qTabs.forEach(function (tab) {
+      var on = tab.getAttribute("data-q-tab") === activeCode;
+      if (on) {
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        tab.setAttribute("tabindex", "0");
+        activeTab = tab;
+      } else {
+        tab.classList.remove("active");
+        tab.setAttribute("aria-selected", "false");
+        tab.setAttribute("tabindex", "-1");
+      }
     });
-    if (focus) {
-      var link = tabs.find(function (a) { return a.getAttribute("data-dim-tab") === name; });
-      if (link) link.focus();
+
+    if (activeTab) {
+      if (typeof activeTab.scrollIntoView === "function") {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+      }
+      if (focus) {
+        activeTab.focus();
+      }
+    }
+    return activeCode;
+  }
+
+  function activate(dimIdent, qIdent, focus, updateUrl) {
+    var targetPanel = null;
+    if (dimIdent) {
+      var dKey = String(dimIdent).trim().toLowerCase();
+      targetPanel = dimPanels.find(function (p) {
+        var pid = (p.id || "").toLowerCase();
+        var sheet = (p.getAttribute("data-dim-panel") || "").toLowerCase();
+        return pid === dKey || pid === "dim-" + dKey || sheet === dKey;
+      });
+    }
+    if (!targetPanel) targetPanel = dimPanels[0];
+
+    var targetSheet = targetPanel.getAttribute("data-dim-panel");
+
+    var activeDimTab = null;
+    dimTabs.forEach(function (tab) {
+      var on = tab.getAttribute("data-dim-tab") === targetSheet;
+      if (on) {
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        tab.setAttribute("tabindex", "0");
+        activeDimTab = tab;
+      } else {
+        tab.classList.remove("active");
+        tab.setAttribute("aria-selected", "false");
+        tab.setAttribute("tabindex", "-1");
+      }
+    });
+
+    dimPanels.forEach(function (panel) {
+      panel.hidden = (panel !== targetPanel);
+    });
+
+    if (activeDimTab && typeof activeDimTab.scrollIntoView === "function") {
+      activeDimTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+    }
+
+    var activeQCode = activateQuestion(targetPanel, qIdent, focus === "question");
+
+    if (focus === "dim" && activeDimTab) {
+      activeDimTab.focus();
+    }
+
+    if (updateUrl !== false && targetPanel.id && activeQCode) {
+      var canonicalHash = "#" + targetPanel.id + "/" + encodeURIComponent(activeQCode);
+      if (location.hash !== canonicalHash) {
+        history.replaceState(null, "", canonicalHash);
+      }
     }
   }
+
   function fromHash() {
-    var h = (location.hash || "").replace("#", "");
-    var panel = document.getElementById(h);
-    if (panel && panel.hasAttribute("data-dim-panel")) {
-      activate(panel.getAttribute("data-dim-panel"), false);
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) {
+      var first = dimPanels[0];
+      if (first) activate(first.id, null, false, true);
       return;
     }
-    var first = panels[0];
-    if (first) activate(first.getAttribute("data-dim-panel"), false);
+    var parts = raw.split("/").map(function (s) {
+      return decodeURIComponent(s).trim();
+    });
+
+    // Se o hash contiver apenas 1 item e ele for o código de uma pergunta, localiza a dimensão correspondente
+    if (parts.length === 1 && parts[0]) {
+      var singleKey = parts[0].toLowerCase();
+      var foundPanel = dimPanels.find(function (p) {
+        return p.querySelector('[data-q-panel="' + parts[0] + '"]') ||
+               p.id.toLowerCase() === singleKey ||
+               (p.getAttribute("data-dim-panel") || "").toLowerCase() === singleKey;
+      });
+      if (foundPanel) {
+        var isDim = foundPanel.id.toLowerCase() === singleKey ||
+                    (foundPanel.getAttribute("data-dim-panel") || "").toLowerCase() === singleKey;
+        activate(foundPanel.id, isDim ? null : parts[0], false, true);
+        return;
+      }
+    }
+
+    var dimPart = parts[0] || "";
+    var qPart = parts[1] || "";
+    activate(dimPart, qPart, false, true);
   }
-  tabs.forEach(function (a) {
-    a.addEventListener("click", function (ev) {
+
+  dimTabs.forEach(function (tab) {
+    tab.addEventListener("click", function (ev) {
       ev.preventDefault();
-      var name = a.getAttribute("data-dim-tab");
-      var panel = panels.find(function (p) { return p.getAttribute("data-dim-panel") === name; });
-      if (panel && panel.id) history.replaceState(null, "", "#" + panel.id);
-      activate(name, false);
+      var sheet = tab.getAttribute("data-dim-tab");
+      activate(sheet, null, false, true);
     });
   });
+
+  dimPanels.forEach(function (panel) {
+    var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+    qTabs.forEach(function (qTab) {
+      qTab.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        var qCode = qTab.getAttribute("data-q-tab");
+        activateQuestion(panel, qCode, false);
+        if (panel.id && qCode) {
+          history.replaceState(null, "", "#" + panel.id + "/" + encodeURIComponent(qCode));
+        }
+      });
+    });
+  });
+
+  function attachKeyNav(container, getItems, onSelect) {
+    container.addEventListener("keydown", function (ev) {
+      var items = getItems();
+      var curIdx = items.indexOf(document.activeElement);
+      if (curIdx === -1) return;
+
+      var targetIdx = -1;
+      if (ev.key === "ArrowRight") {
+        targetIdx = (curIdx + 1) % items.length;
+      } else if (ev.key === "ArrowLeft") {
+        targetIdx = (curIdx - 1 + items.length) % items.length;
+      } else if (ev.key === "Home") {
+        targetIdx = 0;
+      } else if (ev.key === "End") {
+        targetIdx = items.length - 1;
+      } else if (ev.key === " " || ev.key === "Spacebar") {
+        ev.preventDefault();
+        onSelect(items[curIdx]);
+        return;
+      }
+
+      if (targetIdx !== -1) {
+        ev.preventDefault();
+        items[targetIdx].focus();
+        onSelect(items[targetIdx]);
+      }
+    });
+  }
+
+  var dimTablist = document.querySelector("[data-dim-tabs]");
+  if (dimTablist) {
+    attachKeyNav(dimTablist, function () { return dimTabs; }, function (tab) {
+      var sheet = tab.getAttribute("data-dim-tab");
+      activate(sheet, null, "dim", true);
+    });
+  }
+
+  dimPanels.forEach(function (panel) {
+    var qTablist = panel.querySelector("[data-q-tabs]");
+    if (qTablist) {
+      var qTabs = Array.from(panel.querySelectorAll("[data-q-tab]"));
+      attachKeyNav(qTablist, function () { return qTabs; }, function (qTab) {
+        var qCode = qTab.getAttribute("data-q-tab");
+        activateQuestion(panel, qCode, true);
+        if (panel.id && qCode) {
+          history.replaceState(null, "", "#" + panel.id + "/" + encodeURIComponent(qCode));
+        }
+      });
+    }
+  });
+
   window.addEventListener("hashchange", fromHash);
   fromHash();
 })();
