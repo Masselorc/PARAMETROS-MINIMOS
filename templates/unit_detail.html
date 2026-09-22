@@ -10,19 +10,120 @@
   </div>
 </div>
 
-<section class="section" aria-label="Resultado consolidado">
-  <div class="section-head"><h2>Resultado</h2></div>
-  <div class="section-body">
-    <dl class="data-grid">
-      <div><dt>Situação institucional</dt><dd>{{ result.situacao|e }}</dd></div>
-      <div><dt>Nota-base (pontuação regular)</dt><dd id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</dd></div>
-      <div><dt>Bônus disponível (maturidade)</dt><dd id="bonus-avail">{{ "%.1f"|format(result.bonus_available) if result.bonus_available is not none else "—" }}</dd></div>
-      <div><dt>Bônus aplicado</dt><dd id="bonus-applied">{{ "%.1f"|format(result.bonus_applied) if result.bonus_applied is not none else "—" }}</dd></div>
-      <div><dt>Nota final (inclui bônus; mínimo global 70)</dt><dd id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</dd></div>
-      <div class="wide"><dt>Classificação</dt><dd id="classification">{{ result.classification|e }}</dd></div>
-      <div class="wide"><dt>Segue os parâmetros mínimos</dt><dd id="meets-minimum">{% if result.meets_minimum_parameters %}Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%{% else %}Não — ver pisos dimensionais e nota final abaixo{% endif %}</dd></div>
-    </dl>
-    <p class="source">Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026. O bônus aplicado conta para atingir a nota final mínima de 70, mas não altera nem substitui os pisos dimensionais de 50%.</p>
+<section class="section result-section" aria-label="Resultado consolidado">
+  <div class="result-header">
+    <div class="result-title-group">
+      <h2>Resultado da Avaliação</h2>
+      <span class="result-subtitle">{{ entity.uf|e }} — {{ entity.unidade_label|e }}</span>
+    </div>
+    <div class="result-badge-status">
+      {% if result.meets_minimum_parameters %}
+      <span class="status-pill-lg status-pass">
+        <svg class="status-icon-svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Segue os Parâmetros Mínimos
+      </span>
+      {% else %}
+      <span class="status-pill-lg status-fail">
+        <svg class="status-icon-svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        Não Segue os Parâmetros Mínimos
+      </span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="result-body">
+    <!-- Bloco 1: Classificação e Critérios Obrigatórios -->
+    <div class="result-overview-col">
+      <div class="result-classification-card {% if result.classification == 'Instituída — seguindo os parâmetros mínimos' %}class-good{% elif result.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}class-warn{% elif result.classification == 'Instituída — aderência global insuficiente' %}class-info{% else %}class-bad{% endif %}">
+        <span class="card-eyebrow">Classificação Oficial</span>
+        <h3 id="classification" class="classification-text">{{ result.classification|e }}</h3>
+      </div>
+
+      <div class="result-criteria-box">
+        <span class="criteria-header-title">Critérios Obrigatórios (IN nº 75/2026 & ONASP)</span>
+        <ul class="criteria-list">
+          <li class="criteria-item {% if result.situacao == 'Instituída' %}crit-pass{% else %}crit-fail{% endif %}">
+            <span class="crit-icon">{% if result.situacao == 'Instituída' %}✓{% else %}✗{% endif %}</span>
+            <div class="crit-info">
+              <strong>1. Instituição Formal (M1-11)</strong>
+              <span>{% if result.situacao == 'Instituída' %}Ato normativo de criação comprovado (Situação: Instituída){% else %}Situação: {{ result.situacao|e }} (sem ato formal específico){% endif %}</span>
+            </div>
+          </li>
+          <li class="criteria-item {% if result.final_score is not none and result.final_score >= 70 %}crit-pass{% else %}crit-fail{% endif %}">
+            <span class="crit-icon">{% if result.final_score is not none and result.final_score >= 70 %}✓{% else %}✗{% endif %}</span>
+            <div class="crit-info">
+              <strong>2. Piso Global (Nota Final ≥ 70)</strong>
+              <span>Nota consolidada com bônus atingiu <strong>{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong> pts (mínimo: 70)</span>
+            </div>
+          </li>
+          <li class="criteria-item {% if not result.dimensions_below_minimum %}crit-pass{% else %}crit-fail{% endif %}">
+            <span class="crit-icon">{% if not result.dimensions_below_minimum %}✓{% else %}✗{% endif %}</span>
+            <div class="crit-info">
+              <strong>3. Pisos das Dimensões Essenciais (≥ 50%)</strong>
+              <span>{% if not result.dimensions_below_minimum %}Todas as 6 dimensões essenciais atingiram o piso mínimo{% else %}Abaixo do piso em {{ result.dimensions_below_minimum|length }} dimensão(ões) essencial(is){% endif %}</span>
+            </div>
+          </li>
+        </ul>
+        <span id="meets-minimum" class="sr-only">{% if result.meets_minimum_parameters %}Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%{% else %}Não — ver pisos dimensionais e nota final abaixo{% endif %}</span>
+      </div>
+    </div>
+
+    <!-- Bloco 2: Equação da Pontuação e Barra Didática de Escala -->
+    <div class="result-score-col">
+      <div class="score-equation-wrapper">
+        <span class="card-eyebrow">Composição da Pontuação</span>
+        <div class="score-equation">
+          <!-- Nota Base -->
+          <div class="score-kpi-card">
+            <span class="kpi-label">Nota-Base</span>
+            <div class="kpi-value"><strong id="base-score">{{ "%.1f"|format(result.base_score) if result.base_score is not none else "—" }}</strong></div>
+            <span class="kpi-sub">6 dimensões (máx. 100)</span>
+          </div>
+
+          <span class="score-operator">+</span>
+
+          <!-- Bônus -->
+          <div class="score-kpi-card">
+            <span class="kpi-label">Bônus</span>
+            <div class="kpi-value bonus-val">+<strong id="bonus-applied">{{ "%.1f"|format(result.bonus_applied) if result.bonus_applied is not none else "—" }}</strong></div>
+            <span class="kpi-sub">de <span id="bonus-avail">{{ "%.1f"|format(result.bonus_available) if result.bonus_available is not none else "—" }}</span> pts disponíveis</span>
+          </div>
+
+          <span class="score-operator">=</span>
+
+          <!-- Nota Final -->
+          <div class="score-kpi-card score-kpi-final">
+            <span class="kpi-label">Nota Final</span>
+            <div class="kpi-value final-val"><strong id="final-score">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong><span class="kpi-total">/100</span></div>
+            <span class="kpi-sub">Piso para aprovação: 70 pts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra Didática com Marcador do Piso 70 -->
+      <div class="score-gauge-box">
+        <div class="gauge-header">
+          <span>Escala de Aproveitamento Global</span>
+          <strong>{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }} / 100 pts</strong>
+        </div>
+        <div class="gauge-track">
+          <div id="final-score-fill" class="gauge-fill {% if result.final_score is not none and result.final_score >= 70 %}gauge-fill-pass{% else %}gauge-fill-fail{% endif %}" style="width: {{ ((result.final_score if result.final_score <= 100 else 100)|round(1)) if result.final_score is not none else 0 }}%;"></div>
+          <div class="gauge-marker-70" title="Linha de corte: Piso global de 70 pontos">
+            <div class="marker-line"></div>
+            <span class="marker-label">Piso 70</span>
+          </div>
+        </div>
+        <div class="gauge-footer">
+          <span>0 pts</span>
+          <span class="gauge-target">Meta para seguimento: ≥ 70 pts</span>
+          <span>100 pts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-footnote">
+    <p>ℹ️ Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP (IN nº 75/2026). O bônus de maturidade conta para atingir a nota global de 70 pontos (teto 100), mas não altera nem substitui os pisos individuais de 50% em cada dimensão essencial.</p>
   </div>
 </section>
 

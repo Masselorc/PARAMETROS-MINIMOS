@@ -84,6 +84,18 @@
           set("bonus-applied", data.bonus_applied);
           set("final-score", data.final_score);
           set("final-score-head", data.final_score);
+          var finalBar = document.getElementById("final-score-fill");
+          if (finalBar && data.final_score !== undefined && data.final_score !== null) {
+            var pct = Math.min(100, Math.max(0, Number(data.final_score)));
+            finalBar.style.width = pct + "%";
+            if (pct >= 70) {
+              finalBar.classList.add("gauge-fill-pass");
+              finalBar.classList.remove("gauge-fill-fail");
+            } else {
+              finalBar.classList.add("gauge-fill-fail");
+              finalBar.classList.remove("gauge-fill-pass");
+            }
+          }
           var cls = document.getElementById("classification");
           if (cls && data.classification) cls.textContent = data.classification;
           var clsHead = document.getElementById("classification-head");

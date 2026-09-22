@@ -32,7 +32,7 @@
       <p>IN nº 75/2026</p>
     </div>
   </aside>
-  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 19:27, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 19:32, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
 
 <a class="back" href="index.html">← Voltar para a Visão Geral</a>
 <div class="page-head">
@@ -43,19 +43,115 @@
   </div>
 </div>
 
-<section class="section" aria-label="Resultado consolidado">
-  <div class="section-head"><h2>Resultado</h2></div>
-  <div class="section-body">
-    <dl class="data-grid">
-      <div><dt>Situação institucional</dt><dd>Instituída</dd></div>
-      <div><dt>Nota-base (pontuação regular)</dt><dd id="base-score">92.5</dd></div>
-      <div><dt>Bônus disponível (maturidade)</dt><dd id="bonus-avail">6.0</dd></div>
-      <div><dt>Bônus aplicado</dt><dd id="bonus-applied">6.0</dd></div>
-      <div><dt>Nota final (inclui bônus; mínimo global 70)</dt><dd id="final-score">98.5</dd></div>
-      <div class="wide"><dt>Classificação</dt><dd id="classification">Instituída — seguindo os parâmetros mínimos</dd></div>
-      <div class="wide"><dt>Segue os parâmetros mínimos</dt><dd id="meets-minimum">Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%</dd></div>
-    </dl>
-    <p class="source">Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP e não integram o texto da IN nº 75/2026. O bônus aplicado conta para atingir a nota final mínima de 70, mas não altera nem substitui os pisos dimensionais de 50%.</p>
+<section class="section result-section" aria-label="Resultado consolidado">
+  <div class="result-header">
+    <div class="result-title-group">
+      <h2>Resultado da Avaliação</h2>
+      <span class="result-subtitle">PR — Paraná</span>
+    </div>
+    <div class="result-badge-status">
+
+      <span class="status-pill-lg status-pass">
+        <svg class="status-icon-svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Segue os Parâmetros Mínimos
+      </span>
+
+    </div>
+  </div>
+
+  <div class="result-body">
+    <!-- Bloco 1: Classificação e Critérios Obrigatórios -->
+    <div class="result-overview-col">
+      <div class="result-classification-card class-good">
+        <span class="card-eyebrow">Classificação Oficial</span>
+        <h3 id="classification" class="classification-text">Instituída — seguindo os parâmetros mínimos</h3>
+      </div>
+
+      <div class="result-criteria-box">
+        <span class="criteria-header-title">Critérios Obrigatórios (IN nº 75/2026 & ONASP)</span>
+        <ul class="criteria-list">
+          <li class="criteria-item crit-pass">
+            <span class="crit-icon">✓</span>
+            <div class="crit-info">
+              <strong>1. Instituição Formal (M1-11)</strong>
+              <span>Ato normativo de criação comprovado (Situação: Instituída)</span>
+            </div>
+          </li>
+          <li class="criteria-item crit-pass">
+            <span class="crit-icon">✓</span>
+            <div class="crit-info">
+              <strong>2. Piso Global (Nota Final ≥ 70)</strong>
+              <span>Nota consolidada com bônus atingiu <strong>98.5</strong> pts (mínimo: 70)</span>
+            </div>
+          </li>
+          <li class="criteria-item crit-pass">
+            <span class="crit-icon">✓</span>
+            <div class="crit-info">
+              <strong>3. Pisos das Dimensões Essenciais (≥ 50%)</strong>
+              <span>Todas as 6 dimensões essenciais atingiram o piso mínimo</span>
+            </div>
+          </li>
+        </ul>
+        <span id="meets-minimum" class="sr-only">Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%</span>
+      </div>
+    </div>
+
+    <!-- Bloco 2: Equação da Pontuação e Barra Didática de Escala -->
+    <div class="result-score-col">
+      <div class="score-equation-wrapper">
+        <span class="card-eyebrow">Composição da Pontuação</span>
+        <div class="score-equation">
+          <!-- Nota Base -->
+          <div class="score-kpi-card">
+            <span class="kpi-label">Nota-Base</span>
+            <div class="kpi-value"><strong id="base-score">92.5</strong></div>
+            <span class="kpi-sub">6 dimensões (máx. 100)</span>
+          </div>
+
+          <span class="score-operator">+</span>
+
+          <!-- Bônus -->
+          <div class="score-kpi-card">
+            <span class="kpi-label">Bônus</span>
+            <div class="kpi-value bonus-val">+<strong id="bonus-applied">6.0</strong></div>
+            <span class="kpi-sub">de <span id="bonus-avail">6.0</span> pts disponíveis</span>
+          </div>
+
+          <span class="score-operator">=</span>
+
+          <!-- Nota Final -->
+          <div class="score-kpi-card score-kpi-final">
+            <span class="kpi-label">Nota Final</span>
+            <div class="kpi-value final-val"><strong id="final-score">98.5</strong><span class="kpi-total">/100</span></div>
+            <span class="kpi-sub">Piso para aprovação: 70 pts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra Didática com Marcador do Piso 70 -->
+      <div class="score-gauge-box">
+        <div class="gauge-header">
+          <span>Escala de Aproveitamento Global</span>
+          <strong>98.5 / 100 pts</strong>
+        </div>
+        <div class="gauge-track">
+          <div id="final-score-fill" class="gauge-fill gauge-fill-pass" style="width: 98.5%;"></div>
+          <div class="gauge-marker-70" title="Linha de corte: Piso global de 70 pontos">
+            <div class="marker-line"></div>
+            <span class="marker-label">Piso 70</span>
+          </div>
+        </div>
+        <div class="gauge-footer">
+          <span>0 pts</span>
+          <span class="gauge-target">Meta para seguimento: ≥ 70 pts</span>
+          <span>100 pts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-footnote">
+    <p>ℹ️ Pesos, pisos e bônus constituem metodologia de monitoramento da ONASP (IN nº 75/2026). O bônus de maturidade conta para atingir a nota global de 70 pontos (teto 100), mas não altera nem substitui os pisos individuais de 50% em cada dimensão essencial.</p>
   </div>
 </section>
 
