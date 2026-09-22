@@ -31,6 +31,18 @@
           (min === null || (score !== null && score >= min)) &&
           (max === null || (score !== null && score <= max));
         row.hidden = !matches;
+        var entity = row.getAttribute("data-entity");
+        if (entity) {
+          var detail = document.querySelector('tr.row-summary-detail[data-detail-for="' + entity + '"]');
+          if (detail && !matches) {
+            detail.hidden = true;
+            detail.setAttribute("aria-hidden", "true");
+            var expandBtn = row.querySelector(".row-expand");
+            if (expandBtn) expandBtn.setAttribute("aria-expanded", "false");
+            row.classList.remove("row-is-expanded");
+            row.setAttribute("aria-expanded", "false");
+          }
+        }
         if (matches) visible += 1;
       });
 

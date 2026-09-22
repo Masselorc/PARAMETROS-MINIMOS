@@ -83,8 +83,18 @@
       </thead>
       <tbody>
         {% for r in rows %}
-        <tr class="{% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}row-following-minimums{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}row-below-essential-minimum{% elif r.classification == 'Não instituída' %}row-not-instituted{% endif %}" data-sort-row data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}">
-          <td class="col-uf"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
+        {% set unit_url = r.static_page if read_only|default(false) else ('/unidades/' ~ r.entity_key) %}
+        <tr class="{% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}row-following-minimums{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}row-below-essential-minimum{% elif r.classification == 'Não instituída' %}row-not-instituted{% endif %}" data-sort-row data-entity="{{ r.entity_key|e }}" data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}" tabindex="0" aria-expanded="false" aria-controls="detail-{{ r.entity_key|e }}">
+          <td class="col-uf" data-sort-value="{{ r.uf|e }}">
+            <div class="uf-col-wrapper">
+              <button type="button" class="row-expand" aria-expanded="false" aria-controls="detail-{{ r.entity_key|e }}" aria-label="Expandir diagnóstico de {{ r.unidade_label|e }}" title="Expandir diagnóstico rápido">
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+              <span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span>
+            </div>
+          </td>
           <td class="col-unit">{{ r.unidade_label|e }}</td>
           <td class="number col-dim" data-sort-value="{{ r.inst if r.inst is not none else '' }}">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.aut if r.aut is not none else '' }}">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
@@ -97,6 +107,260 @@
           <td class="col-score" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
           <td class="col-classification">{{ r.classification|e }}</td>
           <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}">Detalhar</a>{% endif %}</td>
+        </tr>
+        <tr class="row-summary-detail" data-detail-for="{{ r.entity_key|e }}" id="detail-{{ r.entity_key|e }}" hidden aria-hidden="true">
+          <td colspan="13">
+            <div class="expansion-wrap">
+              <div class="expansion-header">
+                <div class="expansion-header-info">
+                  <span class="expansion-eyebrow">Resumo Diagnóstico Rápido</span>
+                  <h3 class="expansion-title">{{ r.unidade_label|e }} ({{ r.uf|e }})</h3>
+                </div>
+                <div class="expansion-header-badge">
+                  {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}
+                    <span class="badge good">✓ Seguindo os parâmetros mínimos</span>
+                  {% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}
+                    <span class="badge warn">⚠️ Abaixo dos parâmetros mínimos</span>
+                  {% elif r.classification == 'Instituída — aderência global insuficiente' %}
+                    <span class="badge warn">⚠️ Abaixo dos parâmetros mínimos (global &lt; 70)</span>
+                  {% elif r.situacao == 'Não instituída' %}
+                    <span class="badge bad">✗ Não instituída</span>
+                  {% else %}
+                    <span class="badge bad">✗ Instituição não comprovada</span>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Bloco A: Resultado Consolidado -->
+              <div class="expansion-section">
+                <span class="expansion-block-label">Resultado Consolidado</span>
+                <div class="expansion-kpis">
+                  <div class="expansion-kpi">
+                    <span class="kpi-label">Situação Institucional</span>
+                    <strong class="kpi-val">{{ r.situacao|e }}</strong>
+                    <span class="kpi-sub">Critério M1-11</span>
+                  </div>
+                  <div class="expansion-kpi">
+                    <span class="kpi-label">Nota-Base</span>
+                    <strong class="kpi-val">{{ ("%.1f"|format(r.base_score))|replace(".", ",") if r.base_score is not none else "—" }} <small class="kpi-max">/ 100</small></strong>
+                    <span class="kpi-sub">6 dimensões regulares</span>
+                  </div>
+                  <div class="expansion-kpi">
+                    <span class="kpi-label">Bônus Aplicado</span>
+                    <strong class="kpi-val bonus-text">+{{ ("%.1f"|format(r.bonus_applied))|replace(".", ",") if r.bonus_applied is not none else "—" }} <small class="kpi-max">pts</small></strong>
+                    <span class="kpi-sub">de até 10 pts disponíveis</span>
+                  </div>
+                  <div class="expansion-kpi">
+                    <span class="kpi-label">Nota Final</span>
+                    <strong class="kpi-val final-text">{{ ("%.1f"|format(r.final_score))|replace(".", ",") if r.final_score is not none else "—" }} <small class="kpi-max">/ 100</small></strong>
+                    <span class="kpi-sub">base + bônus aplicado</span>
+                  </div>
+                  <div class="expansion-kpi">
+                    <span class="kpi-label">Mínimo Global (70 pts)</span>
+                    <div class="kpi-val">
+                      {% if r.base_score is not none and r.base_score >= 70 %}
+                        <span class="status-tag pass">✓ Atendido</span>
+                      {% elif r.base_score is not none %}
+                        <span class="status-tag fail">✗ Não atendido</span>
+                      {% else %}
+                        <span class="status-tag na">—</span>
+                      {% endif %}
+                    </div>
+                    <span class="kpi-sub">
+                      {% if r.base_score is not none and r.base_score >= 70 %}
+                        Nota-base {{ ("%.1f"|format(r.base_score))|replace(".", ",") }} ≥ 70
+                      {% elif r.base_score is not none %}
+                        Déficit: {{ ("%.1f"|format(70.0 - r.base_score))|replace(".", ",") }} pts
+                      {% else %}
+                        Não se aplica
+                      {% endif %}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloco B: Dimensões e Pisos Regulamentares -->
+              <div class="expansion-section">
+                <span class="expansion-block-label">Dimensões e Pisos Regulamentares (IN nº 75/2026)</span>
+                <div class="expansion-dims">
+                  <!-- 1. Institucionalização -->
+                  <div class="dim-card {% if r.situacao == 'Instituída' %}dim-card-pass{% elif r.situacao == 'Não instituída' or r.situacao == 'Instituição não comprovada' %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">1. Institucionalização</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.inst))|replace(".", ",") if r.inst is not none else "—" }} / 15</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao == 'Instituída' %}
+                        <span class="dim-status pass">✓ Requisito formal atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Requisito formal não atendido</span>
+                      {% endif %}
+                      <span class="dim-meta">Ato normativo de criação (M1-11)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-0" aria-label="Ver perguntas de Institucionalização de {{ r.unidade_label|e }}">Ver detalhes →</a>
+                    </div>
+                  </div>
+
+                  <!-- 2. Autonomia técnica e funcional -->
+                  <div class="dim-card {% if r.situacao != 'Instituída' %}{% elif r.aut is not none and r.aut >= 7.5 %}dim-card-pass{% else %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">2. Autonomia</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.aut))|replace(".", ",") if r.aut is not none else "—" }} / 15</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao != 'Instituída' %}
+                        <span class="dim-status na">— Não avaliada</span>
+                      {% elif r.aut is not none and r.aut >= 7.5 %}
+                        <span class="dim-status pass">✓ Piso 7,5 atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Abaixo do piso (7,5)</span>
+                        <span class="dim-deficit">Déficit: <strong>{{ ("%.1f"|format(7.5 - (r.aut or 0)))|replace(".", ",") }}</strong> pts</span>
+                      {% endif %}
+                      <span class="dim-meta">Piso mínimo: 7,5 pts (50%)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-1" aria-label="Ver perguntas de Autonomia de {{ r.unidade_label|e }}">{% if r.aut is not none and r.aut < 7.5 and r.situacao == 'Instituída' %}Ver perguntas com pendência →{% else %}Ver perguntas →{% endif %}</a>
+                    </div>
+                  </div>
+
+                  <!-- 3. Imparcialidade, sigilo e proteção -->
+                  <div class="dim-card {% if r.situacao != 'Instituída' %}{% elif r.imp is not none and r.imp >= 7.5 %}dim-card-pass{% else %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">3. Imparcialidade</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.imp))|replace(".", ",") if r.imp is not none else "—" }} / 15</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao != 'Instituída' %}
+                        <span class="dim-status na">— Não avaliada</span>
+                      {% elif r.imp is not none and r.imp >= 7.5 %}
+                        <span class="dim-status pass">✓ Piso 7,5 atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Abaixo do piso (7,5)</span>
+                        <span class="dim-deficit">Déficit: <strong>{{ ("%.1f"|format(7.5 - (r.imp or 0)))|replace(".", ",") }}</strong> pts</span>
+                      {% endif %}
+                      <span class="dim-meta">Piso mínimo: 7,5 pts (50%)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-2" aria-label="Ver perguntas de Imparcialidade de {{ r.unidade_label|e }}">{% if r.imp is not none and r.imp < 7.5 and r.situacao == 'Instituída' %}Ver perguntas com pendência →{% else %}Ver perguntas →{% endif %}</a>
+                    </div>
+                  </div>
+
+                  <!-- 4. Acessibilidade e atendimento humanizado -->
+                  <div class="dim-card {% if r.situacao != 'Instituída' %}{% elif r.aces is not none and r.aces >= 7.5 %}dim-card-pass{% else %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">4. Acessibilidade</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.aces))|replace(".", ",") if r.aces is not none else "—" }} / 15</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao != 'Instituída' %}
+                        <span class="dim-status na">— Não avaliada</span>
+                      {% elif r.aces is not none and r.aces >= 7.5 %}
+                        <span class="dim-status pass">✓ Piso 7,5 atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Abaixo do piso (7,5)</span>
+                        <span class="dim-deficit">Déficit: <strong>{{ ("%.1f"|format(7.5 - (r.aces or 0)))|replace(".", ",") }}</strong> pts</span>
+                      {% endif %}
+                      <span class="dim-meta">Piso mínimo: 7,5 pts (50%)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-3" aria-label="Ver perguntas de Acessibilidade de {{ r.unidade_label|e }}">{% if r.aces is not none and r.aces < 7.5 and r.situacao == 'Instituída' %}Ver perguntas com pendência →{% else %}Ver perguntas →{% endif %}</a>
+                    </div>
+                  </div>
+
+                  <!-- 5. Transparência e publicidade -->
+                  <div class="dim-card {% if r.situacao != 'Instituída' %}{% elif r.trans is not none and r.trans >= 7.5 %}dim-card-pass{% else %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">5. Transparência</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.trans))|replace(".", ",") if r.trans is not none else "—" }} / 15</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao != 'Instituída' %}
+                        <span class="dim-status na">— Não avaliada</span>
+                      {% elif r.trans is not none and r.trans >= 7.5 %}
+                        <span class="dim-status pass">✓ Piso 7,5 atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Abaixo do piso (7,5)</span>
+                        <span class="dim-deficit">Déficit: <strong>{{ ("%.1f"|format(7.5 - (r.trans or 0)))|replace(".", ",") }}</strong> pts</span>
+                      {% endif %}
+                      <span class="dim-meta">Piso mínimo: 7,5 pts (50%)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-4" aria-label="Ver perguntas de Transparência de {{ r.unidade_label|e }}">{% if r.trans is not none and r.trans < 7.5 and r.situacao == 'Instituída' %}Ver perguntas com pendência →{% else %}Ver perguntas →{% endif %}</a>
+                    </div>
+                  </div>
+
+                  <!-- 6. Integração tecnológica -->
+                  <div class="dim-card {% if r.situacao != 'Instituída' %}{% elif r.integ is not none and r.integ >= 12.5 %}dim-card-pass{% else %}dim-card-fail{% endif %}">
+                    <div class="dim-card-header">
+                      <span class="dim-name">6. Integração Tec</span>
+                      <strong class="dim-score">{{ ("%.1f"|format(r.integ))|replace(".", ",") if r.integ is not none else "—" }} / 25</strong>
+                    </div>
+                    <div class="dim-card-body">
+                      {% if r.situacao != 'Instituída' %}
+                        <span class="dim-status na">— Não avaliada</span>
+                      {% elif r.integ is not none and r.integ >= 12.5 %}
+                        <span class="dim-status pass">✓ Piso 12,5 atendido</span>
+                      {% else %}
+                        <span class="dim-status fail">✗ Abaixo do piso (12,5)</span>
+                        <span class="dim-deficit">Déficit: <strong>{{ ("%.1f"|format(12.5 - (r.integ or 0)))|replace(".", ",") }}</strong> pts</span>
+                      {% endif %}
+                      <span class="dim-meta">Piso mínimo: 12,5 pts (50%)</span>
+                    </div>
+                    <div class="dim-card-footer">
+                      <a class="dim-link" href="{{ unit_url }}#dim-5" aria-label="Ver perguntas de Integração Tecnológica de {{ r.unidade_label|e }}">{% if r.integ is not none and r.integ < 12.5 and r.situacao == 'Instituída' %}Ver perguntas com pendência →{% else %}Ver perguntas →{% endif %}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloco C: Diagnóstico Rápido e Motivo da Classificação -->
+              <div class="expansion-diag-box">
+                <span class="expansion-block-label">Diagnóstico Rápido e Motivo da Classificação</span>
+                {% if r.situacao == "Não instituída" %}
+                  <p class="expansion-diag-text">A unidade não possui Ouvidoria de Serviços Penais formalmente instituída segundo o critério normativo M1-11.</p>
+                {% elif r.situacao == "Instituição não comprovada" %}
+                  <p class="expansion-diag-text">Não há comprovação documental suficiente para atestar a instituição formal da Ouvidoria de Serviços Penais segundo o critério normativo M1-11.</p>
+                {% elif r.classification == "Instituída — seguindo os parâmetros mínimos" %}
+                  <p class="expansion-diag-text">Todas as dimensões essenciais atingem o piso mínimo regulamentar de 50% e a nota-base global é igual ou superior ao patamar mínimo de 70 pontos.</p>
+                {% elif r.classification == "Instituída — abaixo do mínimo em dimensão essencial" %}
+                  {% if r.base_score is not none and r.base_score >= 70 %}
+                    <p class="expansion-diag-text">A unidade possui nota-base de <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts (suficiente para o mínimo global de 70), mas não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
+                  {% else %}
+                    <p class="expansion-diag-text">A unidade possui nota-base de <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts e não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
+                  {% endif %}
+                  <ul class="expansion-diag-list">
+                    {% if r.aut is not none and r.aut < 7.5 %}
+                      <li><strong>Autonomia técnica e funcional:</strong> {{ ("%.1f"|format(r.aut))|replace(".", ",") }} / 15 pts (piso: 7,5 · <span class="deficit-tag">déficit: {{ ("%.1f"|format(7.5 - r.aut))|replace(".", ",") }} pt(s)</span>) — <a href="{{ unit_url }}#dim-1">Ver perguntas</a></li>
+                    {% endif %}
+                    {% if r.imp is not none and r.imp < 7.5 %}
+                      <li><strong>Imparcialidade, sigilo e proteção:</strong> {{ ("%.1f"|format(r.imp))|replace(".", ",") }} / 15 pts (piso: 7,5 · <span class="deficit-tag">déficit: {{ ("%.1f"|format(7.5 - r.imp))|replace(".", ",") }} pt(s)</span>) — <a href="{{ unit_url }}#dim-2">Ver perguntas</a></li>
+                    {% endif %}
+                    {% if r.aces is not none and r.aces < 7.5 %}
+                      <li><strong>Acessibilidade e atendimento humanizado:</strong> {{ ("%.1f"|format(r.aces))|replace(".", ",") }} / 15 pts (piso: 7,5 · <span class="deficit-tag">déficit: {{ ("%.1f"|format(7.5 - r.aces))|replace(".", ",") }} pt(s)</span>) — <a href="{{ unit_url }}#dim-3">Ver perguntas</a></li>
+                    {% endif %}
+                    {% if r.trans is not none and r.trans < 7.5 %}
+                      <li><strong>Transparência e publicidade:</strong> {{ ("%.1f"|format(r.trans))|replace(".", ",") }} / 15 pts (piso: 7,5 · <span class="deficit-tag">déficit: {{ ("%.1f"|format(7.5 - r.trans))|replace(".", ",") }} pt(s)</span>) — <a href="{{ unit_url }}#dim-4">Ver perguntas</a></li>
+                    {% endif %}
+                    {% if r.integ is not none and r.integ < 12.5 %}
+                      <li><strong>Integração tecnológica:</strong> {{ ("%.1f"|format(r.integ))|replace(".", ",") }} / 25 pts (piso: 12,5 · <span class="deficit-tag">déficit: {{ ("%.1f"|format(12.5 - r.integ))|replace(".", ",") }} pt(s)</span>) — <a href="{{ unit_url }}#dim-5">Ver perguntas</a></li>
+                    {% endif %}
+                  </ul>
+                {% elif r.classification == "Instituída — aderência global insuficiente" %}
+                  <p class="expansion-diag-text">As dimensões essenciais atingem os respectivos pisos mínimos de 50%, mas a nota-base global permanece abaixo do mínimo de 70 pontos (Nota-base: <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts · <span class="deficit-tag">déficit global: {{ ("%.1f"|format(70.0 - r.base_score))|replace(".", ",") }} pt(s)</span>).</p>
+                {% else %}
+                  <p class="expansion-diag-text">{{ r.classification|e }}</p>
+                {% endif %}
+              </div>
+
+              <!-- Bloco D: Ação Principal -->
+              <div class="expansion-footer">
+                <a class="btn-detail btn-open-full" href="{{ unit_url }}">
+                  Abrir avaliação completa de {{ r.unidade_label|e }} →
+                </a>
+              </div>
+            </div>
+          </td>
         </tr>
         {% else %}
         <tr><td colspan="13"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
