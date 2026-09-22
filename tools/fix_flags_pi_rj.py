@@ -17,9 +17,7 @@ BASE = Path(__file__).resolve().parent.parent
 FLAGS = BASE / "static" / "bandeiras"
 
 # Apenas os arquivos quebrados no Chromium como <img> (xlink: sem xmlns).
-# PI e RJ foram corrigidos no commit anterior; manter a lista mínima evita
-# tocar nos arquivos que já funcionavam (am, es, PR etc.).
-TARGETS = ("ma.svg", "mt.svg", "to.svg")
+TARGETS = ("ma.svg", "mt.svg", "to.svg", "pi.svg", "rj.svg")
 
 XLINK = "http://www.w3.org/1999/xlink"
 
@@ -27,6 +25,8 @@ XLINK = "http://www.w3.org/1999/xlink"
 def fix(text: str) -> str:
     if "xlink:" in text and "xmlns:xlink" not in text:
         text = text.replace("<svg ", f'<svg xmlns:xlink="{XLINK}" ', 1)
+    # remove apenas o DOCTYPE (primeira linha do RJ); preserva o restante
+    # do arquivo byte a byte, inclusive quebras de linha originais
     text = re.sub(r"<!DOCTYPE[^>]*>", "", text, count=1)
     return text
 
@@ -35,14 +35,13 @@ def main() -> None:
     for path in sorted(FLAGS.glob("*.svg")):
         if path.name not in TARGETS:
             continue
-        original = path.read_text(encoding="utf-8")
+        original = path.read_bytes().decode("utf-8")
         bak = path.with_suffix(".svg.bak")
         if not bak.exists():
             bak.write_text(original, encoding="utf-8")
-        had_newline = original.endswith("\n")
-        fixed = fix(original).rstrip("\r\n") + ("\n" if had_newline else "")
+        fixed = fix(original)
         if fixed != original:
-            path.write_text(fixed, encoding="utf-8")
+            path.write_bytes(fixed.encode("utf-8"))
             print(f"{path.name}: {len(original)} -> {len(fixed)} bytes (corrigido)")
         else:
             print(f"{path.name}: ok, sem alteracao")
