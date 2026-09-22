@@ -9,31 +9,65 @@
   </div>
 </div>
 <section class="section" aria-label="Unidades avaliadas">
+  {% if read_only|default(false) %}
+  <form class="filters" method="get" action="unidades.html" data-static-filters>
+    <label class="search">Buscar
+      <input type="search" name="q" placeholder="UF ou unidade…">
+    </label>
+    <label>Situação
+      <select name="situacao">
+        <option value="">Todas</option>
+        <option value="Instituída">Instituída</option>
+        <option value="Não instituída">Não instituída</option>
+        <option value="Instituição não comprovada">Instituição não comprovada</option>
+      </select>
+    </label>
+    <label>Classificação
+      <select name="classificacao">
+        <option value="">Todas</option>
+        <option value="seguindo">Seguindo os parâmetros mínimos</option>
+        <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
+        <option value="global_insuficiente">Aderência global insuficiente</option>
+        <option value="nao_instituida">Não instituída</option>
+        <option value="nao_comprovada">Instituição não comprovada</option>
+      </select>
+    </label>
+    <label>Nota mín.
+      <input type="number" name="nota_min" min="0" max="100" step="0.1">
+    </label>
+    <label>Nota máx.
+      <input type="number" name="nota_max" min="0" max="100" step="0.1">
+    </label>
+    <div><button class="primary" type="submit">Filtrar</button></div>
+  </form>
+  <p class="muted" data-static-count>{{ rows|length }} unidades</p>
+  {% endif %}
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>UF</th>
-          <th>Unidade</th>
-          <th>Situação</th>
-          <th>Nota final</th>
-          <th>Classificação</th>
-          <th>Ações</th>
+          <th data-sort-type="text">UF</th>
+          <th data-sort-type="text">Unidade</th>
+          <th data-sort-type="text">Situação</th>
+          <th data-sort-type="number">Nota final</th>
+          <th data-sort-type="text">Classificação</th>
+          <th data-sort-type="text">Ações</th>
         </tr>
       </thead>
       <tbody>
         {% for r in rows %}
-        <tr>
+        <tr data-sort-row data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}">
           <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
           <td>{{ r.unidade_label|e }}</td>
           <td>{{ r.situacao|e }}</td>
-          <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
           <td>{{ r.classification|e }}</td>
-          <td><a href="/unidades/{{ r.entity_key|e }}">Abrir</a></td>
+          <td data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}">Abrir</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}">Abrir</a>{% endif %}</td>
         </tr>
         {% else %}
         <tr><td colspan="6"><div class="empty"><p>Nenhuma unidade encontrada.</p></div></td></tr>
         {% endfor %}
+        <tr data-static-empty hidden><td colspan="6"><div class="empty"><p>Nenhuma unidade corresponde aos filtros.</p></div></td></tr>
       </tbody>
     </table>
   </div>

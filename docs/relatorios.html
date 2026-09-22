@@ -10,27 +10,30 @@
 <body>
 <a class="skip" href="#main">Pular para o conteúdo</a>
 <header class="topbar">
-  <a class="brand" href="/">
+  <a class="brand" href="index.html">
     <span class="brand-mark" aria-hidden="true">P</span>
     <span>Parâmetros Mínimos<small>ONASP / 2026</small></span>
   </a>
-  <span class="local-label">● Ambiente local</span>
+  <span class="local-label">● Snapshot público</span>
 </header>
 <div class="shell">
   <aside class="sidebar" aria-label="Navegação principal">
-    
-    <a class="nav-link active" href="/">Visão Geral</a>
-    <a class="nav-link" href="/unidades">Unidades Federativas</a>
-    <a class="nav-link" href="/relatorios">Relatórios</a>
-    <a class="nav-link" href="/metodologia">Metodologia</a>
+
+
+
+    <a class="nav-link" href="index.html">Visão Geral</a>
+    <a class="nav-link" href="unidades.html">Unidades Federativas</a>
+    <a class="nav-link active" href="relatorios.html">Relatórios</a>
+    <a class="nav-link" href="metodologia.html">Metodologia</a>
+
     <div class="side-context">
       <span class="section-label">Processo</span>
       <p>SEI 08016.027689/2025-19</p>
       <p>IN nº 75/2026</p>
     </div>
   </aside>
-  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Página estática de demonstração com os valores calculados em 22/09/2026 17:45 — o sistema completo roda localmente (uvicorn app:app --host 127.0.0.1 --port 8000) com leitura/edição do DADOS.xlsx.</p></div></div>
-    
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 18:17, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
+
 <div class="page-head">
   <div>
     <div class="eyebrow">Parâmetros Mínimos</div>
@@ -39,16 +42,32 @@
   </div>
 </div>
 
-<section class="section" aria-label="Relatório geral">
+
+<section class="section" aria-label="Relatório geral estático">
   <div class="section-head"><h2>Relatório geral</h2></div>
   <div class="section-body">
-    <form id="general-filters" class="filters" method="get" action="/api/relatorios/geral.pdf" style="border-bottom:0;padding-left:0;padding-right:0;">
-      <label>Situação institucional
+    <p>Relatórios calculados a partir do snapshot de dados publicado.</p>
+    <div class="page-actions">
+      <a class="snapshot-download" href="relatorios/geral.pdf" download>Baixar relatório geral em PDF</a>
+      <a class="snapshot-download" href="relatorios/geral.xlsx" download>Baixar relatório geral em XLSX</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="Relatório individual estático">
+  <div class="section-head"><h2>Relatório individual</h2></div>
+  <div class="section-body">
+    <p>Filtre a lista e abra o detalhe publicado ou baixe o relatório PDF/XLSX da unidade.</p>
+    <form class="filters" method="get" action="relatorios.html" data-static-filters>
+      <label class="search">Buscar
+        <input type="search" name="q" placeholder="UF ou unidade…">
+      </label>
+      <label>Situação
         <select name="situacao">
-          <option value="">Todas as unidades</option>
-          <option value="Instituída">Apenas instituídas</option>
-          <option value="Não instituída">Apenas não instituídas</option>
-          <option value="Instituição não comprovada">Apenas instituição não comprovada</option>
+          <option value="">Todas</option>
+          <option value="Instituída">Instituída</option>
+          <option value="Não instituída">Não instituída</option>
+          <option value="Instituição não comprovada">Instituição não comprovada</option>
         </select>
       </label>
       <label>Classificação
@@ -67,121 +86,309 @@
       <label>Nota máx.
         <input type="number" name="nota_max" min="0" max="100" step="0.1">
       </label>
+      <div><button class="primary" type="submit">Filtrar</button></div>
     </form>
-    <div class="page-actions">
-      <a id="general-pdf" class="button" href="/api/relatorios/geral.pdf"><button type="button" class="primary">Gerar PDF</button></a>
-      <a id="general-xlsx" class="button" href="/api/relatorios/geral.xlsx"><button type="button">Gerar XLSX</button></a>
+    <p class="muted" data-static-count>28 unidades</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th data-sort-type="text">UF</th><th data-sort-type="text">Unidade</th><th data-sort-type="text">Situação</th><th data-sort-type="number">Nota final</th><th data-sort-type="text">Classificação</th><th data-sort-type="text">Detalhe</th><th data-sort-type="text">PDF</th><th data-sort-type="text">XLSX</th></tr></thead>
+        <tbody>
+
+        <tr data-sort-row data-static-row data-static-search="ac acre" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ac.svg" alt="" loading="lazy"><span class="uf-code">AC</span></span></td>
+          <td>Acre</td><td>Instituída</td>
+          <td class="number" data-sort-value="95.0">95.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="AC"><a href="unidade-AC.html">Abrir</a></td>
+          <td data-sort-value="AC"><a href="relatorios/unidade-AC.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="AC"><a href="relatorios/unidade-AC.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="al alagoas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="74.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/al.svg" alt="" loading="lazy"><span class="uf-code">AL</span></span></td>
+          <td>Alagoas</td><td>Instituída</td>
+          <td class="number" data-sort-value="74.5">74.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="AL"><a href="unidade-AL.html">Abrir</a></td>
+          <td data-sort-value="AL"><a href="relatorios/unidade-AL.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="AL"><a href="relatorios/unidade-AL.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ap amapá" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ap.svg" alt="" loading="lazy"><span class="uf-code">AP</span></span></td>
+          <td>Amapá</td><td>Instituída</td>
+          <td class="number" data-sort-value="91.5">91.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="AP"><a href="unidade-AP.html">Abrir</a></td>
+          <td data-sort-value="AP"><a href="relatorios/unidade-AP.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="AP"><a href="relatorios/unidade-AP.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="am amazonas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/am.svg" alt="" loading="lazy"><span class="uf-code">AM</span></span></td>
+          <td>Amazonas</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="AM"><a href="unidade-AM.html">Abrir</a></td>
+          <td data-sort-value="AM"><a href="relatorios/unidade-AM.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="AM"><a href="relatorios/unidade-AM.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ba bahia" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="92.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ba.svg" alt="" loading="lazy"><span class="uf-code">BA</span></span></td>
+          <td>Bahia</td><td>Instituída</td>
+          <td class="number" data-sort-value="92.5">92.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="BA"><a href="unidade-BA.html">Abrir</a></td>
+          <td data-sort-value="BA"><a href="relatorios/unidade-BA.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="BA"><a href="relatorios/unidade-BA.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ce ceará" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ce.svg" alt="" loading="lazy"><span class="uf-code">CE</span></span></td>
+          <td>Ceará</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="CE"><a href="unidade-CE.html">Abrir</a></td>
+          <td data-sort-value="CE"><a href="relatorios/unidade-CE.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="CE"><a href="relatorios/unidade-CE.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="df distrito federal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="93.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/df.svg" alt="" loading="lazy"><span class="uf-code">DF</span></span></td>
+          <td>Distrito Federal</td><td>Instituída</td>
+          <td class="number" data-sort-value="93.5">93.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="DF"><a href="unidade-DF.html">Abrir</a></td>
+          <td data-sort-value="DF"><a href="relatorios/unidade-DF.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="DF"><a href="relatorios/unidade-DF.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="es espírito santo — polícia penal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/es.svg" alt="" loading="lazy"><span class="uf-code">ES</span></span></td>
+          <td>Espírito Santo — Polícia Penal</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="ES_PP"><a href="unidade-ES_PP.html">Abrir</a></td>
+          <td data-sort-value="ES_PP"><a href="relatorios/unidade-ES_PP.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="ES_PP"><a href="relatorios/unidade-ES_PP.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="es espírito santo — sejus/es" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="84.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/es.svg" alt="" loading="lazy"><span class="uf-code">ES</span></span></td>
+          <td>Espírito Santo — SEJUS/ES</td><td>Instituída</td>
+          <td class="number" data-sort-value="84.5">84.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="ES_SEJUS"><a href="unidade-ES_SEJUS.html">Abrir</a></td>
+          <td data-sort-value="ES_SEJUS"><a href="relatorios/unidade-ES_SEJUS.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="ES_SEJUS"><a href="relatorios/unidade-ES_SEJUS.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="go goiás" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/go.svg" alt="" loading="lazy"><span class="uf-code">GO</span></span></td>
+          <td>Goiás</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="GO"><a href="unidade-GO.html">Abrir</a></td>
+          <td data-sort-value="GO"><a href="relatorios/unidade-GO.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="GO"><a href="relatorios/unidade-GO.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ma maranhão" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="90.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ma.svg" alt="" loading="lazy"><span class="uf-code">MA</span></span></td>
+          <td>Maranhão</td><td>Instituída</td>
+          <td class="number" data-sort-value="90.0">90.0</td>
+          <td>Instituída — abaixo do mínimo em dimensão essencial</td>
+          <td data-sort-value="MA"><a href="unidade-MA.html">Abrir</a></td>
+          <td data-sort-value="MA"><a href="relatorios/unidade-MA.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="MA"><a href="relatorios/unidade-MA.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="mt mato grosso" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="97.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mt.svg" alt="" loading="lazy"><span class="uf-code">MT</span></span></td>
+          <td>Mato Grosso</td><td>Instituída</td>
+          <td class="number" data-sort-value="97.0">97.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="MT"><a href="unidade-MT.html">Abrir</a></td>
+          <td data-sort-value="MT"><a href="relatorios/unidade-MT.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="MT"><a href="relatorios/unidade-MT.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ms mato grosso do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="87.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ms.svg" alt="" loading="lazy"><span class="uf-code">MS</span></span></td>
+          <td>Mato Grosso do Sul</td><td>Instituída</td>
+          <td class="number" data-sort-value="87.5">87.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="MS"><a href="unidade-MS.html">Abrir</a></td>
+          <td data-sort-value="MS"><a href="relatorios/unidade-MS.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="MS"><a href="relatorios/unidade-MS.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="mg minas gerais" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mg.svg" alt="" loading="lazy"><span class="uf-code">MG</span></span></td>
+          <td>Minas Gerais</td><td>Instituída</td>
+          <td class="number" data-sort-value="95.5">95.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="MG"><a href="unidade-MG.html">Abrir</a></td>
+          <td data-sort-value="MG"><a href="relatorios/unidade-MG.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="MG"><a href="relatorios/unidade-MG.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="pa pará" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pa.svg" alt="" loading="lazy"><span class="uf-code">PA</span></span></td>
+          <td>Pará</td><td>Não instituída</td>
+          <td class="number" data-sort-value="">—</td>
+          <td>Não instituída</td>
+          <td data-sort-value="PA"><a href="unidade-PA.html">Abrir</a></td>
+          <td data-sort-value="PA"><a href="relatorios/unidade-PA.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="PA"><a href="relatorios/unidade-PA.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="pb paraíba" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="85.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pb.svg" alt="" loading="lazy"><span class="uf-code">PB</span></span></td>
+          <td>Paraíba</td><td>Instituída</td>
+          <td class="number" data-sort-value="85.0">85.0</td>
+          <td>Instituída — abaixo do mínimo em dimensão essencial</td>
+          <td data-sort-value="PB"><a href="unidade-PB.html">Abrir</a></td>
+          <td data-sort-value="PB"><a href="relatorios/unidade-PB.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="PB"><a href="relatorios/unidade-PB.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="pr paraná" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="98.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pr.svg" alt="" loading="lazy"><span class="uf-code">PR</span></span></td>
+          <td>Paraná</td><td>Instituída</td>
+          <td class="number" data-sort-value="98.5">98.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="PR"><a href="unidade-PR.html">Abrir</a></td>
+          <td data-sort-value="PR"><a href="relatorios/unidade-PR.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="PR"><a href="relatorios/unidade-PR.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="pe pernambuco" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pe.svg" alt="" loading="lazy"><span class="uf-code">PE</span></span></td>
+          <td>Pernambuco</td><td>Instituída</td>
+          <td class="number" data-sort-value="91.5">91.5</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="PE"><a href="unidade-PE.html">Abrir</a></td>
+          <td data-sort-value="PE"><a href="relatorios/unidade-PE.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="PE"><a href="relatorios/unidade-PE.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="pi piauí" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="80.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pi.svg" alt="" loading="lazy"><span class="uf-code">PI</span></span></td>
+          <td>Piauí</td><td>Instituída</td>
+          <td class="number" data-sort-value="80.0">80.0</td>
+          <td>Instituída — abaixo do mínimo em dimensão essencial</td>
+          <td data-sort-value="PI"><a href="unidade-PI.html">Abrir</a></td>
+          <td data-sort-value="PI"><a href="relatorios/unidade-PI.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="PI"><a href="relatorios/unidade-PI.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="rj rio de janeiro" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rj.svg" alt="" loading="lazy"><span class="uf-code">RJ</span></span></td>
+          <td>Rio de Janeiro</td><td>Instituída</td>
+          <td class="number" data-sort-value="95.0">95.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="RJ"><a href="unidade-RJ.html">Abrir</a></td>
+          <td data-sort-value="RJ"><a href="relatorios/unidade-RJ.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="RJ"><a href="relatorios/unidade-RJ.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="rn rio grande do norte" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rn.svg" alt="" loading="lazy"><span class="uf-code">RN</span></span></td>
+          <td>Rio Grande do Norte</td><td>Instituída</td>
+          <td class="number" data-sort-value="95.0">95.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="RN"><a href="unidade-RN.html">Abrir</a></td>
+          <td data-sort-value="RN"><a href="relatorios/unidade-RN.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="RN"><a href="relatorios/unidade-RN.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="rs rio grande do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="88.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rs.svg" alt="" loading="lazy"><span class="uf-code">RS</span></span></td>
+          <td>Rio Grande do Sul</td><td>Instituída</td>
+          <td class="number" data-sort-value="88.0">88.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="RS"><a href="unidade-RS.html">Abrir</a></td>
+          <td data-sort-value="RS"><a href="relatorios/unidade-RS.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="RS"><a href="relatorios/unidade-RS.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="ro rondônia" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ro.svg" alt="" loading="lazy"><span class="uf-code">RO</span></span></td>
+          <td>Rondônia</td><td>Não instituída</td>
+          <td class="number" data-sort-value="">—</td>
+          <td>Não instituída</td>
+          <td data-sort-value="RO"><a href="unidade-RO.html">Abrir</a></td>
+          <td data-sort-value="RO"><a href="relatorios/unidade-RO.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="RO"><a href="relatorios/unidade-RO.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="rr roraima" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rr.svg" alt="" loading="lazy"><span class="uf-code">RR</span></span></td>
+          <td>Roraima</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="RR"><a href="unidade-RR.html">Abrir</a></td>
+          <td data-sort-value="RR"><a href="relatorios/unidade-RR.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="RR"><a href="relatorios/unidade-RR.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="sc santa catarina" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/sc.svg" alt="" loading="lazy"><span class="uf-code">SC</span></span></td>
+          <td>Santa Catarina</td><td>Não instituída</td>
+          <td class="number" data-sort-value="">—</td>
+          <td>Não instituída</td>
+          <td data-sort-value="SC"><a href="unidade-SC.html">Abrir</a></td>
+          <td data-sort-value="SC"><a href="relatorios/unidade-SC.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="SC"><a href="relatorios/unidade-SC.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="sp são paulo" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/sp.svg" alt="" loading="lazy"><span class="uf-code">SP</span></span></td>
+          <td>São Paulo</td><td>Instituída</td>
+          <td class="number" data-sort-value="100.0">100.0</td>
+          <td>Instituída — seguindo os parâmetros mínimos</td>
+          <td data-sort-value="SP"><a href="unidade-SP.html">Abrir</a></td>
+          <td data-sort-value="SP"><a href="relatorios/unidade-SP.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="SP"><a href="relatorios/unidade-SP.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="se sergipe" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="15.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/se.svg" alt="" loading="lazy"><span class="uf-code">SE</span></span></td>
+          <td>Sergipe</td><td>Instituída</td>
+          <td class="number" data-sort-value="15.0">15.0</td>
+          <td>Instituída — abaixo do mínimo em dimensão essencial</td>
+          <td data-sort-value="SE"><a href="unidade-SE.html">Abrir</a></td>
+          <td data-sort-value="SE"><a href="relatorios/unidade-SE.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="SE"><a href="relatorios/unidade-SE.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-sort-row data-static-row data-static-search="to tocantins" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/to.svg" alt="" loading="lazy"><span class="uf-code">TO</span></span></td>
+          <td>Tocantins</td><td>Não instituída</td>
+          <td class="number" data-sort-value="">—</td>
+          <td>Não instituída</td>
+          <td data-sort-value="TO"><a href="unidade-TO.html">Abrir</a></td>
+          <td data-sort-value="TO"><a href="relatorios/unidade-TO.pdf" download>Baixar PDF</a></td>
+          <td data-sort-value="TO"><a href="relatorios/unidade-TO.xlsx" download>Baixar XLSX</a></td>
+        </tr>
+
+        <tr data-static-empty hidden><td colspan="8"><div class="empty"><p>Nenhuma unidade corresponde aos filtros.</p></div></td></tr>
+        </tbody>
+      </table>
     </div>
-    <p class="source">Os links acima aplicam os filtros informados.</p>
+    <p class="source">No ES, Polícia Penal e SEJUS/ES têm páginas e relatórios separados. Valores estáticos correspondem ao snapshot desta publicação.</p>
   </div>
 </section>
 
-<section class="section" aria-label="Relatório individual">
-  <div class="section-head"><h2>Relatório individual</h2></div>
-  <div class="section-body">
-    <label for="unit-select">UF / unidade avaliada
-      <select id="unit-select" name="entity_key">
-        
-        <option value="AC">AC — Acre</option>
-        
-        <option value="AL">AL — Alagoas</option>
-        
-        <option value="AP">AP — Amapá</option>
-        
-        <option value="AM">AM — Amazonas</option>
-        
-        <option value="BA">BA — Bahia</option>
-        
-        <option value="CE">CE — Ceará</option>
-        
-        <option value="DF">DF — Distrito Federal</option>
-        
-        <option value="ES_PP">ES — Espírito Santo — Polícia Penal</option>
-        
-        <option value="ES_SEJUS">ES — Espírito Santo — SEJUS/ES</option>
-        
-        <option value="GO">GO — Goiás</option>
-        
-        <option value="MA">MA — Maranhão</option>
-        
-        <option value="MT">MT — Mato Grosso</option>
-        
-        <option value="MS">MS — Mato Grosso do Sul</option>
-        
-        <option value="MG">MG — Minas Gerais</option>
-        
-        <option value="PA">PA — Pará</option>
-        
-        <option value="PB">PB — Paraíba</option>
-        
-        <option value="PR">PR — Paraná</option>
-        
-        <option value="PE">PE — Pernambuco</option>
-        
-        <option value="PI">PI — Piauí</option>
-        
-        <option value="RJ">RJ — Rio de Janeiro</option>
-        
-        <option value="RN">RN — Rio Grande do Norte</option>
-        
-        <option value="RS">RS — Rio Grande do Sul</option>
-        
-        <option value="RO">RO — Rondônia</option>
-        
-        <option value="RR">RR — Roraima</option>
-        
-        <option value="SC">SC — Santa Catarina</option>
-        
-        <option value="SP">SP — São Paulo</option>
-        
-        <option value="SE">SE — Sergipe</option>
-        
-        <option value="TO">TO — Tocantins</option>
-        
-      </select>
-    </label>
-    <div class="page-actions" style="margin-top:16px;">
-      <a id="individual-pdf" href="#"><button type="button" class="primary">Gerar PDF</button></a>
-      <a id="individual-xlsx" href="#"><button type="button">Gerar XLSX</button></a>
-    </div>
-    <p class="source">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
-  </div>
-</section>
 
   </main>
 </div>
+<script src="table-sort.js" defer></script>
 <script src="app.js" defer></script>
 
-<script>
-(function () {
-  var gf = document.getElementById("general-filters");
-  var pdf = document.getElementById("general-pdf");
-  var xlsx = document.getElementById("general-xlsx");
-  function query() {
-    if (!gf) return "";
-    var params = new URLSearchParams(new FormData(gf));
-    for (const [k, v] of Array.from(params.entries())) { if (!v) params.delete(k); }
-    var s = params.toString();
-    return s ? ("?" + s) : "";
-  }
-  if (gf) {
-    gf.addEventListener("input", function () {
-      if (pdf) pdf.href = "/api/relatorios/geral.pdf" + query();
-      if (xlsx) xlsx.href = "/api/relatorios/geral.xlsx" + query();
-    });
-  }
-  var sel = document.getElementById("unit-select");
-  var ipdf = document.getElementById("individual-pdf");
-  var ixlsx = document.getElementById("individual-xlsx");
-  function sync() {
-    if (!sel) return;
-    var ek = encodeURIComponent(sel.value);
-    if (ipdf) ipdf.href = "/api/relatorios/" + ek + ".pdf";
-    if (ixlsx) ixlsx.href = "/api/relatorios/" + ek + ".xlsx";
-  }
-  if (sel) { sel.addEventListener("change", sync); sync(); }
-})();
-</script>
+
 
 </body>
 </html>

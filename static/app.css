@@ -158,4 +158,8 @@ button.pad-analyze{min-height:34px;padding:4px 10px;font-size:.8125rem}
 .qdocs li{margin-bottom:6px}
 .qdocs form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
 .qdocs label{margin:0}
+a.snapshot-download{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--ink);font-weight:600;text-decoration:none}
+a.snapshot-download:hover{background:#edf3f4}
+.sort-button{display:inline-grid;place-items:center;width:20px;min-width:20px;min-height:20px;margin-left:4px;padding:0;border:0;border-radius:4px;background:transparent;color:var(--muted);font-size:.72rem;line-height:1;vertical-align:middle}
+.sort-button:hover{background:#eaf1f3;color:var(--brand-dark)}
 @media(max-width:900px){.qcols{grid-template-columns:1fr}.qcard-head{flex-wrap:wrap}}

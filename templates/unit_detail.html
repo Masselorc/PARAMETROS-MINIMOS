@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ entity.uf|e }} — {{ entity.unidade_label|e }} — Parâmetros Mínimos{% endblock %}
 {% block content %}
-<a class="back" href="/">← Voltar para a Visão Geral</a>
+<a class="back" href="{% if read_only|default(false) %}index.html{% else %}/{% endif %}">← Voltar para a Visão Geral</a>
 <div class="page-head">
   <div>
     <div class="eyebrow"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (entity.flag or 'br') + '.svg') }}" alt="Bandeira de {{ entity.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ entity.uf|e }}</span></span></div>
@@ -50,7 +50,7 @@
         <div class="qcol">
           <h4>Resposta do diagnóstico</h4>
           <p class="texto-oficial">{{ q.resposta|e or "Sem resposta no diagnóstico" }}</p>
-          <details>
+          {% if not read_only|default(false) %}<details>
             <summary>Corrigir resposta do diagnóstico</summary>
             <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/corrigir-resposta" data-confirm="Confirmar a correção da resposta do diagnóstico?">
               <label>Nova resposta do diagnóstico
@@ -58,10 +58,14 @@
               </label>
               <button type="submit" class="quiet">Corrigir resposta do diagnóstico</button>
             </form>
-          </details>
+          </details>{% endif %}
         </div>
         <div class="qcol">
           <h4>Avaliação</h4>
+          {% if read_only|default(false) %}
+          <p><strong>Status:</strong> {{ q.status|e }}</p>
+          <p><strong>Evidência / observação:</strong><br>{{ q.evidence_text|e }}</p>
+          {% else %}
           <label class="quiet-label">Status
             <select data-status-select>
               {% for opt in q.status_options %}
@@ -76,6 +80,7 @@
             <button type="button" class="primary" data-save data-entity="{{ entity.entity_key|e }}" data-occurrence="{{ q.occurrence_key|e }}">Salvar avaliação</button>
           </div>
           <small data-msg aria-live="polite"></small>
+          {% endif %}
         </div>
       </div>
       <details class="qmeta">
@@ -90,18 +95,22 @@
           {% for a in q.attachments %}
           <li>
             {{ a.original_filename|e }}
+            {% if read_only|default(false) %}
+            {% if a.static_url %}<a href="{{ a.static_url|e }}" target="_blank" rel="noopener">Abrir</a><a href="{{ a.static_url|e }}" download>Baixar</a>{% else %}<span class="muted">Arquivo não incluído neste snapshot.</span>{% endif %}
+            {% else %}
             <a href="/anexos/{{ a.id|e }}/abrir">Abrir</a>
             <a href="/anexos/{{ a.id|e }}/baixar">Baixar</a>
             <form method="post" action="/api/anexos/{{ a.id|e }}/desvincular" data-confirm="Desvincular este documento?">
               <button type="submit" class="quiet danger">Desvincular</button>
             </form>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>
         {% else %}
         <p class="muted">Nenhum documento anexado.</p>
         {% endif %}
-        <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
+        {% if not read_only|default(false) %}<form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
           <label>Anexar documento
             <input type="file" name="file">
           </label>
@@ -109,7 +118,7 @@
             <input type="text" name="notes" value="">
           </label>
           <button type="submit">Anexar</button>
-        </form>
+        </form>{% endif %}
       </div>
     </article>
     {% endfor %}

@@ -19,7 +19,7 @@
 </div>
 
 <section class="section" aria-label="Unidades avaliadas">
-  <form class="filters" method="get" action="/">
+  <form class="filters" method="get" action="/" data-static-filters>
     <label class="search">Buscar
       <input type="search" name="q" value="{{ filters.q|default('', true)|e }}" placeholder="UF ou unidade…">
     </label>
@@ -49,48 +49,50 @@
     </label>
     <div><button class="primary" type="submit">Filtrar</button></div>
   </form>
+  <p class="muted" data-static-count>{{ rows|length }} unidades</p>
 
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>UF</th>
-          <th>Unidade avaliada</th>
-          <th>Inst</th>
-          <th>Aut</th>
-          <th>Imp</th>
-          <th>Aces</th>
-          <th>Trans</th>
-          <th>Integ</th>
-          <th>Nota-base</th>
-          <th>Bônus</th>
-          <th>Final</th>
-          <th>Nota final /100</th>
-          <th>Classificação</th>
-          <th>Ações</th>
+          <th data-sort-type="text">UF</th>
+          <th data-sort-type="text">Unidade avaliada</th>
+          <th data-sort-type="number">Inst</th>
+          <th data-sort-type="number">Aut</th>
+          <th data-sort-type="number">Imp</th>
+          <th data-sort-type="number">Aces</th>
+          <th data-sort-type="number">Trans</th>
+          <th data-sort-type="number">Integ</th>
+          <th data-sort-type="number">Nota-base</th>
+          <th data-sort-type="number">Bônus</th>
+          <th data-sort-type="number">Final</th>
+          <th data-sort-type="number">Nota final /100</th>
+          <th data-sort-type="text">Classificação</th>
+          <th data-sort-type="text">Ações</th>
         </tr>
       </thead>
       <tbody>
         {% for r in rows %}
-        <tr>
+        <tr data-sort-row data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}">
           <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
           <td>{{ r.unidade_label|e }}</td>
-          <td class="number">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
-          <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
-          <td>{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
+          <td class="number" data-sort-value="{{ r.inst if r.inst is not none else '' }}">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.aut if r.aut is not none else '' }}">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.imp if r.imp is not none else '' }}">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.aces if r.aces is not none else '' }}">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.trans if r.trans is not none else '' }}">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.integ if r.integ is not none else '' }}">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
+          <td class="number" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+          <td data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
           <td>{{ r.classification|e }}</td>
-          <td><a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a></td>
+          <td data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a href="{{ r.static_page|e }}">Abrir avaliação</a>{% else %}<a href="/unidades/{{ r.entity_key|e }}">Abrir avaliação</a>{% endif %}</td>
         </tr>
         {% else %}
         <tr><td colspan="14"><div class="empty"><p>Nenhuma unidade encontrada para os filtros informados.</p></div></td></tr>
         {% endfor %}
+        <tr data-static-empty hidden><td colspan="14"><div class="empty"><p>Nenhuma unidade corresponde aos filtros.</p></div></td></tr>
       </tbody>
     </table>
   </div>

@@ -9,6 +9,76 @@
   </div>
 </div>
 
+{% if read_only|default(false) %}
+<section class="section" aria-label="Relatório geral estático">
+  <div class="section-head"><h2>Relatório geral</h2></div>
+  <div class="section-body">
+    <p>Relatórios calculados a partir do snapshot de dados publicado.</p>
+    <div class="page-actions">
+      <a class="snapshot-download" href="{{ static_reports.general_pdf|e }}" download>Baixar relatório geral em PDF</a>
+      <a class="snapshot-download" href="{{ static_reports.general_xlsx|e }}" download>Baixar relatório geral em XLSX</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="Relatório individual estático">
+  <div class="section-head"><h2>Relatório individual</h2></div>
+  <div class="section-body">
+    <p>Filtre a lista e abra o detalhe publicado ou baixe o relatório PDF/XLSX da unidade.</p>
+    <form class="filters" method="get" action="relatorios.html" data-static-filters>
+      <label class="search">Buscar
+        <input type="search" name="q" placeholder="UF ou unidade…">
+      </label>
+      <label>Situação
+        <select name="situacao">
+          <option value="">Todas</option>
+          <option value="Instituída">Instituída</option>
+          <option value="Não instituída">Não instituída</option>
+          <option value="Instituição não comprovada">Instituição não comprovada</option>
+        </select>
+      </label>
+      <label>Classificação
+        <select name="classificacao">
+          <option value="">Todas</option>
+          <option value="seguindo">Seguindo os parâmetros mínimos</option>
+          <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
+          <option value="global_insuficiente">Aderência global insuficiente</option>
+          <option value="nao_instituida">Não instituída</option>
+          <option value="nao_comprovada">Instituição não comprovada</option>
+        </select>
+      </label>
+      <label>Nota mín.
+        <input type="number" name="nota_min" min="0" max="100" step="0.1">
+      </label>
+      <label>Nota máx.
+        <input type="number" name="nota_max" min="0" max="100" step="0.1">
+      </label>
+      <div><button class="primary" type="submit">Filtrar</button></div>
+    </form>
+    <p class="muted" data-static-count>{{ units|length }} unidades</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th data-sort-type="text">UF</th><th data-sort-type="text">Unidade</th><th data-sort-type="text">Situação</th><th data-sort-type="number">Nota final</th><th data-sort-type="text">Classificação</th><th data-sort-type="text">Detalhe</th><th data-sort-type="text">PDF</th><th data-sort-type="text">XLSX</th></tr></thead>
+        <tbody>
+        {% for u in units %}
+        <tr data-sort-row data-static-row data-static-search="{{ (u.uf ~ ' ' ~ u.unidade_label)|lower|e }}" data-static-situation="{{ u.situacao|e }}" data-static-classification="{{ u.classification_key|e }}" data-static-score="{{ u.final_score if u.final_score is not none else '' }}">
+          <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (u.flag or 'br') + '.svg') }}" alt="" loading="lazy"><span class="uf-code">{{ u.uf|e }}</span></span></td>
+          <td>{{ u.unidade_label|e }}</td><td>{{ u.situacao|e }}</td>
+          <td class="number" data-sort-value="{{ u.final_score if u.final_score is not none else '' }}">{{ "%.1f"|format(u.final_score) if u.final_score is not none else "—" }}</td>
+          <td>{{ u.classification|e }}</td>
+          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_page|e }}">Abrir</a></td>
+          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_pdf|e }}" download>Baixar PDF</a></td>
+          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_xlsx|e }}" download>Baixar XLSX</a></td>
+        </tr>
+        {% endfor %}
+        <tr data-static-empty hidden><td colspan="8"><div class="empty"><p>Nenhuma unidade corresponde aos filtros.</p></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source">No ES, Polícia Penal e SEJUS/ES têm páginas e relatórios separados. Valores estáticos correspondem ao snapshot desta publicação.</p>
+  </div>
+</section>
+{% else %}
 <section class="section" aria-label="Relatório geral">
   <div class="section-head"><h2>Relatório geral</h2></div>
   <div class="section-body">
@@ -63,8 +133,10 @@
     <p class="source">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
   </div>
 </section>
+{% endif %}
 {% endblock %}
 {% block scripts %}
+{% if not read_only|default(false) %}
 <script>
 (function () {
   var gf = document.getElementById("general-filters");
@@ -95,4 +167,5 @@
   if (sel) { sel.addEventListener("change", sync); sync(); }
 })();
 </script>
+{% endif %}
 {% endblock %}
