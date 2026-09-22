@@ -32,7 +32,7 @@
       <p>IN nº 75/2026</p>
     </div>
   </aside>
-  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 19:22, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
+  <main id="main" tabindex="-1"><div class="section"><div class="section-body"><p class="muted">Snapshot de consulta atualizado em 22/09/2026 19:27, gerado a partir do DADOS.xlsx. Edição e gravação permanecem disponíveis somente no sistema local.</p></div></div>
 
 <a class="back" href="index.html">← Voltar para a Visão Geral</a>
 <div class="page-head">
@@ -71,7 +71,6 @@
      data-dim-tab="01_Institucionalização">
     Institucionalização
     <span class="badge" data-dim-total="01_Institucionalização">15.0</span>
-
   </a>
 
   <a href="#dim-1"
@@ -84,9 +83,6 @@
      data-dim-tab="02_Autonomia">
     Autonomia técnica e funcional
     <span class="badge" data-dim-total="02_Autonomia">12.0</span>
-
-    <span class="badge" data-dim-floor="02_Autonomia">Piso atendido</span>
-
   </a>
 
   <a href="#dim-2"
@@ -99,9 +95,6 @@
      data-dim-tab="03_Imparcialidade">
     Imparcialidade, sigilo e proteção
     <span class="badge" data-dim-total="03_Imparcialidade">8.0</span>
-
-    <span class="badge" data-dim-floor="03_Imparcialidade">Piso atendido</span>
-
   </a>
 
   <a href="#dim-3"
@@ -114,9 +107,6 @@
      data-dim-tab="04_Acessibilidade">
     Acessibilidade e atendimento humanizado
     <span class="badge" data-dim-total="04_Acessibilidade">10.5</span>
-
-    <span class="badge" data-dim-floor="04_Acessibilidade">Piso atendido</span>
-
   </a>
 
   <a href="#dim-4"
@@ -129,9 +119,6 @@
      data-dim-tab="05_Transparência">
     Transparência e publicidade
     <span class="badge" data-dim-total="05_Transparência">10.0</span>
-
-    <span class="badge" data-dim-floor="05_Transparência">Piso atendido</span>
-
   </a>
 
   <a href="#dim-5"
@@ -144,9 +131,6 @@
      data-dim-tab="06_Integração Tec">
     Integração tecnológica
     <span class="badge" data-dim-total="06_Integração Tec">23.0</span>
-
-    <span class="badge" data-dim-floor="06_Integração Tec">Piso atendido</span>
-
   </a>
 
   <a href="#dim-6"
@@ -159,7 +143,6 @@
      data-dim-tab="07_Maturidade">
     Maturidade / bônus
     <span class="badge" data-dim-total="07_Maturidade">9.0</span>
-
   </a>
 
 </nav>
@@ -168,7 +151,7 @@
 
 <section class="section dim-panel" id="dim-0" data-dim-panel="01_Institucionalização" role="tabpanel" aria-labelledby="tab-dim-0" aria-label="Institucionalização">
   <div class="section-body">
-    <p class="muted">15.0 / 15</p>
+    <p class="muted dim-summary-subtitle">15.0 / 15</p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Institucionalização" data-q-tabs>
@@ -198,38 +181,65 @@
              data-occurrence="01_Institucionalização:M1-11"
              data-q-panel="M1-11">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M1-11</span>
-          <h3>Existe ato normativo específico que cria a Ouvidoria de Serviços Penais ou núcleo especializado?</h3>
-          <p class="muted">Item 1 — Instituição formal da Ouvidoria de Serviços Penais · Peso máximo: 15 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M1-11</span>
+            <h3 class="qcard-title">Existe ato normativo específico que cria a Ouvidoria de Serviços Penais ou núcleo especializado?</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Instituição formal da Ouvidoria de Serviços Penais · Peso máximo: <strong>15 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="01_Institucionalização:M1-11">15.0 / 15 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="01_Institucionalização:M1-11">15.0 / 15 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Existe apenas ato de ouvidoria geral do Estado, sem criação de unidade/núcleo específico para serviços penais</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Existe apenas ato de ouvidoria geral do Estado, sem criação de unidade/núcleo específico para serviços penais</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 6º, caput.</p>
-        <p><strong>Critério:</strong> 15 pts: existe ato normativo específico vigente que cria/institui a Ouvidoria de Serviços Penais ou núcleo especializado. 0 pt: não existe ato específico ou não há evidência suficiente. Sem o ato, a unidade é classificada como Não instituída.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 6º, caput.</p>
+            <p><strong>Critério:</strong> 15 pts: existe ato normativo específico vigente que cria/institui a Ouvidoria de Serviços Penais ou núcleo especializado. 0 pt: não existe ato específico ou não há evidência suficiente. Sem o ato, a unidade é classificada como Não instituída.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -239,7 +249,7 @@
 
 <section class="section dim-panel" id="dim-1" data-dim-panel="02_Autonomia" hidden role="tabpanel" aria-labelledby="tab-dim-1" aria-label="Autonomia técnica e funcional">
   <div class="section-body">
-    <p class="muted">12.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
+    <p class="muted dim-summary-subtitle">12.0 / 15 · Mínimo: 7.5 · <span data-dim-floor="02_Autonomia">Piso atendido</span></p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Autonomia técnica e funcional" data-q-tabs>
@@ -325,38 +335,65 @@
              data-occurrence="02_Autonomia:M3-56"
              data-q-panel="M3-56">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M3-56</span>
-          <h3>Vinculação institucional da Ouvidoria de Serviços Penais</h3>
-          <p class="muted">Item 1 — Garantia normativa de autonomia técnica/funcional · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M3-56</span>
+            <h3 class="qcard-title">Vinculação institucional da Ouvidoria de Serviços Penais</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Garantia normativa de autonomia técnica/funcional · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="02_Autonomia:M3-56">3.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="02_Autonomia:M3-56">3.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Vinculada diretamente ao Gabinete ou à autoridade máxima do órgão gestor do sistema penal</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Vinculada diretamente ao Gabinete ou à autoridade máxima do órgão gestor do sistema penal</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, I; art. 6º, §1º, I.</p>
-        <p><strong>Critério:</strong> 3 pts: vinculada diretamente ao Gabinete/autoridade máxima, ou situação equivalente que assegure posição institucional autônoma. 1,5 pt: vinculada à estrutura central, sem subordinação a área operacional. 0 pt: vinculada a área operacional, não se aplica ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, I; art. 6º, §1º, I.</p>
+            <p><strong>Critério:</strong> 3 pts: vinculada diretamente ao Gabinete/autoridade máxima, ou situação equivalente que assegure posição institucional autônoma. 1,5 pt: vinculada à estrutura central, sem subordinação a área operacional. 0 pt: vinculada a área operacional, não se aplica ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -368,38 +405,65 @@
              data-occurrence="02_Autonomia:M3-57"
              data-q-panel="M3-57" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M3-57</span>
-          <h3>Existência e designação do(a) Ouvidor(a) de Serviços Penais</h3>
-          <p class="muted">Item 1 — Garantia normativa de autonomia técnica/funcional · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M3-57</span>
+            <h3 class="qcard-title">Existência e designação do(a) Ouvidor(a) de Serviços Penais</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Garantia normativa de autonomia técnica/funcional · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="02_Autonomia:M3-57">3.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="02_Autonomia:M3-57">3.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Há ouvidor(a) designado(a) formalmente pela autoridade máxima do órgão gestor do sistema penal</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Há ouvidor(a) designado(a) formalmente pela autoridade máxima do órgão gestor do sistema penal</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, I; art. 8º, caput.</p>
-        <p><strong>Critério:</strong> 3 pts: há Ouvidor(a) formalmente designado(a) pela autoridade máxima ou autoridade superior equivalente. 1,5 pt: designação formal em condição intermediária. 0 pt: ponto focal informal, inexistência de Ouvidor específico ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, I; art. 8º, caput.</p>
+            <p><strong>Critério:</strong> 3 pts: há Ouvidor(a) formalmente designado(a) pela autoridade máxima ou autoridade superior equivalente. 1,5 pt: designação formal em condição intermediária. 0 pt: ponto focal informal, inexistência de Ouvidor específico ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -411,38 +475,65 @@
              data-occurrence="02_Autonomia:M1-12"
              data-q-panel="M1-12" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M1-12</span>
-          <h3>Conteúdo do ato de criação da Ouvidoria de Serviços Penais</h3>
-          <p class="muted">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M1-12</span>
+            <h3 class="qcard-title">Conteúdo do ato de criação da Ouvidoria de Serviços Penais</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="02_Autonomia:M1-12">0.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="02_Autonomia:M1-12">0.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Não há normativa;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Não há normativa;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Não atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge bad">Não atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 6º, §1º, III; art. 10, II.</p>
-        <p><strong>Critério:</strong> 3 pts: o ato prevê simultaneamente dever de colaboração das áreas e prerrogativa de solicitar informações/documentos e requisitar apuração. 1,5 pt: apenas um desses elementos. 0 pt: nenhum ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 6º, §1º, III; art. 10, II.</p>
+            <p><strong>Critério:</strong> 3 pts: o ato prevê simultaneamente dever de colaboração das áreas e prerrogativa de solicitar informações/documentos e requisitar apuração. 1,5 pt: apenas um desses elementos. 0 pt: nenhum ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -454,38 +545,65 @@
              data-occurrence="02_Autonomia:M4-67"
              data-q-panel="M4-67" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-67</span>
-          <h3>Fluxo de trabalho interno da Ouvidoria de Serviços Penais</h3>
-          <p class="muted">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-67</span>
+            <h3 class="qcard-title">Fluxo de trabalho interno da Ouvidoria de Serviços Penais</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="02_Autonomia:M4-67">3.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="02_Autonomia:M4-67">3.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Há fluxo formalizado e efetivamente utilizado, contemplando, no mínimo, recebimento, registro, encaminhamento à área competente, acompanhamento da resposta e devolutiva ao(à) manifestante, quando aplicável</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Há fluxo formalizado e efetivamente utilizado, contemplando, no mínimo, recebimento, registro, encaminhamento à área competente, acompanhamento da resposta e devolutiva ao(à) manifestante, quando aplicável</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 13, caput e incisos I a V.</p>
-        <p><strong>Critério:</strong> 3 pts: fluxo formalizado e efetivamente utilizado, contemplando recebimento, registro, encaminhamento, acompanhamento e devolutiva. 1,5 pt: fluxo descrito, mas pouco aplicado. 0 pt: fluxo informal/inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 13, caput e incisos I a V.</p>
+            <p><strong>Critério:</strong> 3 pts: fluxo formalizado e efetivamente utilizado, contemplando recebimento, registro, encaminhamento, acompanhamento e devolutiva. 1,5 pt: fluxo descrito, mas pouco aplicado. 0 pt: fluxo informal/inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -497,38 +615,65 @@
              data-occurrence="02_Autonomia:M4-68"
              data-q-panel="M4-68" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-68</span>
-          <h3>Prazos e qualidade da resposta às manifestações</h3>
-          <p class="muted">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-68</span>
+            <h3 class="qcard-title">Prazos e qualidade da resposta às manifestações</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Condições institucionais de atuação sem interferência indevida · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="02_Autonomia:M4-68">3.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="02_Autonomia:M4-68">3.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Há prazos claros e registrados, com monitoramento das respostas das áreas e medidas adotadas em caso de descumprimento (cobrança, reencaminhamento, informação a instâncias superiores etc.)</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Há prazos claros e registrados, com monitoramento das respostas das áreas e medidas adotadas em caso de descumprimento (cobrança, reencaminhamento, informação a instâncias superiores etc.)</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 6º, §1º, IV; art. 10, II e IV; art. 13, IV e V.</p>
-        <p><strong>Critério:</strong> 3 pts: prazos claros e registrados, monitoramento e medidas diante de descumprimento. 1,5 pt: há prazos, mas sem controle sistemático. 0 pt: inexistência de prazos/monitoramento ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 6º, §1º, IV; art. 10, II e IV; art. 13, IV e V.</p>
+            <p><strong>Critério:</strong> 3 pts: prazos claros e registrados, monitoramento e medidas diante de descumprimento. 1,5 pt: há prazos, mas sem controle sistemático. 0 pt: inexistência de prazos/monitoramento ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -538,7 +683,7 @@
 
 <section class="section dim-panel" id="dim-2" data-dim-panel="03_Imparcialidade" hidden role="tabpanel" aria-labelledby="tab-dim-2" aria-label="Imparcialidade, sigilo e proteção">
   <div class="section-body">
-    <p class="muted">8.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
+    <p class="muted dim-summary-subtitle">8.0 / 15 · Mínimo: 7.5 · <span data-dim-floor="03_Imparcialidade">Piso atendido</span></p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Imparcialidade, sigilo e proteção" data-q-tabs>
@@ -582,38 +727,65 @@
              data-occurrence="03_Imparcialidade:M4-69"
              data-q-panel="M4-69">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-69</span>
-          <h3>Tratamento de denúncias graves e sensíveis</h3>
-          <p class="muted">Item 1 — Proteção e tratamento de denúncias graves e sensíveis · Peso máximo: 8 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-69</span>
+            <h3 class="qcard-title">Tratamento de denúncias graves e sensíveis</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Proteção e tratamento de denúncias graves e sensíveis · Peso máximo: <strong>8 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="03_Imparcialidade:M4-69">8.0 / 8 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="03_Imparcialidade:M4-69">8.0 / 8 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Protocolo para situações de risco à vida ou à integridade de pessoas privadas de liberdade;Protocolo para casos de tortura ou tratamento cruel, desumano ou degradante em unidades penais;Protocolo para outras formas de violência institucional em unidades penais;Protocolo para assédio moral ou sexual envolvendo servidores(as) penais;Protocolo para ameaças, retaliações ou perseguições contra servidores(as) penais em razão de manifestações ou denúncias;Protocolo para corrupção e irregularidades graves na gestão dos serviços penais;Procedimentos de sigilo reforçado, restrição de acesso e fluxos de emergência para esses casos;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Protocolo para situações de risco à vida ou à integridade de pessoas privadas de liberdade;Protocolo para casos de tortura ou tratamento cruel, desumano ou degradante em unidades penais;Protocolo para outras formas de violência institucional em unidades penais;Protocolo para assédio moral ou sexual envolvendo servidores(as) penais;Protocolo para ameaças, retaliações ou perseguições contra servidores(as) penais em razão de manifestações ou denúncias;Protocolo para corrupção e irregularidades graves na gestão dos serviços penais;Procedimentos de sigilo reforçado, restrição de acesso e fluxos de emergência para esses casos;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, II e §2º; art. 10, III.</p>
-        <p><strong>Critério:</strong> 8 pts: há tratamento específico para denúncias graves/sensíveis, com proteção da identidade, sigilo reforçado ou restrição de acesso e encaminhamento adequado. 4 pts: tratamento diferenciado, mas incompleto. 0 pt: inexistência de proteção específica ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, II e §2º; art. 10, III.</p>
+            <p><strong>Critério:</strong> 8 pts: há tratamento específico para denúncias graves/sensíveis, com proteção da identidade, sigilo reforçado ou restrição de acesso e encaminhamento adequado. 4 pts: tratamento diferenciado, mas incompleto. 0 pt: inexistência de proteção específica ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -625,38 +797,65 @@
              data-occurrence="03_Imparcialidade:M3-63"
              data-q-panel="M3-63" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M3-63</span>
-          <h3>Compromisso de sigilo da equipe</h3>
-          <p class="muted">Item 2 — Confidencialidade e sigilo da equipe · Peso máximo: 7 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M3-63</span>
+            <h3 class="qcard-title">Compromisso de sigilo da equipe</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Confidencialidade e sigilo da equipe · Peso máximo: <strong>7 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="03_Imparcialidade:M3-63">0.0 / 7 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="03_Imparcialidade:M3-63">0.0 / 7 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Não há qualquer instrumento formal de sigilo para a equipe da Ouvidoria</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Não há qualquer instrumento formal de sigilo para a equipe da Ouvidoria</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Não atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge bad">Não atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 9º, §4º.</p>
-        <p><strong>Critério:</strong> 7 pts: equipe e colaboradores possuem compromisso formal de sigilo. 3,5 pts: compromisso parcial, informal ou não abrangente. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 9º, §4º.</p>
+            <p><strong>Critério:</strong> 7 pts: equipe e colaboradores possuem compromisso formal de sigilo. 3,5 pts: compromisso parcial, informal ou não abrangente. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -666,7 +865,7 @@
 
 <section class="section dim-panel" id="dim-3" data-dim-panel="04_Acessibilidade" hidden role="tabpanel" aria-labelledby="tab-dim-3" aria-label="Acessibilidade e atendimento humanizado">
   <div class="section-body">
-    <p class="muted">10.5 / 15 · Mínimo: 7.5 · Piso atendido</p>
+    <p class="muted dim-summary-subtitle">10.5 / 15 · Mínimo: 7.5 · <span data-dim-floor="04_Acessibilidade">Piso atendido</span></p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Acessibilidade e atendimento humanizado" data-q-tabs>
@@ -766,38 +965,65 @@
              data-occurrence="04_Acessibilidade:M2-41"
              data-q-panel="M2-41">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-41</span>
-          <h3>E-mail institucional exclusivo</h3>
-          <p class="muted">Item 1 — Canais institucionais acessíveis · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-41</span>
+            <h3 class="qcard-title">E-mail institucional exclusivo</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Canais institucionais acessíveis · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M2-41">2.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M2-41">2.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Sim</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Sim</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §2º, I.</p>
-        <p><strong>Critério:</strong> 2 pts: possui e-mail institucional exclusivo ativo. 1 pt: e-mail institucional não exclusivo ou com limitação relevante. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §2º, I.</p>
+            <p><strong>Critério:</strong> 2 pts: possui e-mail institucional exclusivo ativo. 1 pt: e-mail institucional não exclusivo ou com limitação relevante. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -809,38 +1035,65 @@
              data-occurrence="04_Acessibilidade:M2-43"
              data-q-panel="M2-43" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-43</span>
-          <h3>Linha telefônica funcional de uso restrito</h3>
-          <p class="muted">Item 1 — Canais institucionais acessíveis · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-43</span>
+            <h3 class="qcard-title">Linha telefônica funcional de uso restrito</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Canais institucionais acessíveis · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M2-43">2.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M2-43">2.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Sim</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Sim</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §2º, II.</p>
-        <p><strong>Critério:</strong> 2 pts: possui telefone/ramal funcional de uso restrito. 1 pt: telefone compartilhado ou limitado. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §2º, II.</p>
+            <p><strong>Critério:</strong> 2 pts: possui telefone/ramal funcional de uso restrito. 1 pt: telefone compartilhado ou limitado. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -852,38 +1105,65 @@
              data-occurrence="04_Acessibilidade:M2-47"
              data-q-panel="M2-47" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-47</span>
-          <h3>Endereço postal próprio ou referência clara</h3>
-          <p class="muted">Item 1 — Canais institucionais acessíveis · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-47</span>
+            <h3 class="qcard-title">Endereço postal próprio ou referência clara</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Canais institucionais acessíveis · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M2-47">2.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M2-47">2.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Sim</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Sim</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §2º, IV.</p>
-        <p><strong>Critério:</strong> 2 pts: existe endereço postal próprio ou referência institucional clara. 1 pt: referência indireta/compartilhada que ainda permite recebimento. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §2º, IV.</p>
+            <p><strong>Critério:</strong> 2 pts: existe endereço postal próprio ou referência institucional clara. 1 pt: referência indireta/compartilhada que ainda permite recebimento. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -895,38 +1175,65 @@
              data-occurrence="04_Acessibilidade:M2-16"
              data-q-panel="M2-16" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-16</span>
-          <h3>Espaço físico da Ouvidoria</h3>
-          <p class="muted">Item 2 — Condições de atendimento reservado e acessível · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-16</span>
+            <h3 class="qcard-title">Espaço físico da Ouvidoria</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Condições de atendimento reservado e acessível · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M2-16">1.5 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M2-16">1.5 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Possui sala definida, mas com limitações relevantes (privacidade, acessibilidade, mobiliário)</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Possui sala definida, mas com limitações relevantes (privacidade, acessibilidade, mobiliário)</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Parcial</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Parcial</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §1º, I e II.</p>
-        <p><strong>Critério:</strong> 3 pts: espaço com privacidade, confidencialidade e condições de acessibilidade/atendimento. 1,5 pt: espaço existente com limitações relevantes. 0 pt: sem espaço adequado ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §1º, I e II.</p>
+            <p><strong>Critério:</strong> 3 pts: espaço com privacidade, confidencialidade e condições de acessibilidade/atendimento. 1,5 pt: espaço existente com limitações relevantes. 0 pt: sem espaço adequado ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -938,38 +1245,65 @@
              data-occurrence="04_Acessibilidade:M1-13"
              data-q-panel="M1-13" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M1-13</span>
-          <h3>Públicos atendidos no plano normativo</h3>
-          <p class="muted">Item 3 — Alcance dos públicos dos serviços penais · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M1-13</span>
+            <h3 class="qcard-title">Públicos atendidos no plano normativo</h3>
+          </div>
+          <p class="muted qcard-meta">Item 3 — Alcance dos públicos dos serviços penais · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M1-13">0.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M1-13">0.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Não existe normativa;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Não existe normativa;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Não atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge bad">Não atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, III; art. 10, I.</p>
-        <p><strong>Critério:</strong> 3 pts: previsão normativa contempla amplamente os públicos dos serviços penais. 1,5 pt: contempla apenas parte relevante dos públicos. 0 pt: previsão restrita/inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, III; art. 10, I.</p>
+            <p><strong>Critério:</strong> 3 pts: previsão normativa contempla amplamente os públicos dos serviços penais. 1,5 pt: contempla apenas parte relevante dos públicos. 0 pt: previsão restrita/inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -981,38 +1315,65 @@
              data-occurrence="04_Acessibilidade:M4-64"
              data-q-panel="M4-64" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-64</span>
-          <h3>Públicos atendidos na prática</h3>
-          <p class="muted">Item 3 — Alcance dos públicos dos serviços penais · Peso máximo: 3 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-64</span>
+            <h3 class="qcard-title">Públicos atendidos na prática</h3>
+          </div>
+          <p class="muted qcard-meta">Item 3 — Alcance dos públicos dos serviços penais · Peso máximo: <strong>3 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="04_Acessibilidade:M4-64">3.0 / 3 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="04_Acessibilidade:M4-64">3.0 / 3 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Pessoas privadas de liberdade: Recebe raramente | Familiares / pessoas de referência de pessoas privadas de liberdade: Recebe com alta frequência | Servidores(as) penais e demais trabalhadores(as) dos serviços penais: Recebe com alta frequência | Outros cidadãos e usuários de serviços relacionados ao sistema penal: Recebe com alguma frequência</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Pessoas privadas de liberdade: Recebe raramente | Familiares / pessoas de referência de pessoas privadas de liberdade: Recebe com alta frequência | Servidores(as) penais e demais trabalhadores(as) dos serviços penais: Recebe com alta frequência | Outros cidadãos e usuários de serviços relacionados ao sistema penal: Recebe com alguma frequência</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, III; art. 10, I.</p>
-        <p><strong>Critério:</strong> 3 pts: atendimento alcança de forma ampla os principais públicos dos serviços penais. 1,5 pt: alcance parcial ou com barreiras relevantes. 0 pt: alcance muito restrito ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, III; art. 10, I.</p>
+            <p><strong>Critério:</strong> 3 pts: atendimento alcança de forma ampla os principais públicos dos serviços penais. 1,5 pt: alcance parcial ou com barreiras relevantes. 0 pt: alcance muito restrito ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1022,7 +1383,7 @@
 
 <section class="section dim-panel" id="dim-4" data-dim-panel="05_Transparência" hidden role="tabpanel" aria-labelledby="tab-dim-4" aria-label="Transparência e publicidade">
   <div class="section-body">
-    <p class="muted">10.0 / 15 · Mínimo: 7.5 · Piso atendido</p>
+    <p class="muted dim-summary-subtitle">10.0 / 15 · Mínimo: 7.5 · <span data-dim-floor="05_Transparência">Piso atendido</span></p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Transparência e publicidade" data-q-tabs>
@@ -1066,38 +1427,65 @@
              data-occurrence="05_Transparência:M2-35"
              data-q-panel="M2-35">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-35</span>
-          <h3>Placas e cartazes da Ouvidoria</h3>
-          <p class="muted">Item 1 — Visibilidade institucional e divulgação dos canais · Peso máximo: 5 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-35</span>
+            <h3 class="qcard-title">Placas e cartazes da Ouvidoria</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Visibilidade institucional e divulgação dos canais · Peso máximo: <strong>5 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="05_Transparência:M2-35">5.0 / 5 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="05_Transparência:M2-35">5.0 / 5 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">A Ouvidoria dispõe de placas/cartazes padronizados em todas ou na maior parte das unidades prisionais e dos locais de atendimento ao público, familiares e servidores(as), com indicação clara dos canais de contato</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">A Ouvidoria dispõe de placas/cartazes padronizados em todas ou na maior parte das unidades prisionais e dos locais de atendimento ao público, familiares e servidores(as), com indicação clara dos canais de contato</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, IV; art. 7º, §6º, III.</p>
-        <p><strong>Critério:</strong> 5 pts: existem placas/cartazes institucionais que dão visibilidade à Ouvidoria e a seus canais. 2,5 pts: divulgação física limitada ou parcial. 0 pt: inexistente ou sem evidência. A IN trata esses instrumentos como recomendados.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, IV; art. 7º, §6º, III.</p>
+            <p><strong>Critério:</strong> 5 pts: existem placas/cartazes institucionais que dão visibilidade à Ouvidoria e a seus canais. 2,5 pts: divulgação física limitada ou parcial. 0 pt: inexistente ou sem evidência. A IN trata esses instrumentos como recomendados.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1109,38 +1497,65 @@
              data-occurrence="05_Transparência:M4-71"
              data-q-panel="M4-71" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-71</span>
-          <h3>Monitoramento, relatórios e recomendações</h3>
-          <p class="muted">Item 2 — Publicidade das ações e atividades · Peso máximo: 10 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-71</span>
+            <h3 class="qcard-title">Monitoramento, relatórios e recomendações</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Publicidade das ações e atividades · Peso máximo: <strong>10 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="05_Transparência:M4-71">5.0 / 10 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="05_Transparência:M4-71">5.0 / 10 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Há relatórios periódicos, mas com pouco uso gerencial e sem indicadores estruturados</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Há relatórios periódicos, mas com pouco uso gerencial e sem indicadores estruturados</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Parcial</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Parcial</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, IV; art. 10, VI; art. 12, §3º.</p>
-        <p><strong>Critério:</strong> 10 pts: há produção/divulgação periódica de relatórios, monitoramento ou recomendações sobre a atuação. 5 pts: prática parcial ou esporádica. 0 pt: inexistente ou sem evidência. A pergunta não substitui eventual verificação adicional do art. 7º, §3º, sobre área no sítio eletrônico oficial.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, IV; art. 10, VI; art. 12, §3º.</p>
+            <p><strong>Critério:</strong> 10 pts: há produção/divulgação periódica de relatórios, monitoramento ou recomendações sobre a atuação. 5 pts: prática parcial ou esporádica. 0 pt: inexistente ou sem evidência. A pergunta não substitui eventual verificação adicional do art. 7º, §3º, sobre área no sítio eletrônico oficial.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1150,7 +1565,7 @@
 
 <section class="section dim-panel" id="dim-5" data-dim-panel="06_Integração Tec" hidden role="tabpanel" aria-labelledby="tab-dim-5" aria-label="Integração tecnológica">
   <div class="section-body">
-    <p class="muted">23.0 / 25 · Mínimo: 12.5 · Piso atendido</p>
+    <p class="muted dim-summary-subtitle">23.0 / 25 · Mínimo: 12.5 · <span data-dim-floor="06_Integração Tec">Piso atendido</span></p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Integração tecnológica" data-q-tabs>
@@ -1264,38 +1679,65 @@
              data-occurrence="06_Integração Tec:M2-45"
              data-q-panel="M2-45">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-45</span>
-          <h3>Sistemas ou canais eletrônicos utilizados para registro e gestão</h3>
-          <p class="muted">Item 1 — Canal eletrônico e solução para registro e gestão das manifestações · Peso máximo: 5 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-45</span>
+            <h3 class="qcard-title">Sistemas ou canais eletrônicos utilizados para registro e gestão</h3>
+          </div>
+          <p class="muted qcard-meta">Item 1 — Canal eletrônico e solução para registro e gestão das manifestações · Peso máximo: <strong>5 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-45">5.0 / 5 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-45">5.0 / 5 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Possui canal próprio na Plataforma Fala.BR (CGU);</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Possui canal próprio na Plataforma Fala.BR (CGU);</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, V; art. 7º, §2º, III; §4º, II; §5º.</p>
-        <p><strong>Critério:</strong> 5 pts: utiliza solução eletrônica institucional capaz de receber/registrar e apoiar a gestão das manifestações. 2,5 pts: solução parcial, manual ou limitada. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, V; art. 7º, §2º, III; §4º, II; §5º.</p>
+            <p><strong>Critério:</strong> 5 pts: utiliza solução eletrônica institucional capaz de receber/registrar e apoiar a gestão das manifestações. 2,5 pts: solução parcial, manual ou limitada. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1307,38 +1749,65 @@
              data-occurrence="06_Integração Tec:M4-66"
              data-q-panel="M4-66" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M4-66</span>
-          <h3>Registro, protocolo e classificação das manifestações</h3>
-          <p class="muted">Item 2 — Registro, protocolo, rastreabilidade e acompanhamento · Peso máximo: 5 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M4-66</span>
+            <h3 class="qcard-title">Registro, protocolo e classificação das manifestações</h3>
+          </div>
+          <p class="muted qcard-meta">Item 2 — Registro, protocolo, rastreabilidade e acompanhamento · Peso máximo: <strong>5 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M4-66">5.0 / 5 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M4-66">5.0 / 5 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Toda manifestação é registrada com número de protocolo, é classificada por tipo e passa por análise preliminar, com critérios para arquivamento fundamentado e para o tratamento de manifestações anônimas</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Toda manifestação é registrada com número de protocolo, é classificada por tipo e passa por análise preliminar, com critérios para arquivamento fundamentado e para o tratamento de manifestações anônimas</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 11; art. 13, II.</p>
-        <p><strong>Critério:</strong> 5 pts: manifestações são registradas/classificadas e recebem protocolo que permita acompanhamento e rastreabilidade. 2,5 pts: registro/protocolo parcial. 0 pt: inexistente ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 11; art. 13, II.</p>
+            <p><strong>Critério:</strong> 5 pts: manifestações são registradas/classificadas e recebem protocolo que permita acompanhamento e rastreabilidade. 2,5 pts: registro/protocolo parcial. 0 pt: inexistente ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1350,38 +1819,65 @@
              data-occurrence="06_Integração Tec:M2-37"
              data-q-panel="M2-37" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-37</span>
-          <h3>Recursos específicos de segurança da informação</h3>
-          <p class="muted">Item 3 — Sigilo, autenticação e controle de acesso · Peso máximo: 5 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-37</span>
+            <h3 class="qcard-title">Recursos específicos de segurança da informação</h3>
+          </div>
+          <p class="muted qcard-meta">Item 3 — Sigilo, autenticação e controle de acesso · Peso máximo: <strong>5 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-37">5.0 / 5 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-37">5.0 / 5 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Antivírus institucional instalado nas estações de trabalho;Mecanismos de autenticação e controle de acesso aos dados;Rotina de backup periódico dos dados da Ouvidoria;Acesso restrito a pastas/sistemas que contenham manifestações;Política interna ou instruções sobre tratamento de dados pessoais;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Antivírus institucional instalado nas estações de trabalho;Mecanismos de autenticação e controle de acesso aos dados;Rotina de backup periódico dos dados da Ouvidoria;Acesso restrito a pastas/sistemas que contenham manifestações;Política interna ou instruções sobre tratamento de dados pessoais;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, §2º; art. 7º, §4º, II e III; §5º.</p>
-        <p><strong>Critério:</strong> 5 pts: há autenticação, restrição de acesso e mecanismos compatíveis de segurança da informação. 2,5 pts: controles básicos ou incompletos. 0 pt: inexistentes ou sem evidência.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, §2º; art. 7º, §4º, II e III; §5º.</p>
+            <p><strong>Critério:</strong> 5 pts: há autenticação, restrição de acesso e mecanismos compatíveis de segurança da informação. 2,5 pts: controles básicos ou incompletos. 0 pt: inexistentes ou sem evidência.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1393,38 +1889,65 @@
              data-occurrence="06_Integração Tec:M2-17"
              data-q-panel="M2-17" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-17</span>
-          <h3>Quantidade atualmente disponível de computadores com acesso à internet</h3>
-          <p class="muted">Item 4 — Computadores e acesso à internet · Peso máximo: 4 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-17</span>
+            <h3 class="qcard-title">Quantidade atualmente disponível de computadores com acesso à internet</h3>
+          </div>
+          <p class="muted qcard-meta">Item 4 — Computadores e acesso à internet · Peso máximo: <strong>4 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-17">4.0 / 4 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-17">4.0 / 4 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">5</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">5</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §4º, I.</p>
-        <p><strong>Critério:</strong> 4 pts: há computador(es) com acesso à internet disponível(is) para a Ouvidoria. 2 pts: disponibilidade compartilhada/limitada que compromete a rotina. 0 pt: quantidade zero ou sem evidência. A IN não fixa quantitativo mínimo.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §4º, I.</p>
+            <p><strong>Critério:</strong> 4 pts: há computador(es) com acesso à internet disponível(is) para a Ouvidoria. 2 pts: disponibilidade compartilhada/limitada que compromete a rotina. 0 pt: quantidade zero ou sem evidência. A IN não fixa quantitativo mínimo.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1436,38 +1959,65 @@
              data-occurrence="06_Integração Tec:M2-19"
              data-q-panel="M2-19" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-19</span>
-          <h3>Impressoras multifuncionais atualmente disponíveis</h3>
-          <p class="muted">Item 5 — Impressoras e scanners · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-19</span>
+            <h3 class="qcard-title">Impressoras multifuncionais atualmente disponíveis</h3>
+          </div>
+          <p class="muted qcard-meta">Item 5 — Impressoras e scanners · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-19">2.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-19">2.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">1</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">1</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §6º, I.</p>
-        <p><strong>Critério:</strong> 2 pts: há ao menos uma impressora multifuncional disponível regularmente. 1 pt: acesso compartilhado/limitado. 0 pt: inexistente ou sem evidência. Recurso recomendado na IN.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §6º, I.</p>
+            <p><strong>Critério:</strong> 2 pts: há ao menos uma impressora multifuncional disponível regularmente. 1 pt: acesso compartilhado/limitado. 0 pt: inexistente ou sem evidência. Recurso recomendado na IN.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1479,38 +2029,65 @@
              data-occurrence="06_Integração Tec:M2-21"
              data-q-panel="M2-21" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-21</span>
-          <h3>Scanners atualmente disponíveis</h3>
-          <p class="muted">Item 5 — Impressoras e scanners · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-21</span>
+            <h3 class="qcard-title">Scanners atualmente disponíveis</h3>
+          </div>
+          <p class="muted qcard-meta">Item 5 — Impressoras e scanners · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-21">0.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-21">0.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">0</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">0</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Não atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge bad">Não atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §6º, I — impressora multifuncional; scanner autônomo não é citado expressamente.</p>
-        <p><strong>Critério:</strong> 2 pts: há scanner disponível regularmente. 1 pt: acesso compartilhado/limitado. 0 pt: inexistente ou sem evidência. A referência normativa é indireta quando se trata de scanner autônomo.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §6º, I — impressora multifuncional; scanner autônomo não é citado expressamente.</p>
+            <p><strong>Critério:</strong> 2 pts: há scanner disponível regularmente. 1 pt: acesso compartilhado/limitado. 0 pt: inexistente ou sem evidência. A referência normativa é indireta quando se trata de scanner autônomo.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1522,38 +2099,65 @@
              data-occurrence="06_Integração Tec:M2-27"
              data-q-panel="M2-27" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-27</span>
-          <h3>Smartphones atualmente disponíveis</h3>
-          <p class="muted">Item 6 — Aparelhos de telefone celular · Peso máximo: 2 pts</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-27</span>
+            <h3 class="qcard-title">Smartphones atualmente disponíveis</h3>
+          </div>
+          <p class="muted qcard-meta">Item 6 — Aparelhos de telefone celular · Peso máximo: <strong>2 pts</strong></p>
         </div>
-        <span class="qscore" data-score-for="06_Integração Tec:M2-27">2.0 / 2 pts</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="06_Integração Tec:M2-27">2.0 / 2 pts</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">1</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">1</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Atende</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge good">Atende</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §6º, IV.</p>
-        <p><strong>Critério:</strong> 2 pts: há aparelho celular institucional disponível para a Ouvidoria. 1 pt: aparelho compartilhado/uso limitado. 0 pt: inexistente ou sem evidência. Recurso recomendado na IN.</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §6º, IV.</p>
+            <p><strong>Critério:</strong> 2 pts: há aparelho celular institucional disponível para a Ouvidoria. 1 pt: aparelho compartilhado/uso limitado. 0 pt: inexistente ou sem evidência. Recurso recomendado na IN.</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1563,7 +2167,7 @@
 
 <section class="section dim-panel" id="dim-6" data-dim-panel="07_Maturidade" hidden role="tabpanel" aria-labelledby="tab-dim-6" aria-label="Maturidade / bônus">
   <div class="section-body">
-    <p class="muted">9.0 / 10</p>
+    <p class="muted dim-summary-subtitle">9.0 / 10</p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão Maturidade / bônus" data-q-tabs>
@@ -1677,38 +2281,65 @@
              data-occurrence="07_Maturidade:M2-46"
              data-q-panel="M2-46">
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-46</span>
-          <h3>Uso do canal Fala.BR (+3)</h3>
-          <p class="muted">Bônus — Uso do canal Fala.BR · Peso máximo: +3</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-46</span>
+            <h3 class="qcard-title">Uso do canal Fala.BR (+3)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Uso do canal Fala.BR · Peso máximo: <strong>+3</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M2-46">3.0 / +3</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M2-46">3.0 / +3</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">O Fala.BR é utilizado como sistema principal de registro e gestão das manifestações</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">O Fala.BR é utilizado como sistema principal de registro e gestão das manifestações</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, V; art. 7º, §2º, III, e §5º.</p>
-        <p><strong>Critério:</strong> SIM: utiliza o Fala.BR. NÃO/SEM EVIDÊNCIA: 0. Valor: +3 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, V; art. 7º, §2º, III, e §5º.</p>
+            <p><strong>Critério:</strong> SIM: utiliza o Fala.BR. NÃO/SEM EVIDÊNCIA: 0. Valor: +3 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1720,38 +2351,65 @@
              data-occurrence="07_Maturidade:M0-08"
              data-q-panel="M0-08" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M0-08</span>
-          <h3>Designação por mandato (+1)</h3>
-          <p class="muted">Bônus — Designação por mandato · Peso máximo: +1</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M0-08</span>
+            <h3 class="qcard-title">Designação por mandato (+1)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Designação por mandato · Peso máximo: <strong>+1</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M0-08">0.0 / +1</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M0-08">0.0 / +1</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">NÃO</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">NÃO</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Não</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Não</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 6º, §2º; art. 8º, §2º.</p>
-        <p><strong>Critério:</strong> SIM: existe mandato fixo formalmente previsto. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 6º, §2º; art. 8º, §2º.</p>
+            <p><strong>Critério:</strong> SIM: existe mandato fixo formalmente previsto. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1763,38 +2421,65 @@
              data-occurrence="07_Maturidade:M3-60"
              data-q-panel="M3-60" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M3-60</span>
-          <h3>Dedicação da equipe (+1)</h3>
-          <p class="muted">Bônus — Dedicação da equipe · Peso máximo: +1</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M3-60</span>
+            <h3 class="qcard-title">Dedicação da equipe (+1)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Dedicação da equipe · Peso máximo: <strong>+1</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M3-60">1.0 / +1</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M3-60">1.0 / +1</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">A equipe atua com dedicação exclusiva na Ouvidoria de Serviços Penais</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">A equipe atua com dedicação exclusiva na Ouvidoria de Serviços Penais</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 9º, caput.</p>
-        <p><strong>Critério:</strong> SIM: há dedicação exclusiva da equipe. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 9º, caput.</p>
+            <p><strong>Critério:</strong> SIM: há dedicação exclusiva da equipe. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1806,38 +2491,65 @@
              data-occurrence="07_Maturidade:M3-58"
              data-q-panel="M3-58" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M3-58</span>
-          <h3>Requisitos de perfil para o cargo de Ouvidor (+1)</h3>
-          <p class="muted">Bônus — Requisitos de perfil para o cargo de Ouvidor · Peso máximo: +1</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M3-58</span>
+            <h3 class="qcard-title">Requisitos de perfil para o cargo de Ouvidor (+1)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Requisitos de perfil para o cargo de Ouvidor · Peso máximo: <strong>+1</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M3-58">1.0 / +1</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M3-58">1.0 / +1</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Reputação ilibada;Conhecimento em gestão pública;Conhecimento em direitos humanos ou sistema penal;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Reputação ilibada;Conhecimento em gestão pública;Conhecimento em direitos humanos ou sistema penal;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 8º, §1º.</p>
-        <p><strong>Critério:</strong> SIM: perfil atende aos requisitos preferenciais indicados na IN. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 8º, §1º.</p>
+            <p><strong>Critério:</strong> SIM: perfil atende aos requisitos preferenciais indicados na IN. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1849,38 +2561,65 @@
              data-occurrence="07_Maturidade:M2-50"
              data-q-panel="M2-50" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-50</span>
-          <h3>WhatsApp institucional (+1)</h3>
-          <p class="muted">Bônus — WhatsApp institucional · Peso máximo: +1</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-50</span>
+            <h3 class="qcard-title">WhatsApp institucional (+1)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — WhatsApp institucional · Peso máximo: <strong>+1</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M2-50">1.0 / +1</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M2-50">1.0 / +1</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">(67)99971-4323</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">(67)99971-4323</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, III e V; art. 7º, §2º — canal adicional não previsto nominalmente.</p>
-        <p><strong>Critério:</strong> SIM: existe WhatsApp institucional utilizado pela Ouvidoria. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, III e V; art. 7º, §2º — canal adicional não previsto nominalmente.</p>
+            <p><strong>Critério:</strong> SIM: existe WhatsApp institucional utilizado pela Ouvidoria. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1892,38 +2631,65 @@
              data-occurrence="07_Maturidade:M2-49"
              data-q-panel="M2-49" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-49</span>
-          <h3>Outros canais eletrônicos institucionais (+1)</h3>
-          <p class="muted">Bônus — Outros canais eletrônicos institucionais · Peso máximo: +1</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-49</span>
+            <h3 class="qcard-title">Outros canais eletrônicos institucionais (+1)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Outros canais eletrônicos institucionais · Peso máximo: <strong>+1</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M2-49">1.0 / +1</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M2-49">1.0 / +1</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">WhatsApp institucional ou outro aplicativo de mensagem;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">WhatsApp institucional ou outro aplicativo de mensagem;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 4º, III e V; art. 7º, §2º.</p>
-        <p><strong>Critério:</strong> SIM: existem outros canais eletrônicos institucionais adicionais. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 4º, III e V; art. 7º, §2º.</p>
+            <p><strong>Critério:</strong> SIM: existem outros canais eletrônicos institucionais adicionais. NÃO/SEM EVIDÊNCIA: 0. Valor: +1 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 
@@ -1935,38 +2701,65 @@
              data-occurrence="07_Maturidade:M2-36"
              data-q-panel="M2-36" hidden>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">M2-36</span>
-          <h3>Materiais adicionais de divulgação e educação em direitos (+2)</h3>
-          <p class="muted">Bônus — Materiais adicionais de divulgação e educação em direitos · Peso máximo: +2</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">M2-36</span>
+            <h3 class="qcard-title">Materiais adicionais de divulgação e educação em direitos (+2)</h3>
+          </div>
+          <p class="muted qcard-meta">Bônus — Materiais adicionais de divulgação e educação em direitos · Peso máximo: <strong>+2</strong></p>
         </div>
-        <span class="qscore" data-score-for="07_Maturidade:M2-36">2.0 / +2</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="07_Maturidade:M2-36">2.0 / +2</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">Conteúdos digitais no site ou portal institucional específicos da Ouvidoria de Serviços Penais;</p>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">Conteúdos digitais no site ou portal institucional específicos da Ouvidoria de Serviços Penais;</p>
+          </div>
 
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
 
-          <p><strong>Status:</strong> Sim</p>
-          <p><strong>Evidência / observação:</strong><br>Doc. SEI 37070578</p>
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
+
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge ">Sim</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">Doc. SEI 37070578</p>
+            </div>
+          </div>
 
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> Art. 7º, §6º, III.</p>
-        <p><strong>Critério:</strong> SIM: existem materiais adicionais de divulgação/educação em direitos. NÃO/SEM EVIDÊNCIA: 0. Valor: +2 ponto(s).</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
 
-        <p class="muted">Nenhum documento anexado.</p>
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> Art. 7º, §6º, III.</p>
+            <p><strong>Critério:</strong> SIM: existem materiais adicionais de divulgação/educação em direitos. NÃO/SEM EVIDÊNCIA: 0. Valor: +2 ponto(s).</p>
+          </div>
+        </details>
 
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
 
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
+
+          </div>
+
+        </div>
       </div>
     </article>
 

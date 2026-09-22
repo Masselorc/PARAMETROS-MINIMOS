@@ -38,9 +38,6 @@
      data-dim-tab="{{ dim.sheet_name|e }}">
     {{ dim.dimension_name|e }}
     <span class="badge" data-dim-total="{{ dim.sheet_name|e }}">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }}</span>
-    {% if dim.meets_minimum is not none %}
-    <span class="badge" data-dim-floor="{{ dim.sheet_name|e }}">{% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}</span>
-    {% endif %}
   </a>
   {% endfor %}
 </nav>
@@ -49,7 +46,7 @@
 {% set dim_idx = loop.index0 %}
 <section class="section dim-panel" id="dim-{{ dim_idx }}" data-dim-panel="{{ dim.sheet_name|e }}"{% if not loop.first %} hidden{% endif %} role="tabpanel" aria-labelledby="tab-dim-{{ dim_idx }}" aria-label="{{ dim.dimension_name|e }}">
   <div class="section-body">
-    <p class="muted">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }} / {{ dim.max|e }}{% if dim.minimum is not none %} · Mínimo: {{ dim.minimum|e }} · {% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}{% endif %}</p>
+    <p class="muted dim-summary-subtitle">{{ "%.1f"|format(dim.dimension_score) if dim.dimension_score is not none else "—" }} / {{ dim.max|e }}{% if dim.minimum is not none %} · Mínimo: {{ dim.minimum|e }} · <span data-dim-floor="{{ dim.sheet_name|e }}">{% if dim.meets_minimum %}Piso atendido{% else %}Abaixo do mínimo{% endif %}</span>{% endif %}</p>
 
     <!-- Sub-abas de perguntas da dimensão ativa -->
     <nav class="qtabs" role="tablist" aria-label="Perguntas da dimensão {{ dim.dimension_name|e }}" data-q-tabs>
@@ -79,86 +76,123 @@
              data-occurrence="{{ q.occurrence_key|e }}"
              data-q-panel="{{ q.question_code|e }}"{% if not loop.first %} hidden{% endif %}>
       <div class="qcard-head">
-        <div>
-          <span class="qcode">{{ q.question_code|e }}</span>
-          <h3>{{ q.question_title|e }}</h3>
-          <p class="muted">{{ q.item_name|e }} · Peso máximo: {{ q.max_display|e }}</p>
+        <div class="qcard-head-info">
+          <div class="qcard-title-line">
+            <span class="qcode">{{ q.question_code|e }}</span>
+            <h3 class="qcard-title">{{ q.question_title|e }}</h3>
+          </div>
+          <p class="muted qcard-meta">{{ q.item_name|e }} · Peso máximo: <strong>{{ q.max_display|e }}</strong></p>
         </div>
-        <span class="qscore" data-score-for="{{ q.occurrence_key|e }}">{{ q.score|e }} / {{ q.max_display|e }}</span>
+        <div class="qcard-head-score">
+          <span class="qscore" data-score-for="{{ q.occurrence_key|e }}">{{ q.score|e }} / {{ q.max_display|e }}</span>
+        </div>
       </div>
+
       <div class="qcols">
-        <div class="qcol">
-          <h4>Resposta do diagnóstico</h4>
-          <p class="texto-oficial">{{ q.resposta|e or "Sem resposta no diagnóstico" }}</p>
-          {% if not read_only|default(false) %}<details>
+        <!-- Coluna Diagnóstico Oficial -->
+        <div class="qcol qcol-diag">
+          <h4 class="qcol-title">Resposta do diagnóstico</h4>
+          <div class="diag-box">
+            <p class="diag-text">{{ q.resposta|e or "Sem resposta no diagnóstico" }}</p>
+          </div>
+          {% if not read_only|default(false) %}
+          <details class="diag-correct-details">
             <summary>Corrigir resposta do diagnóstico</summary>
             <form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/corrigir-resposta" data-confirm="Confirmar a correção da resposta do diagnóstico?">
-              <label>Nova resposta do diagnóstico
-                <textarea name="resposta" rows="3">{{ q.resposta|e }}</textarea>
-              </label>
-              <button type="submit" class="quiet">Corrigir resposta do diagnóstico</button>
+              <label class="sr-only">Nova resposta do diagnóstico</label>
+              <textarea name="resposta" rows="2" class="textarea-compact">{{ q.resposta|e }}</textarea>
+              <div class="diag-correct-actions">
+                <button type="submit" class="quiet btn-compact">Salvar correção</button>
+              </div>
             </form>
-          </details>{% endif %}
+          </details>
+          {% endif %}
         </div>
-        <div class="qcol">
-          <h4>Avaliação</h4>
+
+        <!-- Coluna Avaliação do Analista -->
+        <div class="qcol qcol-eval">
+          <h4 class="qcol-title">Avaliação</h4>
           {% if read_only|default(false) %}
-          <p><strong>Status:</strong> {{ q.status|e }}</p>
-          <p><strong>Evidência / observação:</strong><br>{{ q.evidence_text|e }}</p>
-          {% else %}
-          <label class="quiet-label">Status
-            <select data-status-select>
-              {% for opt in q.status_options %}
-              <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
-              {% endfor %}
-            </select>
-          </label>
-          <label>Evidência / observação
-            <textarea data-evidence rows="3">{{ q.evidence_text|e }}</textarea>
-          </label>
-          <div class="page-actions">
-            <button type="button" class="primary" data-save data-entity="{{ entity.entity_key|e }}" data-occurrence="{{ q.occurrence_key|e }}">Salvar avaliação</button>
+          <div class="eval-readonly-box">
+            <div class="eval-status-line">
+              <span class="eval-lbl">Status:</span>
+              <span class="badge eval-badge {% if q.status == 'Atende' %}good{% elif q.status == 'Atende parcialmente' %}warn{% elif q.status == 'Não atende' %}bad{% endif %}">{{ q.status|e or "Não avaliado" }}</span>
+            </div>
+            <div class="eval-evidence-line">
+              <span class="eval-lbl">Evidência / observação:</span>
+              <p class="eval-evidence-text">{{ q.evidence_text|e or "Nenhuma evidência ou observação informada." }}</p>
+            </div>
           </div>
-          <small data-msg aria-live="polite"></small>
+          {% else %}
+          <div class="eval-edit-box">
+            <div class="eval-ctrl-bar">
+              <div class="eval-status-group">
+                <label for="status-{{ q.occurrence_key|e }}" class="eval-lbl">Status</label>
+                <select id="status-{{ q.occurrence_key|e }}" data-status-select class="select-compact">
+                  {% for opt in q.status_options %}
+                  <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button type="button" class="primary btn-compact-save" data-save data-entity="{{ entity.entity_key|e }}" data-occurrence="{{ q.occurrence_key|e }}">Salvar avaliação</button>
+              <small data-msg aria-live="polite" class="eval-msg"></small>
+            </div>
+            <div class="eval-evidence-group">
+              <label for="evidence-{{ q.occurrence_key|e }}" class="eval-lbl">Evidência / observação</label>
+              <textarea id="evidence-{{ q.occurrence_key|e }}" data-evidence rows="2" class="textarea-compact" placeholder="Indicar processo SEI, documento ou nota comprobatória…">{{ q.evidence_text|e }}</textarea>
+            </div>
+          </div>
           {% endif %}
         </div>
       </div>
-      <details class="qmeta">
-        <summary>Fundamentação e critério</summary>
-        <p><strong>Fundamentação:</strong> {{ q.fundamentacao|e }}</p>
-        <p><strong>Critério:</strong> {{ q.criterio|e }}</p>
-      </details>
-      <div class="qdocs">
-        <h4>Documentos</h4>
-        {% if q.attachments %}
-        <ul>
-          {% for a in q.attachments %}
-          <li>
-            {{ a.original_filename|e }}
-            {% if read_only|default(false) %}
-            {% if a.static_url %}<a href="{{ a.static_url|e }}" target="_blank" rel="noopener">Abrir</a><a href="{{ a.static_url|e }}" download>Baixar</a>{% else %}<span class="muted">Arquivo não incluído neste snapshot.</span>{% endif %}
+
+      <!-- Rodapé: Fundamentação e Documentos -->
+      <div class="qcard-footer">
+        <details class="qmeta-compact">
+          <summary>Fundamentação e critério</summary>
+          <div class="qmeta-body">
+            <p><strong>Fundamentação:</strong> {{ q.fundamentacao|e or "—" }}</p>
+            <p><strong>Critério:</strong> {{ q.criterio|e or "—" }}</p>
+          </div>
+        </details>
+
+        <div class="qdocs-compact">
+          <div class="qdocs-header-bar">
+            <span class="qdocs-title">Documentos:</span>
+            {% if q.attachments %}
+            <ul class="qdocs-pills">
+              {% for a in q.attachments %}
+              <li class="qdoc-pill">
+                <span class="qdoc-filename" title="{{ a.original_filename|e }}">{{ a.original_filename|e }}</span>
+                <span class="qdoc-actions">
+                  {% if read_only|default(false) %}
+                  {% if a.static_url %}<a href="{{ a.static_url|e }}" target="_blank" rel="noopener">Abrir</a> · <a href="{{ a.static_url|e }}" download>Baixar</a>{% else %}<span class="muted">Não incluído</span>{% endif %}
+                  {% else %}
+                  <a href="/anexos/{{ a.id|e }}/abrir" target="_blank">Abrir</a> ·
+                  <a href="/anexos/{{ a.id|e }}/baixar">Baixar</a>
+                  <form method="post" action="/api/anexos/{{ a.id|e }}/desvincular" data-confirm="Desvincular este documento?" class="qdoc-del-form">
+                    <button type="submit" class="quiet danger btn-link">Desvincular</button>
+                  </form>
+                  {% endif %}
+                </span>
+              </li>
+              {% endfor %}
+            </ul>
             {% else %}
-            <a href="/anexos/{{ a.id|e }}/abrir">Abrir</a>
-            <a href="/anexos/{{ a.id|e }}/baixar">Baixar</a>
-            <form method="post" action="/api/anexos/{{ a.id|e }}/desvincular" data-confirm="Desvincular este documento?">
-              <button type="submit" class="quiet danger">Desvincular</button>
-            </form>
+            <span class="muted qdocs-empty">Nenhum documento anexado.</span>
             {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="muted">Nenhum documento anexado.</p>
-        {% endif %}
-        {% if not read_only|default(false) %}<form method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
-          <label>Anexar documento
-            <input type="file" name="file">
-          </label>
-          <label>Notas do anexo
-            <input type="text" name="notes" value="">
-          </label>
-          <button type="submit">Anexar</button>
-        </form>{% endif %}
+          </div>
+          {% if not read_only|default(false) %}
+          <form class="qdocs-upload-form" method="post" action="/api/unidades/{{ entity.entity_key|e }}/avaliacoes/{{ q.occurrence_key|e }}/anexos" enctype="multipart/form-data">
+            <label class="qdocs-file-label">
+              <span>Anexo:</span>
+              <input type="file" name="file" class="input-file-compact">
+            </label>
+            <input type="text" name="notes" placeholder="Notas do anexo (opcional)" class="input-notes-compact">
+            <button type="submit" class="btn-compact">Anexar</button>
+          </form>
+          {% endif %}
+        </div>
       </div>
     </article>
     {% endfor %}
