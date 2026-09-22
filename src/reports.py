@@ -10,7 +10,8 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 from .config import (
     BASE_WEIGHTS,
@@ -49,15 +50,59 @@ def _base_doc(path: Path, title: str) -> tuple[SimpleDocTemplate, list, dict]:
     return doc, [], styles
 
 
-def _header_flow(styles) -> list:
+def _header_flow(styles, report_subtitle: str = "") -> list:
+    header_org_style = ParagraphStyle(
+        "HeaderOrg",
+        parent=styles["Normal"],
+        alignment=TA_CENTER,
+        fontName="Helvetica-Bold",
+        fontSize=8.5,
+        leading=11.5,
+        textColor=colors.HexColor("#103E49"),
+    )
+    header_title_style = ParagraphStyle(
+        "HeaderSystemTitle",
+        parent=styles["Normal"],
+        alignment=TA_CENTER,
+        fontName="Helvetica-Bold",
+        fontSize=10,
+        leading=13,
+        textColor=colors.HexColor("#17365D"),
+    )
+    header_sub_style = ParagraphStyle(
+        "HeaderReportSubtitle",
+        parent=styles["Normal"],
+        alignment=TA_CENTER,
+        fontName="Helvetica-Bold",
+        fontSize=10.5,
+        leading=13.5,
+        textColor=colors.HexColor("#103E49"),
+    )
+    header_ref_style = ParagraphStyle(
+        "HeaderRef",
+        parent=styles["Normal"],
+        alignment=TA_CENTER,
+        fontSize=7.5,
+        leading=10,
+        textColor=colors.HexColor("#526572"),
+    )
+
     flows = []
-    for line in HEADER_LINES:
-        flows.append(Paragraph(f"<b>{line}</b>", styles["Normal"]))
+    # Linhas institucionais centralizadas
+    for line in HEADER_LINES[:3]:
+        flows.append(Paragraph(line, header_org_style))
+    flows.append(Spacer(1, 1.5 * mm))
+    # Nome do Sistema centralizado
+    flows.append(Paragraph(HEADER_LINES[3], header_title_style))
+    if report_subtitle:
+        flows.append(Spacer(1, 1.5 * mm))
+        flows.append(Paragraph(report_subtitle, header_sub_style))
+    flows.append(Spacer(1, 1.5 * mm))
     now = datetime.now().strftime("%d/%m/%Y %H:%M")
     flows.append(Paragraph(
         f"Referência: IN GABSEC/SENAPPEN/MJSP nº 75/2026 — metodologia ONASP. "
-        f"Dados: {WORKBOOK_FILENAME}. Gerado em {now}.", styles["Normal"]))
-    flows.append(Spacer(1, 6 * mm))
+        f"Dados: {WORKBOOK_FILENAME}. Gerado em {now}.", header_ref_style))
+    flows.append(Spacer(1, 4 * mm))
     return flows
 
 
@@ -68,13 +113,14 @@ def _table_style() -> TableStyle:
         ("FONTSIZE", (0, 0), (-1, -1), 7),
         ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("ALIGN", (0, 0), (-1, 0), "CENTER"),  # cabeçalhos da tabela centralizados
     ])
 
 
 def generate_general_pdf(rows: list[dict], cards: dict) -> Path:
     path = EXPORTACOES_DIR / f"relatorio_geral_{_stamp()}.pdf"
     doc, story, styles = _base_doc(path, "Relatório geral — Parâmetros Mínimos")
-    story.extend(_header_flow(styles))
+    story.extend(_header_flow(styles, "Relatório Geral Consolidado"))
     story.append(Paragraph("<b>Síntese</b>", styles["Heading2"]))
     story.append(Paragraph(
         f"Unidades avaliadas: {cards['unidades']}. Ouvidorias instituídas: {cards['instituidas']}. "
@@ -97,7 +143,16 @@ def generate_general_pdf(rows: list[dict], cards: dict) -> Path:
             (r["classification"] or "")[:60],
         ])
     t = Table(data, repeatRows=1)
-    t.setStyle(_table_style())
+    t.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#17365D")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONTSIZE", (0, 0), (-1, -1), 7),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("ALIGN", (0, 0), (-1, 0), "CENTER"),  # cabeçalhos centralizados
+        ("ALIGN", (0, 1), (0, -1), "CENTER"),  # coluna UF centralizada
+        ("ALIGN", (2, 1), (-2, -1), "CENTER"),  # pontuações centralizadas
+    ]))
     story.append(t)
     story.append(Spacer(1, 4 * mm))
     story.append(Paragraph(f"<i>{NOTA_METODOLOGICA}</i>", styles["Normal"]))
@@ -111,12 +166,22 @@ def generate_unit_pdf(entity_key: str) -> Path:
     res = detail["result"]
     path = EXPORTACOES_DIR / f"relatorio_{entity_key}_{_stamp()}.pdf"
     doc, story, styles = _base_doc(path, f"Relatório individual — {entity_key}")
-    story.extend(_header_flow(styles))
+    story.extend(_header_flow(styles, f"Relatório de Avaliação Individual — {ent['uf']} — {ent['unidade_label']}"))
+    unit_meta_style = ParagraphStyle(
+        "UnitMeta",
+        parent=styles["Normal"],
+        alignment=TA_CENTER,
+        fontSize=8.5,
+        leading=12,
+        textColor=colors.HexColor("#192E39"),
+    )
     story.append(Paragraph(
-        f"<b>UF:</b> {ent['uf']} &nbsp; <b>Unidade:</b> {ent['unidade_label']} &nbsp; "
-        f"<b>Situação:</b> {res['situacao']} &nbsp; "
-        f"<b>Emitido em:</b> {datetime.now().strftime('%d/%m/%Y %H:%M')}", styles["Normal"]))
-    story.append(Paragraph("<b>Resultado</b>", styles["Heading2"]))
+        f"<b>UF:</b> {ent['uf']} &nbsp;&nbsp;|&nbsp;&nbsp; "
+        f"<b>Unidade:</b> {ent['unidade_label']} &nbsp;&nbsp;|&nbsp;&nbsp; "
+        f"<b>Situação:</b> {res['situacao']} &nbsp;&nbsp;|&nbsp;&nbsp; "
+        f"<b>Classificação:</b> {res['classification']}", unit_meta_style))
+    story.append(Spacer(1, 3 * mm))
+    story.append(Paragraph("<b>Resultado Consolidado</b>", styles["Heading2"]))
     dimension_results = " | ".join(
         f"{dim['dimension_name']}: {_fmt(res['dim_scores'].get(dim['sheet_name']))}"
         + (f" (mínimo {DIMENSION_MINIMUMS[dim['sheet_name']]:g})"
