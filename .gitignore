@@ -1,0 +1,18 @@
+# Arquivos temporários do Microsoft Office / Excel
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+*.tmp
+
+# Arquivos do sistema operacional
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Ambientes virtuais e dependências
+.env
+__pycache__/
+*.pyc
+
