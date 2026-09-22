@@ -32,13 +32,13 @@
         <option value="nao_comprovada">Instituição não comprovada</option>
       </select>
     </label>
-    <label>Nota mín.
-      <input type="number" name="nota_min" min="0" max="100" step="0.1">
+    <label class="col-num">Nota mín.
+      <input type="number" name="nota_min" min="0" max="100" step="0.1" placeholder="0">
     </label>
-    <label>Nota máx.
-      <input type="number" name="nota_max" min="0" max="100" step="0.1">
+    <label class="col-num">Nota máx.
+      <input type="number" name="nota_max" min="0" max="100" step="0.1" placeholder="100">
     </label>
-    <div><button class="primary" type="submit">Filtrar</button></div>
+    <div class="filter-action"><button class="primary" type="submit">Filtrar</button></div>
   </form>
   <p class="muted" data-static-count>{{ rows|length }} unidades</p>
   {% endif %}
