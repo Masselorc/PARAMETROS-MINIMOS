@@ -9,82 +9,15 @@
   </div>
 </div>
 
-{% if read_only|default(false) %}
-<section class="section" aria-label="Relatório geral estático">
-  <div class="section-head"><h2>Relatório geral</h2></div>
-  <div class="section-body">
-    <p>Relatórios calculados a partir do snapshot de dados publicado.</p>
-    <div class="page-actions">
-      <a class="snapshot-download" href="{{ static_reports.general_pdf|e }}" download>Baixar relatório geral em PDF</a>
-      <a class="snapshot-download" href="{{ static_reports.general_xlsx|e }}" download>Baixar relatório geral em XLSX</a>
-    </div>
-  </div>
-</section>
-
-<section class="section" aria-label="Relatório individual estático">
-  <div class="section-head"><h2>Relatório individual</h2></div>
-  <div class="section-body">
-    <p>Filtre a lista e abra o detalhe publicado ou baixe o relatório PDF/XLSX da unidade.</p>
-    <form class="filters" method="get" action="relatorios.html" data-static-filters>
-      <label class="search">Buscar
-        <input type="search" name="q" placeholder="UF ou unidade…">
-      </label>
-      <label>Situação
-        <select name="situacao">
-          <option value="">Todas</option>
-          <option value="Instituída">Instituída</option>
-          <option value="Não instituída">Não instituída</option>
-          <option value="Instituição não comprovada">Instituição não comprovada</option>
-        </select>
-      </label>
-      <label>Classificação
-        <select name="classificacao">
-          <option value="">Todas</option>
-          <option value="seguindo">Seguindo os parâmetros mínimos</option>
-          <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
-          <option value="global_insuficiente">Aderência global insuficiente</option>
-          <option value="nao_instituida">Não instituída</option>
-          <option value="nao_comprovada">Instituição não comprovada</option>
-        </select>
-      </label>
-      <label>Nota mín.
-        <input type="number" name="nota_min" min="0" max="100" step="0.1">
-      </label>
-      <label>Nota máx.
-        <input type="number" name="nota_max" min="0" max="100" step="0.1">
-      </label>
-      <div><button class="primary" type="submit">Filtrar</button></div>
-    </form>
-    <p class="muted" data-static-count>{{ units|length }} unidades</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th data-sort-type="text">UF</th><th data-sort-type="text">Unidade</th><th data-sort-type="text">Situação</th><th data-sort-type="number">Nota final</th><th data-sort-type="text">Classificação</th><th data-sort-type="text">Detalhe</th><th data-sort-type="text">PDF</th><th data-sort-type="text">XLSX</th></tr></thead>
-        <tbody>
-        {% for u in units %}
-        <tr data-sort-row data-static-row data-static-search="{{ (u.uf ~ ' ' ~ u.unidade_label)|lower|e }}" data-static-situation="{{ u.situacao|e }}" data-static-classification="{{ u.classification_key|e }}" data-static-score="{{ u.final_score if u.final_score is not none else '' }}">
-          <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (u.flag or 'br') + '.svg') }}" alt="" loading="lazy"><span class="uf-code">{{ u.uf|e }}</span></span></td>
-          <td>{{ u.unidade_label|e }}</td><td>{{ u.situacao|e }}</td>
-          <td class="number" data-sort-value="{{ u.final_score if u.final_score is not none else '' }}">{{ "%.1f"|format(u.final_score) if u.final_score is not none else "—" }}</td>
-          <td>{{ u.classification|e }}</td>
-          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_page|e }}">Abrir</a></td>
-          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_pdf|e }}" download>Baixar PDF</a></td>
-          <td data-sort-value="{{ u.entity_key|e }}"><a href="{{ u.static_xlsx|e }}" download>Baixar XLSX</a></td>
-        </tr>
-        {% endfor %}
-        <tr data-static-empty hidden><td colspan="8"><div class="empty"><p>Nenhuma unidade corresponde aos filtros.</p></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="source">No ES, Polícia Penal e SEJUS/ES têm páginas e relatórios separados. Valores estáticos correspondem ao snapshot desta publicação.</p>
-  </div>
-</section>
-{% else %}
+{# =====================================================================
+   SEÇÃO 1: RELATÓRIO GERAL
+   ===================================================================== #}
 <section class="section" aria-label="Relatório geral">
   <div class="section-head"><h2>Relatório geral</h2></div>
   <div class="section-body">
-    <form id="general-filters" class="filters" method="get" action="/api/relatorios/geral.pdf" style="border-bottom:0;padding-left:0;padding-right:0;">
+    <form id="general-filters" class="filters" method="get" action="{% if read_only|default(false) %}relatorios.html{% else %}/api/relatorios/geral.pdf{% endif %}" style="border-bottom:0;padding-left:0;padding-right:0;">
       <label>Situação institucional
-        <select name="situacao">
+        <select name="situacao" id="filter-situacao">
           <option value="">Todas as unidades</option>
           <option value="Instituída">Apenas instituídas</option>
           <option value="Não instituída">Apenas não instituídas</option>
@@ -92,7 +25,7 @@
         </select>
       </label>
       <label>Classificação
-        <select name="classificacao">
+        <select name="classificacao" id="filter-classificacao">
           <option value="">Todas</option>
           <option value="seguindo">Seguindo os parâmetros mínimos</option>
           <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
@@ -102,70 +35,458 @@
         </select>
       </label>
       <label>Nota mín.
-        <input type="number" name="nota_min" min="0" max="100" step="0.1">
+        <input type="number" name="nota_min" id="filter-nota-min" min="0" max="100" step="0.1" placeholder="0.0">
       </label>
       <label>Nota máx.
-        <input type="number" name="nota_max" min="0" max="100" step="0.1">
+        <input type="number" name="nota_max" id="filter-nota-max" min="0" max="100" step="0.1" placeholder="100.0">
       </label>
     </form>
-    <div class="page-actions">
-      <a id="general-pdf" class="button" href="/api/relatorios/geral.pdf"><button type="button" class="primary">Gerar PDF</button></a>
-      <a id="general-xlsx" class="button" href="/api/relatorios/geral.xlsx"><button type="button">Gerar XLSX</button></a>
+
+    <div class="page-actions" style="margin-bottom: 20px;">
+      {% if read_only|default(false) %}
+      <a id="general-pdf" class="button" href="{{ static_reports.general_pdf|default('relatorios/geral.pdf') }}" download><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="general-xlsx" class="button" href="{{ static_reports.general_xlsx|default('relatorios/geral.xlsx') }}" download><button type="button">Gerar XLSX</button></a>
+      {% else %}
+      <a id="general-pdf" class="button" href="/api/relatorios/geral.pdf" target="_blank"><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="general-xlsx" class="button" href="/api/relatorios/geral.xlsx" download><button type="button">Gerar XLSX</button></a>
+      {% endif %}
     </div>
-    <p class="source">Os links acima aplicam os filtros informados.</p>
+    <p class="source" style="margin-top:-10px;margin-bottom:16px;">Os botões acima exportam o relatório com os filtros selecionados.</p>
+
+    {# VISUALIZAÇÃO EM TELA DO RELATÓRIO GERAL #}
+    <div class="report-document" id="report-geral-doc">
+      <div class="report-doc-header">
+        <div class="report-doc-inst-titles">
+          MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
+          SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
+          OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
+        </div>
+        <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
+        <div class="report-doc-ref">Relatório Geral Consolidado — Referência: Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026 — Metodologia ONASP</div>
+      </div>
+
+      <div class="report-doc-body">
+        <h3 style="margin-top:0;margin-bottom:12px;font-size:1.05rem;color:var(--brand-dark);">Síntese do Monitoramento Nacional</h3>
+        <div class="report-summary-cards">
+          <div class="report-summary-card">
+            <span class="report-summary-card-lbl">Unidades avaliadas</span>
+            <span class="report-summary-card-val">{{ cards.unidades if cards else (rows|length) }}</span>
+          </div>
+          <div class="report-summary-card">
+            <span class="report-summary-card-lbl">Ouvidorias instituídas</span>
+            <span class="report-summary-card-val" style="color:var(--good);">{{ cards.instituidas if cards else '—' }}</span>
+          </div>
+          <div class="report-summary-card">
+            <span class="report-summary-card-lbl">Não instituídas</span>
+            <span class="report-summary-card-val" style="color:var(--bad);">{{ cards.nao_instituidas if cards else '—' }}</span>
+          </div>
+          <div class="report-summary-card highlight">
+            <span class="report-summary-card-lbl">Seguindo parâmetros</span>
+            <span class="report-summary-card-val" style="color:var(--good);">{{ cards.seguindo_minimos if cards else '—' }}</span>
+          </div>
+          <div class="report-summary-card">
+            <span class="report-summary-card-lbl">Abaixo de dimensão</span>
+            <span class="report-summary-card-val" style="color:var(--warn);">{{ cards.abaixo_dimensao if cards else '—' }}</span>
+          </div>
+          <div class="report-summary-card">
+            <span class="report-summary-card-lbl">Aderência insuficiente</span>
+            <span class="report-summary-card-val" style="color:var(--info);">{{ cards.global_insuficiente if cards else '—' }}</span>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <h3 style="margin:0;font-size:1.05rem;color:var(--brand-dark);">Tabela Consolidada de Resultados</h3>
+          <span class="muted" id="general-table-count" style="font-size:.8125rem;">Exibindo {{ rows|length }} unidades</span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="report-dim-table" id="general-report-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">UF</th>
+                <th>Unidade avaliada</th>
+                <th class="cell-center" title="01_Institucionalização (Mínimo 5.0)">Inst</th>
+                <th class="cell-center" title="02_Autonomia (Mínimo 10.0)">Aut</th>
+                <th class="cell-center" title="03_Imparcialidade (Mínimo 10.0)">Imp</th>
+                <th class="cell-center" title="04_Acessibilidade (Mínimo 10.0)">Aces</th>
+                <th class="cell-center" title="05_Transparência (Mínimo 7.5)">Trans</th>
+                <th class="cell-center" title="06_Integração Tecnológica (Mínimo 7.5)">Integ</th>
+                <th class="cell-center">Nota-base</th>
+                <th class="cell-center">Bônus</th>
+                <th class="cell-center">Nota final</th>
+                <th>Classificação</th>
+                <th class="cell-center">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in rows %}
+              {% set classification_key = "seguindo" if r.classification == "Instituída — seguindo os parâmetros mínimos" else ("abaixo_dimensao" if r.classification == "Instituída — abaixo do mínimo em dimensão essencial" else ("global_insuficiente" if r.classification == "Instituída — aderência global insuficiente" else ("nao_instituida" if r.classification == "Não instituída" else "nao_comprovada"))) %}
+              <tr class="general-row" data-uf="{{ r.uf|e }}" data-situacao="{{ r.situacao|e }}" data-classificacao="{{ classification_key }}" data-score="{{ r.final_score if r.final_score is not none else '' }}">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="{% if read_only|default(false) %}bandeiras/{{ r.flag or 'br' }}.svg{% else %}{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}{% endif %}" alt="" loading="lazy">
+                    <span class="uf-code">{{ r.uf|e }}</span>
+                  </span>
+                </td>
+                <td><strong>{{ r.unidade_label|e }}</strong></td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("01_Institucionalização", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("02_Autonomia", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("03_Imparcialidade", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("04_Acessibilidade", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("05_Transparência", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center">{{ "%.1f"|format(r.dim.get("06_Integração Tec", 0)) if r.dim else "—" }}</td>
+                <td class="number cell-center"><strong>{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</strong></td>
+                <td class="number cell-center">+{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "0.0" }}</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
+                <td>
+                  <span class="head-badge {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif r.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}" style="font-size:.75rem;padding:2px 8px;">
+                    {{ r.classification|e }}
+                  </span>
+                </td>
+                <td class="cell-center">
+                  <a class="btn-link" href="{% if read_only|default(false) %}unidade-{{ r.entity_key|e }}.html{% else %}/unidades/{{ r.entity_key|e }}{% endif %}">Abrir</a>
+                </td>
+              </tr>
+              {% endfor %}
+              <tr id="general-empty-row" hidden>
+                <td colspan="13" style="text-align:center;padding:32px;color:var(--muted);">Nenhuma unidade encontrada com os filtros informados.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="report-note-box">
+          <strong>Nota Metodológica:</strong> As pontuações, pesos e faixas de classificação constituem metodologia de monitoramento da ONASP e não integram o texto da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026. A avaliação deve ser interpretada em conjunto com as evidências registradas no sistema.
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+{# =====================================================================
+   SEÇÃO 2: RELATÓRIO INDIVIDUAL
+   ===================================================================== #}
 <section class="section" aria-label="Relatório individual">
   <div class="section-head"><h2>Relatório individual</h2></div>
   <div class="section-body">
     <label for="unit-select">UF / unidade avaliada
       <select id="unit-select" name="entity_key">
         {% for u in units %}
-        <option value="{{ u.entity_key|e }}">{{ u.uf|e }} — {{ u.unidade_label|e }}</option>
+        <option value="{{ u.entity_key|e }}" {% if u.entity_key == selected_key %}selected{% endif %}>{{ u.uf|e }} — {{ u.unidade_label|e }}</option>
         {% endfor %}
       </select>
     </label>
-    <div class="page-actions" style="margin-top:16px;">
-      <a id="individual-pdf" href="#"><button type="button" class="primary">Gerar PDF</button></a>
-      <a id="individual-xlsx" href="#"><button type="button">Gerar XLSX</button></a>
+
+    <div class="page-actions" style="margin-top:16px;margin-bottom:16px;">
+      {% if read_only|default(false) %}
+      <a id="individual-pdf" href="relatorios/unidade-{{ selected_key|e }}.pdf" download><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="individual-xlsx" href="relatorios/unidade-{{ selected_key|e }}.xlsx" download><button type="button">Gerar XLSX</button></a>
+      {% else %}
+      <a id="individual-pdf" href="/api/relatorios/{{ selected_key|e }}.pdf" target="_blank"><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="individual-xlsx" href="/api/relatorios/{{ selected_key|e }}.xlsx" download><button type="button">Gerar XLSX</button></a>
+      {% endif %}
     </div>
-    <p class="source">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
+    <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
+
+    {# VISUALIZAÇÃO EM TELA DOS RELATÓRIOS INDIVIDUAIS #}
+    <div id="individual-reports-container">
+      {% for k, detail in all_details.items() %}
+      {% set ent = detail.entity %}
+      {% set res = detail.result %}
+      <article class="report-document unit-report-paper" id="unit-report-{{ k|e }}" {% if k != selected_key %}hidden{% endif %}>
+        <div class="report-doc-header">
+          <div class="report-doc-inst-titles">
+            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
+            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
+            OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
+          </div>
+          <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
+          <div class="report-doc-ref">Relatório de Avaliação Individual — Referência: Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026 — Metodologia ONASP</div>
+        </div>
+
+        <div class="report-doc-body">
+          <div class="report-unit-headline">
+            <div class="report-unit-identity">
+              <img class="uf-flag" src="{% if read_only|default(false) %}bandeiras/{{ ent.flag or 'br' }}.svg{% else %}{{ url_for('static', path='bandeiras/' + (ent.flag or 'br') + '.svg') }}{% endif %}" alt="Bandeira de {{ ent.unidade_label|e }}" loading="lazy">
+              <div>
+                <span class="eyebrow" style="margin-bottom:2px;display:block;">{{ ent.uf|e }}</span>
+                <h3>{{ ent.uf|e }} — {{ ent.unidade_label|e }}</h3>
+              </div>
+            </div>
+            <a class="btn-link" href="{% if read_only|default(false) %}unidade-{{ k|e }}.html{% else %}/unidades/{{ k|e }}{% endif %}">Abrir tela de avaliação interativa →</a>
+          </div>
+
+          {# Resumo executivo da UF #}
+          <div class="page-head-badges" style="margin-bottom:20px;margin-top:0;">
+            <span class="head-badge {% if res.situacao == 'Instituída' %}badge-good{% elif res.situacao == 'Não instituída' %}badge-bad{% else %}badge-warn{% endif %}">
+              {{ res.situacao|e }}
+            </span>
+            <span class="head-badge">
+              <span class="head-badge-lbl">Nota-base:</span>
+              <strong>{{ "%.1f"|format(res.base_score) if res.base_score is not none else "—" }}</strong>
+            </span>
+            <span class="head-badge">
+              <span class="head-badge-lbl">Bônus:</span>
+              <strong>+{{ "%.1f"|format(res.bonus_applied) if res.bonus_applied is not none else "0.0" }}</strong>
+              <small class="muted" style="margin-left:2px;">(de {{ "%.1f"|format(res.bonus_available) if res.bonus_available is not none else "0.0" }})</small>
+            </span>
+            <span class="head-badge head-badge-final">
+              <span class="head-badge-lbl">Nota final:</span>
+              <strong>{{ "%.1f"|format(res.final_score) if res.final_score is not none else "—" }}</strong>
+            </span>
+            <span class="head-badge {% if res.meets_minimum_parameters %}badge-good{% else %}badge-bad{% endif %}">
+              {% if res.meets_minimum_parameters %}
+                ✓ Segue os Parâmetros Mínimos (Nota ≥ 70 e pisos atendidos)
+              {% else %}
+                ✗ Não atende aos Parâmetros Mínimos
+              {% endif %}
+            </span>
+            <span class="head-badge {% if res.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif res.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif res.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}">
+              {{ res.classification|e }}
+            </span>
+          </div>
+
+          {# Tabela de notas por dimensão vs piso mínimo #}
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <div class="table-wrap">
+            <table class="report-dim-table">
+              <thead>
+                <tr>
+                  <th>Dimensão Avaliada</th>
+                  <th class="cell-center">Pontuação Obtida</th>
+                  <th class="cell-center">Peso Máximo</th>
+                  <th class="cell-center">Piso Mínimo Exigido</th>
+                  <th class="cell-center">Situação do Piso</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dim in detail.dimensions %}
+                <tr>
+                  <td><strong>{{ dim.dimension_name|e }}</strong></td>
+                  <td class="number cell-center"><strong>{{ "%.1f"|format(dim.total) }}</strong></td>
+                  <td class="number cell-center">{{ "%.1f"|format(dim.max) }}</td>
+                  <td class="number cell-center">
+                    {% if dim.sheet_name == "01_Institucionalização" %}
+                      Instituída (15.0)
+                    {% elif dim.minimum is not none %}
+                      {{ "%.1f"|format(dim.minimum) }} pts (50%)
+                    {% else %}
+                      — (Bônus)
+                    {% endif %}
+                  </td>
+                  <td class="cell-center">
+                    {% if dim.sheet_name == "01_Institucionalização" %}
+                      {% if res.situacao == "Instituída" %}
+                        <span class="badge good">Instituída</span>
+                      {% else %}
+                        <span class="badge bad">{{ res.situacao|e }}</span>
+                      {% endif %}
+                    {% elif dim.sheet_name == "07_Maturidade" or dim.minimum is none %}
+                      <span class="badge" style="background:#eaf2f4;color:var(--brand-dark);">Bônus extra</span>
+                    {% elif dim.meets_minimum %}
+                      <span class="badge good">Piso atendido (≥ {{ "%.1f"|format(dim.minimum) }})</span>
+                    {% else %}
+                      <span class="badge bad">Abaixo do piso (&lt; {{ "%.1f"|format(dim.minimum) }})</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          {# Detalhamento pergunta a pergunta por dimensão #}
+          <h4 style="margin:28px 0 12px;font-size:1.05rem;color:var(--brand-dark);border-bottom:2px solid var(--brand);padding-bottom:6px;">Detalhamento da Avaliação e Evidências por Dimensão</h4>
+          {% for dim in detail.dimensions %}
+          <div class="report-dim-block">
+            <div class="report-dim-title">
+              <span>{{ dim.dimension_name|e }}</span>
+              <span class="head-badge head-badge-base" style="font-size:.75rem;">
+                Pontuação: <strong>{{ "%.1f"|format(dim.total) }} / {{ "%.1f"|format(dim.max) }}</strong>
+                {% if dim.minimum is not none %} · Piso: {{ "%.1f"|format(dim.minimum) }}{% endif %}
+              </span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="report-q-table">
+                <thead>
+                  <tr>
+                    <th style="width:28%;">Pergunta / Item Normativo</th>
+                    <th style="width:34%;">Diagnóstico e Fundamentação</th>
+                    <th style="width:16%;">Avaliação ONASP</th>
+                    <th style="width:22%;">Evidência Técnica e Anexos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for q in dim.questions %}
+                  <tr>
+                    <td>
+                      <span class="report-q-code">[{{ q.question_code|e }}]</span>
+                      <div class="report-q-title">{{ q.question_title|e }}</div>
+                      <div class="report-q-item">Item: {{ q.item_name|e }}</div>
+                    </td>
+                    <td>
+                      <div class="report-meta-row">
+                        <span class="report-meta-lbl">Resposta informada:</span>
+                        <div class="report-meta-val" style="font-weight:600;margin-top:2px;">{{ q.resposta or "—" }}</div>
+                      </div>
+                      <div class="report-meta-row" style="margin-top:6px;">
+                        <span class="report-meta-lbl">Fundamentação:</span>
+                        <div class="report-meta-val" style="font-size:.75rem;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;">{{ q.fundamentacao or "Não informada" }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge {% if q.score == q.weight %}good{% elif q.score > 0 %}warn{% else %}bad{% endif %}" style="display:inline-block;margin-bottom:6px;">
+                        {{ q.status|e }}
+                      </span>
+                      <div style="font-size:.8125rem;">
+                        <strong>{{ "%.1f"|format(q.score) }}</strong> / {{ "%.1f"|format(q.weight) }} pts
+                      </div>
+                    </td>
+                    <td>
+                      <div class="report-meta-row">
+                        <span class="report-meta-lbl">Evidência apurada:</span>
+                        <div class="report-meta-val" style="font-size:.75rem;white-space:pre-wrap;overflow-wrap:anywhere;">{{ q.evidence_text or "Sem evidência registrada" }}</div>
+                      </div>
+                      {% if q.attachments and q.attachments|length > 0 %}
+                      <div class="report-meta-row" style="margin-top:6px;">
+                        <span class="report-meta-lbl">Documentos anexados ({{ q.attachments|length }}):</span>
+                        <div style="margin-top:4px;">
+                          {% for a in q.attachments %}
+                          <span class="report-doc-pill" title="Arquivo: {{ a.original_filename|e }}">
+                            📎 {{ a.original_filename|e }}
+                          </span>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endfor %}
+
+          <div class="report-note-box">
+            <strong>Nota Metodológica:</strong> As pontuações, pesos e faixas de classificação constituem metodologia de monitoramento da ONASP e não integram o texto da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026. A avaliação deve ser interpretada em conjunto com as evidências registradas no sistema.
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
   </div>
 </section>
-{% endif %}
 {% endblock %}
+
 {% block scripts %}
-{% if not read_only|default(false) %}
 <script>
 (function () {
-  var gf = document.getElementById("general-filters");
-  var pdf = document.getElementById("general-pdf");
-  var xlsx = document.getElementById("general-xlsx");
-  function query() {
-    if (!gf) return "";
-    var params = new URLSearchParams(new FormData(gf));
-    for (const [k, v] of Array.from(params.entries())) { if (!v) params.delete(k); }
-    var s = params.toString();
-    return s ? ("?" + s) : "";
+  var isReadOnly = {% if read_only|default(false) %}true{% else %}false{% endif %};
+
+  // --- 1. Filtros interativos do Relatório Geral ---
+  var fSituacao = document.getElementById("filter-situacao");
+  var fClassif = document.getElementById("filter-classificacao");
+  var fNotaMin = document.getElementById("filter-nota-min");
+  var fNotaMax = document.getElementById("filter-nota-max");
+  var genPdf = document.getElementById("general-pdf");
+  var genXlsx = document.getElementById("general-xlsx");
+  var countEl = document.getElementById("general-table-count");
+  var emptyRow = document.getElementById("general-empty-row");
+  var rows = document.querySelectorAll(".general-row");
+
+  function buildQuery() {
+    var p = new URLSearchParams();
+    if (fSituacao && fSituacao.value) p.set("situacao", fSituacao.value);
+    if (fClassif && fClassif.value) p.set("classificacao", fClassif.value);
+    if (fNotaMin && fNotaMin.value) p.set("nota_min", fNotaMin.value);
+    if (fNotaMax && fNotaMax.value) p.set("nota_max", fNotaMax.value);
+    var q = p.toString();
+    return q ? ("?" + q) : "";
   }
-  if (gf) {
-    gf.addEventListener("input", function () {
-      if (pdf) pdf.href = "/api/relatorios/geral.pdf" + query();
-      if (xlsx) xlsx.href = "/api/relatorios/geral.xlsx" + query();
+
+  function applyGeneralFilters() {
+    var sit = fSituacao ? fSituacao.value.trim().toLowerCase() : "";
+    var cls = fClassif ? fClassif.value.trim().toLowerCase() : "";
+    var nmin = fNotaMin && fNotaMin.value !== "" ? parseFloat(fNotaMin.value) : null;
+    var nmax = fNotaMax && fNotaMax.value !== "" ? parseFloat(fNotaMax.value) : null;
+
+    var visibleCount = 0;
+    rows.forEach(function (row) {
+      var rSit = (row.getAttribute("data-situacao") || "").toLowerCase();
+      var rCls = (row.getAttribute("data-classificacao") || "").toLowerCase();
+      var rScoreRaw = row.getAttribute("data-score");
+      var rScore = rScoreRaw !== "" && rScoreRaw !== null ? parseFloat(rScoreRaw) : null;
+
+      var match = true;
+      if (sit && rSit !== sit) match = false;
+      if (cls && rCls !== cls) match = false;
+      if (nmin !== null && (rScore === null || rScore < nmin)) match = false;
+      if (nmax !== null && (rScore === null || rScore > nmax)) match = false;
+
+      row.hidden = !match;
+      if (match) visibleCount++;
     });
+
+    if (countEl) countEl.textContent = "Exibindo " + visibleCount + " de " + rows.length + " unidades";
+    if (emptyRow) emptyRow.hidden = (visibleCount > 0);
+
+    // Atualiza links de exportação do relatório geral
+    if (!isReadOnly) {
+      var q = buildQuery();
+      if (genPdf) genPdf.href = "/api/relatorios/geral.pdf" + q;
+      if (genXlsx) genXlsx.href = "/api/relatorios/geral.xlsx" + q;
+    }
   }
+
+  [fSituacao, fClassif, fNotaMin, fNotaMax].forEach(function (el) {
+    if (el) {
+      el.addEventListener("input", applyGeneralFilters);
+      el.addEventListener("change", applyGeneralFilters);
+    }
+  });
+
+  // --- 2. Troca dinâmica da UF do Relatório Individual ---
   var sel = document.getElementById("unit-select");
-  var ipdf = document.getElementById("individual-pdf");
-  var ixlsx = document.getElementById("individual-xlsx");
-  function sync() {
-    if (!sel) return;
-    var ek = encodeURIComponent(sel.value);
-    if (ipdf) ipdf.href = "/api/relatorios/" + ek + ".pdf";
-    if (ixlsx) ixlsx.href = "/api/relatorios/" + ek + ".xlsx";
+  var indPdf = document.getElementById("individual-pdf");
+  var indXlsx = document.getElementById("individual-xlsx");
+  var papers = document.querySelectorAll(".unit-report-paper");
+
+  function switchUnit(key, updateUrl) {
+    if (!key) return;
+    papers.forEach(function (paper) {
+      paper.hidden = (paper.id !== "unit-report-" + key);
+    });
+
+    if (isReadOnly) {
+      if (indPdf) indPdf.href = "relatorios/unidade-" + encodeURIComponent(key) + ".pdf";
+      if (indXlsx) indXlsx.href = "relatorios/unidade-" + encodeURIComponent(key) + ".xlsx";
+    } else {
+      if (indPdf) indPdf.href = "/api/relatorios/" + encodeURIComponent(key) + ".pdf";
+      if (indXlsx) indXlsx.href = "/api/relatorios/" + encodeURIComponent(key) + ".xlsx";
+    }
+
+    if (updateUrl && window.history && window.history.replaceState) {
+      var url = new URL(window.location.href);
+      url.searchParams.set("unidade", key);
+      window.history.replaceState({}, "", url.toString());
+    }
   }
-  if (sel) { sel.addEventListener("change", sync); sync(); }
+
+  if (sel) {
+    sel.addEventListener("change", function () {
+      switchUnit(sel.value, true);
+    });
+
+    // Se houver parâmetro 'unidade' na URL ao abrir a página, selecionar automaticamente
+    var urlParams = new URLSearchParams(window.location.search);
+    var urlUnit = urlParams.get("unidade");
+    if (urlUnit) {
+      sel.value = urlUnit;
+      switchUnit(urlUnit, false);
+    }
+  }
 })();
 </script>
-{% endif %}
 {% endblock %}

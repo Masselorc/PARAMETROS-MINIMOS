@@ -469,8 +469,11 @@ def summarize_uf_indicator(rows: list[dict]) -> dict:
     }
 
 
-def read_unit_detail(entity_key: str) -> dict:
-    wb = open_workbook()
+def read_unit_detail(entity_key: str, wb=None) -> dict:
+    should_close = False
+    if wb is None:
+        wb = open_workbook()
+        should_close = True
     try:
         entities = parse_entities(wb)
         ent = next((e for e in entities if e["entity_key"] == entity_key), None)
@@ -540,7 +543,86 @@ def read_unit_detail(entity_key: str) -> dict:
         }
         return {"entity": ent, "dimensions": dimensions, "result": result}
     finally:
-        wb.close()
+        if should_close:
+            wb.close()
+
+
+def read_all_unit_details(wb=None) -> dict[str, dict]:
+    should_close = False
+    if wb is None:
+        wb = open_workbook()
+        should_close = True
+    try:
+        entities = parse_entities(wb)
+        all_q = parse_all_questions(wb)
+        ev_map = evidences_map(wb)
+        att_map = attachments_map(wb, only_active=True)
+        res = {}
+        for ent in entities:
+            entity_key = ent["entity_key"]
+            dimensions: list[dict] = []
+            dim_scores: dict[str, float] = {}
+            inst_status = None
+            bonus_available = 0.0
+            for sheet in DIMENSION_SHEETS:
+                ws = wb[sheet]
+                qs: list[dict] = []
+                total = 0.0
+                for q in all_q[sheet]:
+                    raw_status = ws.cell(ent["row"], q["status_col"]).value
+                    status = str(raw_status).strip() if raw_status is not None and str(raw_status).strip() else "Sem evidência"
+                    resposta = ws.cell(ent["row"], q["resposta_col"]).value
+                    fundamento = ws.cell(ent["row"], q["fundamento_col"]).value
+                    if sheet == "01_Institucionalização":
+                        inst_status = status
+                    sc = score_for(q["kind"], status, q["weight"])
+                    total += sc
+                    if sheet == "07_Maturidade":
+                        bonus_available += sc
+                    occ = q["occurrence_key"]
+                    qs.append({
+                        **q,
+                        "status": status,
+                        "resposta": "" if resposta is None else str(resposta),
+                        "fundamentacao": "" if fundamento is None else str(fundamento),
+                        "score": round(sc, 2),
+                        "evidence_text": ev_map.get((entity_key, occ), EVIDENCE_INITIAL_TEXT),
+                        "attachments": att_map.get((entity_key, occ), []),
+                    })
+                if sheet != "07_Maturidade":
+                    dim_scores[sheet] = total
+                score = round(total, 2)
+                dim_min = DIMENSION_MINIMUMS.get(sheet)
+                dimensions.append({
+                    "sheet_name": sheet,
+                    "dimension_name": DIMENSION_NAMES.get(sheet, sheet),
+                    "total": score,
+                    "dimension_score": score,
+                    "max": BASE_WEIGHTS.get(sheet, BONUS_MAX if sheet == "07_Maturidade" else 0),
+                    "minimum": dim_min,
+                    "meets_minimum": None if dim_min is None else score >= dim_min,
+                    "questions": qs,
+                })
+            situacao = situacao_from_status(inst_status)
+            base = sum(dim_scores.get(s, 0.0) for s in BASE_WEIGHTS)
+            cls = classify(base, bonus_available, situacao, dim_scores)
+            result = {
+                "situacao": situacao,
+                "dim_scores": {k: round(float(v), 2) for k, v in dim_scores.items()},
+                "base_score": cls["base_score"],
+                "bonus_available": cls["bonus_available"],
+                "bonus_applied": cls["bonus_applied"],
+                "final_score": cls["final_score"],
+                "meets_minimum_parameters": cls["meets_minimum_parameters"],
+                "dimensions_below_minimum": cls["dimensions_below_minimum"],
+                "global_final_minimum": GLOBAL_BASE_MINIMUM,
+                "classification": cls["classification"],
+            }
+            res[entity_key] = {"entity": ent, "dimensions": dimensions, "result": result}
+        return res
+    finally:
+        if should_close:
+            wb.close()
 
 
 # ---------------------------------------------------------------- aux sheets / audit

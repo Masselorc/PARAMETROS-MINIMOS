@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src.attachments import get_attachment, store_attachment, unlink_attachment
-from src.config import BASE_DIR
+from src.config import BASE_DIR, BASE_WEIGHTS, DIMENSION_MINIMUMS, DIMENSION_NAMES
 from src.reports import (
     generate_general_pdf,
     generate_general_xlsx,
@@ -27,6 +27,7 @@ from src.workbook_service import (
     ensure_dirs,
     open_workbook,
     parse_entities,
+    read_all_unit_details,
     read_summary,
     read_unit_detail,
     summarize_uf_indicator,
@@ -173,13 +174,18 @@ def unit_detail(entity_key: str, request: Request):
 @app.get("/relatorios", response_class=HTMLResponse)
 def reports_page(request: Request):
     _guard_startup()
-    wb = open_workbook()
-    try:
-        entities = parse_entities(wb)
-    finally:
-        wb.close()
+    rows, cards = read_summary()
+    all_details = read_all_unit_details()
+    units = [all_details[r["entity_key"]]["entity"] for r in rows if r["entity_key"] in all_details]
+    selected_key = request.query_params.get("unidade") or (units[0]["entity_key"] if units else "AC")
     return templates.TemplateResponse(request, "reports.html", {
-        "units": entities,
+        "units": units,
+        "rows": rows,
+        "cards": cards,
+        "all_details": all_details,
+        "selected_key": selected_key,
+        "base_weights": BASE_WEIGHTS,
+        "dimension_minimums": DIMENSION_MINIMUMS,
     })
 
 

@@ -81,17 +81,26 @@ def _generate_static_reports(rows: list[dict], cards: dict, units: list[dict]) -
     original_export_dir = report_service.EXPORTACOES_DIR
     with TemporaryDirectory(prefix="pages_reports_") as temp_dir:
         report_service.EXPORTACOES_DIR = Path(temp_dir)
+        def _safe_copy(src, dst):
+            try:
+                shutil.copy2(src, dst)
+            except OSError as err:
+                if getattr(err, "winerror", None) == 1224 or "1224" in str(err):
+                    pass
+                else:
+                    raise
+
         try:
             general_pdf = report_service.generate_general_pdf(rows, cards)
             general_xlsx = report_service.generate_general_xlsx(rows, cards)
-            shutil.copy2(general_pdf, reports_dir / "geral.pdf")
-            shutil.copy2(general_xlsx, reports_dir / "geral.xlsx")
+            _safe_copy(general_pdf, reports_dir / "geral.pdf")
+            _safe_copy(general_xlsx, reports_dir / "geral.xlsx")
             for unit in units:
                 entity_key = unit["entity_key"]
                 pdf = report_service.generate_unit_pdf(entity_key)
                 xlsx = report_service.generate_unit_xlsx(entity_key)
-                shutil.copy2(pdf, reports_dir / f"unidade-{entity_key}.pdf")
-                shutil.copy2(xlsx, reports_dir / f"unidade-{entity_key}.xlsx")
+                _safe_copy(pdf, reports_dir / f"unidade-{entity_key}.pdf")
+                _safe_copy(xlsx, reports_dir / f"unidade-{entity_key}.xlsx")
         finally:
             report_service.EXPORTACOES_DIR = original_export_dir
     return {
@@ -129,9 +138,11 @@ def main() -> None:
 
     import sys
     sys.path.insert(0, str(BASE))
-    from src.workbook_service import read_summary, read_unit_detail
+    from src.config import BASE_WEIGHTS, DIMENSION_MINIMUMS
+    from src.workbook_service import read_all_unit_details, read_summary, read_unit_detail
 
     rows, cards = read_summary()  # somente leitura do DADOS.xlsx commitado
+    all_details = read_all_unit_details()
     stamp = datetime.now().strftime("%d/%m/%Y %H:%M")
     classification_keys = {
         "Instituída — seguindo os parâmetros mínimos": "seguindo",
@@ -165,14 +176,26 @@ def main() -> None:
     pages = {
         "index.html": ("dashboard.html", {"request": Req("/"), "static_page": "index.html", "read_only": True, "rows": rows, "cards": cards, "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""}}),
         "unidades.html": ("units.html", {"request": Req("/unidades"), "static_page": "unidades.html", "read_only": True, "rows": rows, "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""}}),
-        "relatorios.html": ("reports.html", {"request": Req("/relatorios"), "static_page": "relatorios.html", "read_only": True, "units": units, "static_reports": static_reports}),
+        "relatorios.html": ("reports.html", {
+            "request": Req("/relatorios"),
+            "static_page": "relatorios.html",
+            "read_only": True,
+            "units": units,
+            "rows": rows,
+            "cards": cards,
+            "all_details": all_details,
+            "selected_key": units[0]["entity_key"] if units else "AC",
+            "static_reports": static_reports,
+            "base_weights": BASE_WEIGHTS,
+            "dimension_minimums": DIMENSION_MINIMUMS,
+        }),
         "metodologia.html": ("methodology.html", {"request": Req("/metodologia"), "static_page": "metodologia.html", "read_only": True}),
     }
     for fname, (tpl, ctx) in pages.items():
         _render(env, tpl, ctx, DOCS / fname, stamp)
 
     for unit in units:
-        detail = read_unit_detail(unit["entity_key"])
+        detail = all_details.get(unit["entity_key"]) or read_unit_detail(unit["entity_key"])
         _copy_static_attachments(detail)
         filename = unit["static_page"] if "static_page" in unit else f"unidade-{unit['entity_key']}.html"
         _render(env, "unit_detail.html", {
