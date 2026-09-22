@@ -31,6 +31,8 @@ def _url_for(name, **kw):
         return "app.js"
     if path.startswith("bandeiras/"):
         return path  # docs/bandeiras/*.svg copiados abaixo
+    if path.startswith("logos/"):
+        return path  # docs/logos/* copiados abaixo
     return path
 
 
@@ -135,6 +137,9 @@ def main() -> None:
     flags_src = BASE / "static" / "bandeiras"
     if flags_src.exists():
         shutil.copytree(flags_src, DOCS / "bandeiras", dirs_exist_ok=True)
+    logos_src = BASE / "static" / "logos"
+    if logos_src.exists():
+        shutil.copytree(logos_src, DOCS / "logos", dirs_exist_ok=True)
 
     import sys
     sys.path.insert(0, str(BASE))

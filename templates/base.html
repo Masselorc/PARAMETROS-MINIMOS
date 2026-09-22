@@ -14,7 +14,13 @@
     <span class="brand-mark" aria-hidden="true">P</span>
     <span>Parâmetros Mínimos<small>ONASP / 2026</small></span>
   </a>
-  <span class="local-label">{% if read_only|default(false) %}● Snapshot público{% else %}● Ambiente local{% endif %}</span>
+  <div class="topbar-institutional">
+    <img src="{{ url_for('static', path='logos/logo_senappen_mjsp_gov_horizontal.png') }}"
+         alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal"
+         class="topbar-logo"
+         loading="eager">
+    <span class="local-label">{% if read_only|default(false) %}● Snapshot público{% else %}● Ambiente local{% endif %}</span>
+  </div>
 </header>
 <div class="shell">
   <aside class="sidebar" aria-label="Navegação principal">
@@ -35,6 +41,10 @@
       <span class="section-label">Processo</span>
       <p>SEI 08016.027689/2025-19</p>
       <p>IN nº 75/2026</p>
+      <div class="sidebar-inst">
+        <span class="section-label">Institucional</span>
+        <p>ONASP / SENAPPEN / MJSP</p>
+      </div>
     </div>
   </aside>
   <main id="main" tabindex="-1">
