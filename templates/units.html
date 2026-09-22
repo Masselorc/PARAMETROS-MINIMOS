@@ -24,7 +24,7 @@
       <tbody>
         {% for r in rows %}
         <tr>
-          <td><span class="uf-code">{{ r.uf|e }}</span></td>
+          <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
           <td>{{ r.unidade_label|e }}</td>
           <td>{{ r.situacao|e }}</td>
           <td class="number">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>

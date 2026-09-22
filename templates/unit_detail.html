@@ -4,7 +4,7 @@
 <a class="back" href="/">← Voltar para a Visão Geral</a>
 <div class="page-head">
   <div>
-    <div class="eyebrow">{{ entity.uf|e }}</div>
+    <div class="eyebrow"><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (entity.flag or 'br') + '.svg') }}" alt="Bandeira de {{ entity.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ entity.uf|e }}</span></span></div>
     <h1>{{ entity.uf|e }} — {{ entity.unidade_label|e }}</h1>
     <p class="muted">{{ result.situacao|e }}</p>
   </div>

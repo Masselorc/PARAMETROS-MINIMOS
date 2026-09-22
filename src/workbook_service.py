@@ -185,6 +185,7 @@ def parse_entities(wb) -> list[dict]:
         entities.append({
             "entity_key": key,
             "uf": uf,
+            "flag": uf.strip().lower(),  # sigla p/ static/bandeiras/<uf>.svg
             "unidade_label": label,
             "row": r,  # linha nas abas de dimensao
             "resumo_row": RESUMO_START_ROW + (r - DATA_START_ROW),
@@ -358,6 +359,7 @@ def read_summary() -> tuple[list[dict], dict]:
             rows.append({
                 "entity_key": ent["entity_key"],
                 "uf": ent["uf"],
+                "flag": ent.get("flag", ent["uf"].strip().lower()),
                 "unidade_label": ent["unidade_label"],
                 "dim": {k: round(float(v), 2) for k, v in dim_scores.items()},
                 # aliases planos p/ templates (dashboard)

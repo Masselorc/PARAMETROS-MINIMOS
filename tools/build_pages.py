@@ -35,13 +35,24 @@ STATIC_NOTE = (
 )
 
 
+def _url_for(name, **kw):
+    path = kw.get("path", "")
+    if path == "app.css":
+        return "app.css"
+    if path == "app.js":
+        return "app.js"
+    if path.startswith("bandeiras/"):
+        return path  # docs/bandeiras/*.svg copiados abaixo
+    return path
+
+
 def main() -> None:
     env = Environment(
         loader=FileSystemLoader(str(BASE / "templates")),
         autoescape=select_autoescape(),
     )
     # url_for inexistente no modo estatico
-    env.globals["url_for"] = lambda name, **kw: ("app.css" if kw.get("path") == "app.css" else "app.js")
+    env.globals["url_for"] = _url_for
 
     class Req:
         url = type("U", (), {"path": "/"})()
@@ -51,18 +62,28 @@ def main() -> None:
     if css_src.exists():
         (DOCS / "app.css").write_bytes(css_src.read_bytes())
     (DOCS / "app.js").write_text("// snapshot estático: sem interações de backend.\n", encoding="utf-8")
+    import shutil
+    flags_src = BASE / "static" / "bandeiras"
+    if flags_src.exists():
+        shutil.copytree(flags_src, DOCS / "bandeiras", dirs_exist_ok=True)
 
     cards = {"unidades": 28, "instituidas": "—", "nao_instituidas": "—",
              "sem_evidencia": "—", "elevada": "—", "satisfatoria": "—",
              "parcial": "—", "baixa_insuficiente": "—"}
-    rows = [{"uf": (k if not k.startswith("ES_") else "ES"), "unidade_label": lab,
+
+    def _uf_flag(k: str) -> str:
+        return "es" if k.startswith("ES_") else k.lower()
+
+    rows = [{"uf": (k if not k.startswith("ES_") else "ES"), "flag": _uf_flag(k),
+             "unidade_label": lab,
              "entity_key": k, "inst": None, "aut": None, "imp": None, "aces": None,
              "trans": None, "integ": None, "base_score": None, "bonus_applied": None,
              "final_score": None, "classification": "Snapshot estático",
              "situacao": "Snapshot estático"}
             for k, lab in UFS]
     filters = {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""}
-    units = [{"entity_key": k, "uf": (k if not k.startswith("ES_") else "ES"), "unidade_label": lab}
+    units = [{"entity_key": k, "uf": (k if not k.startswith("ES_") else "ES"),
+              "flag": _uf_flag(k), "unidade_label": lab}
              for k, lab in UFS]
 
     pages = {

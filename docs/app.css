@@ -120,3 +120,9 @@ details.oficial .texto-oficial{margin-top:6px}
 button.pad-analyze{min-height:34px;padding:4px 10px;font-size:.8125rem}
 @media(min-width:1180px){.pad-table{table-layout:fixed}.pad-table col.c-pad-item{width:34%}.pad-table col.c-pad-qtd{width:9%}.pad-table col.c-pad-unit{width:14%}.pad-table col.c-pad-total{width:19%}.pad-table col.c-pad-conf{width:12%}.pad-table col.c-pad-acao{width:12%}}
 @media print{.pad-filter{display:none}.pad-table thead th{position:static}.pad-table .pad-desc-text{-webkit-line-clamp:unset}}
+
+/* Bandeiras das UFs ao lado da sigla (dashboard, unidades, detalhe). */
+.uf-cell{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.uf-cell .uf-flag{width:28px;height:20px;object-fit:cover;flex:0 0 auto}
+.uf-cell .uf-code{font-weight:700}
+.page-head .eyebrow .uf-cell .uf-flag{width:36px;height:26px}
