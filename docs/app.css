@@ -1122,12 +1122,22 @@ main {
   color: var(--brand-dark);
 }
 .qtab-title {
-  max-width: 230px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-width: none;
+  overflow: visible;
+  text-overflow: unset;
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;
+}
+@media (max-width: 768px) {
+  .qtab {
+    white-space: normal;
+  }
+  .qtab-title {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
 }
 .qtab .badge {
   margin-left: 0;
