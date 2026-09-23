@@ -18,9 +18,6 @@
         <span class="head-badge-lbl">Nota final:</span>
         <strong id="final-score-head">{{ "%.1f"|format(result.final_score) if result.final_score is not none else "—" }}</strong>
       </span>
-      <span class="head-badge head-badge-class {% if result.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif result.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif result.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}">
-        <span id="classification-head">{{ result.classification|e }}</span>
-      </span>
     </div>
   </div>
 </div>
