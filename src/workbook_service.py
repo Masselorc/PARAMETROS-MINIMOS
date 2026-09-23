@@ -87,6 +87,21 @@ def slugify(value: str) -> str:
     return slug or "aba"
 
 
+def sort_pt_key(value: Any) -> str:
+    norm = unicodedata.normalize("NFKD", str(value or ""))
+    return norm.encode("ascii", "ignore").decode("ascii").lower().strip()
+
+
+def sort_pt_filter(items: Any, attr: str | None = None) -> list:
+    if not items:
+        return []
+    lst = list(items)
+    if attr:
+        return sorted(lst, key=lambda x: sort_pt_key(x.get(attr) if isinstance(x, dict) else getattr(x, attr, "")))
+    return sorted(lst, key=sort_pt_key)
+
+
+
 def sheet_slug(sheet_name: str) -> str:
     return slugify(sheet_name)
 

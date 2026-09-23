@@ -107,6 +107,17 @@ def main() -> None:
     # url_for inexistente no modo estatico
     env.globals["url_for"] = _url_for
 
+    import sys
+    sys.path.insert(0, str(BASE))
+    from src.config import BASE_WEIGHTS, DIMENSION_MINIMUMS
+    from src.workbook_service import (
+        read_all_unit_details,
+        read_summary,
+        read_unit_detail,
+        sort_pt_filter,
+    )
+    env.filters["sort_pt"] = sort_pt_filter
+
     class Req:
         def __init__(self, path: str):
             self.url = type("U", (), {"path": path})()
@@ -129,13 +140,9 @@ def main() -> None:
     if logos_src.exists():
         shutil.copytree(logos_src, DOCS / "logos", dirs_exist_ok=True)
 
-    import sys
-    sys.path.insert(0, str(BASE))
-    from src.config import BASE_WEIGHTS, DIMENSION_MINIMUMS
-    from src.workbook_service import read_all_unit_details, read_summary, read_unit_detail
-
     rows, cards = read_summary()  # somente leitura do DADOS.xlsx commitado
     all_details = read_all_unit_details()
+    unit_options = sort_pt_filter(rows, "unidade_label")
     stamp = datetime.now().strftime("%d/%m/%Y %H:%M")
     classification_keys = {
         "Instituída — seguindo os parâmetros mínimos": "seguindo",
@@ -152,7 +159,7 @@ def main() -> None:
         row["classification_key"] = classification_keys.get(row["classification"], "")
         row["static_page"] = f"unidade-{row['entity_key']}.html"
         row["flag"] = row.get("flag") or _uf_flag(row["entity_key"])
-    units = [
+    units = sort_pt_filter([
         {"entity_key": row["entity_key"], "uf": row["uf"],
          "flag": row["flag"], "unidade_label": row["unidade_label"],
          "situacao": row["situacao"], "final_score": row["final_score"],
@@ -162,18 +169,34 @@ def main() -> None:
          "static_pdf": f"relatorios/unidade-{row['entity_key']}.pdf",
          "static_xlsx": f"relatorios/unidade-{row['entity_key']}.xlsx"}
         for row in rows
-    ]
+    ], "unidade_label")
     static_reports = _generate_static_reports(rows, cards, units)
     static_reports["stamp"] = stamp
 
     pages = {
-        "index.html": ("dashboard.html", {"request": Req("/"), "static_page": "index.html", "read_only": True, "rows": rows, "cards": cards, "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""}}),
-        "unidades.html": ("units.html", {"request": Req("/unidades"), "static_page": "unidades.html", "read_only": True, "rows": rows, "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""}}),
+        "index.html": ("dashboard.html", {
+            "request": Req("/"),
+            "static_page": "index.html",
+            "read_only": True,
+            "rows": rows,
+            "cards": cards,
+            "unit_options": unit_options,
+            "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""},
+        }),
+        "unidades.html": ("units.html", {
+            "request": Req("/unidades"),
+            "static_page": "unidades.html",
+            "read_only": True,
+            "rows": rows,
+            "unit_options": unit_options,
+            "filters": {"q": "", "situacao": "", "classificacao": "", "nota_min": "", "nota_max": ""},
+        }),
         "relatorios.html": ("reports.html", {
             "request": Req("/relatorios"),
             "static_page": "relatorios.html",
             "read_only": True,
             "units": units,
+            "unit_options": unit_options,
             "rows": rows,
             "cards": cards,
             "all_details": all_details,

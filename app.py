@@ -30,6 +30,7 @@ from src.workbook_service import (
     read_all_unit_details,
     read_summary,
     read_unit_detail,
+    sort_pt_filter,
     summarize_uf_indicator,
     update_assessment,
     validate_startup,
@@ -37,6 +38,7 @@ from src.workbook_service import (
 
 app = FastAPI(title="Parâmetros Mínimos — ONASP", version="0.1.0")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates.env.filters["sort_pt"] = sort_pt_filter
 static_dir = BASE_DIR / "static"
 if static_dir.exists():
     app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
@@ -152,9 +154,11 @@ def dashboard(request: Request):
     _guard_startup()
     rows, cards = read_summary()
     f = _filters(request)
+    unit_options = sort_pt_filter(rows, "unidade_label")
     return templates.TemplateResponse(request, "dashboard.html", {
         "rows": _apply_filters(rows, f),
         "cards": cards, "filters": f,
+        "unit_options": unit_options,
     })
 
 
@@ -163,8 +167,10 @@ def units(request: Request):
     _guard_startup()
     rows, _ = read_summary()
     f = _filters(request)
+    unit_options = sort_pt_filter(rows, "unidade_label")
     return templates.TemplateResponse(request, "units.html", {
         "rows": _apply_filters(rows, f), "filters": f,
+        "unit_options": unit_options,
     })
 
 
@@ -188,10 +194,12 @@ def reports_page(request: Request):
     _guard_startup()
     rows, cards = read_summary()
     all_details = read_all_unit_details()
-    units = [all_details[r["entity_key"]]["entity"] for r in rows if r["entity_key"] in all_details]
+    unit_options = sort_pt_filter(rows, "unidade_label")
+    units = sort_pt_filter([all_details[r["entity_key"]]["entity"] for r in rows if r["entity_key"] in all_details], "unidade_label")
     selected_key = request.query_params.get("unidade") or (units[0]["entity_key"] if units else "AC")
     return templates.TemplateResponse(request, "reports.html", {
         "units": units,
+        "unit_options": unit_options,
         "rows": rows,
         "cards": cards,
         "all_details": all_details,

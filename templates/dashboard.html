@@ -35,7 +35,7 @@
           <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
         </div>
         <div class="ms-options-list">
-          {% for r in rows %}
+          {% for r in (unit_options if unit_options is defined and unit_options else rows)|sort_pt('unidade_label') %}
           <label class="ms-option">
             <input type="checkbox" name="unidade" value="{{ r.entity_key|e }}" checked>
             <span class="ms-option-uf">{{ r.uf|e }}</span>
