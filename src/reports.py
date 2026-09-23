@@ -8,9 +8,9 @@ import openpyxl
 from openpyxl.styles import Alignment, Font
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
-from reportlab.platypus import Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
+from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 from .config import (
@@ -20,6 +20,7 @@ from .config import (
     EXPORTACOES_DIR,
     GLOBAL_BASE_MINIMUM,
 )
+from .methodology_pdf import methodology_flow
 from .workbook_service import read_unit_detail
 
 HEADER_LINES = [
@@ -122,196 +123,7 @@ def _header_flow(styles, report_subtitle: str = "") -> list:
 
 
 def _methodology_flow(styles) -> list:
-    annex_header_style = ParagraphStyle(
-        "AnnexHeader",
-        parent=styles["Normal"],
-        alignment=TA_CENTER,
-        fontName="Helvetica-Bold",
-        fontSize=10.5,
-        leading=13.5,
-        textColor=colors.HexColor("#103E49"),
-    )
-    annex_sub_style = ParagraphStyle(
-        "AnnexSub",
-        parent=styles["Normal"],
-        alignment=TA_CENTER,
-        fontName="Helvetica-Bold",
-        fontSize=8.5,
-        leading=11.5,
-        textColor=colors.HexColor("#17365D"),
-    )
-    annex_ref_style = ParagraphStyle(
-        "AnnexRef",
-        parent=styles["Normal"],
-        alignment=TA_CENTER,
-        fontSize=7,
-        leading=9.5,
-        textColor=colors.HexColor("#526572"),
-    )
-    body_style = ParagraphStyle(
-        "AnnexBody",
-        parent=styles["Normal"],
-        fontSize=7,
-        leading=9.5,
-        alignment=TA_JUSTIFY,
-        textColor=colors.HexColor("#192E39"),
-    )
-    h2_style = ParagraphStyle(
-        "AnnexH2",
-        parent=styles["Heading2"],
-        fontSize=8.5,
-        leading=11.5,
-        fontName="Helvetica-Bold",
-        textColor=colors.HexColor("#103E49"),
-        spaceBefore=2.5 * mm,
-        spaceAfter=1 * mm,
-    )
-    note_box_style = ParagraphStyle(
-        "AnnexNote",
-        parent=styles["Normal"],
-        fontSize=6.5,
-        leading=9,
-        alignment=TA_JUSTIFY,
-        textColor=colors.HexColor("#103E49"),
-    )
-
-    flows = [PageBreak()]
-    if LOGO_PATH.exists():
-        logo_w = 60 * mm
-        logo_h = logo_w * (197 / 1342)  # ~8.8mm
-        img = Image(str(LOGO_PATH), width=logo_w, height=logo_h)
-        img.hAlign = "CENTER"
-        flows.append(img)
-        flows.append(Spacer(1, 1.5 * mm))
-
-    flows.extend([
-        Paragraph("<b>ANEXO</b>", annex_sub_style),
-        Spacer(1, 0.8 * mm),
-        Paragraph("<b>METODOLOGIA DE MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</b>", annex_header_style),
-        Spacer(1, 0.8 * mm),
-        Paragraph(
-            f"<b>Referência:</b> Processo <a href='{SEI_PROCESSO_URL}' color='#155b67'><u>SEI nº 08016.027689/2025-19</u></a> · "
-            f"<a href='{IN_75_URL}' color='#155b67'><u>IN GABSEC/SENAPPEN/MJSP nº 75/2026</u></a> · Doc. SEI 37070578",
-            annex_ref_style
-        ),
-        Spacer(1, 2 * mm),
-
-        Paragraph("<b>1. Apresentação e Finalidade</b>", h2_style),
-        Paragraph(
-            "Este sistema foi desenvolvido pela Ouvidoria Nacional de Serviços Penais (ONASP/SENAPPEN/MJSP) para apoiar o "
-            "monitoramento da institucionalização, da estruturação e das condições de funcionamento das Ouvidorias de Serviços "
-            "Penais dos Estados e do Distrito Federal. A ferramenta articula três componentes principais: as metas do Plano Nacional "
-            "Pena Justa; os parâmetros mínimos da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026; e as informações fáticas do "
-            "diagnóstico nacional realizado pela ONASP junto às Unidades Federativas. Sua finalidade é organizar evidências, permitir "
-            "comparação padronizada, acompanhar a evolução da política pública e orientar ações federais de fomento institucional.", body_style),
-
-        Paragraph("<b>2. Relação com o Plano Nacional Pena Justa</b>", h2_style),
-        Paragraph(
-            "O monitoramento atende diretamente às metas de implementação do Plano Nacional Pena Justa, em especial: "
-            "<b>Indicador 2.4.2.1.1.1</b> (Elaboração de parâmetros para criação de ouvidorias estaduais autônomas de serviços penais) e "
-            "<b>Indicador 2.4.2.1.2.1</b> (Estabelecimento de ouvidorias estaduais criadas, seguindo os parâmetros mínimos). "
-            "Primeiro estabeleceu-se a referência normativa (IN nº 75/2026); em seguida afere-se a aderência concreta das unidades.", body_style),
-
-        Paragraph("<b>3. Estrutura da Avaliação, Dimensões e Pesos</b>", h2_style),
-        Paragraph(
-            "A matriz de avaliação é composta por 6 dimensões de pontuação-base (totalizando até 100 pontos) e 1 bloco de maturidade/bônus "
-            "(até 10 pontos compensatórios). Para assegurar rigor e evitar dupla contagem, cada pergunta do diagnóstico vincula-se "
-            "exclusivamente a uma única dimensão:", body_style),
-        Spacer(1, 1 * mm),
-    ])
-
-    weights_table_data = [
-        ["Dimensão", "Peso Máx.", "Piso Mínimo Exigido (IN nº 75/2026)"],
-        ["01. Institucionalização", "15 pts", "Requisito de entrada: ato formal publicado (binário: 15 ou 0)"],
-        ["02. Autonomia técnica e funcional", "15 pts", "Piso de 50% = 7,5 pontos"],
-        ["03. Imparcialidade, sigilo e proteção", "15 pts", "Piso de 50% = 7,5 pontos"],
-        ["04. Acessibilidade e atendimento humanizado", "15 pts", "Piso de 50% = 7,5 pontos"],
-        ["05. Transparência e publicidade", "15 pts", "Piso de 50% = 7,5 pontos"],
-        ["06. Integração tecnológica", "25 pts", "Piso de 50% = 12,5 pontos"],
-        ["Total da Nota-base", "100 pts", "Piso global: 70 pontos na Nota Final"],
-        ["07. Maturidade / Bônus adicional", "10 pts bônus", "Compensatório: preenche a nota até 100 e apoia a nota global"],
-    ]
-    tw = Table(weights_table_data, colWidths=[60 * mm, 28 * mm, 92 * mm])
-    tw.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#17365D")),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("FONTSIZE", (0, 0), (-1, -1), 6),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("ALIGN", (0, 0), (-1, 0), "CENTER"),
-        ("ALIGN", (1, 1), (1, -1), "CENTER"),
-        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-        ("FONTNAME", (0, 7), (-1, 7), "Helvetica-Bold"),
-        ("BACKGROUND", (0, 7), (-1, 7), colors.HexColor("#EAF2F4")),
-    ]))
-    flows.append(tw)
-    flows.append(Spacer(1, 1.5 * mm))
-
-    flows.extend([
-        Paragraph("<b>4. Critérios de Pontuação das Perguntas</b>", h2_style),
-        Paragraph(
-            "Cada pergunta ordinária é pontuada conforme o nível de comprovação registrado: "
-            "<b>Atende (100% dos pontos):</b> evidência demonstra atendimento integral ao critério; "
-            "<b>Parcial (50% dos pontos):</b> atendimento intermediário ou em implementação; "
-            "<b>Não atende (0%):</b> evidência aponta ausência do requisito; "
-            "<b>Sem evidência (0%):</b> ausência de documentação ou comprovação suficiente no momento da avaliação.", body_style),
-
-        Paragraph("<b>5. Regras para Cumprimento dos Parâmetros Mínimos e Faixas de Classificação</b>", h2_style),
-        Paragraph(
-            "Uma unidade avaliada é considerada <b>“Instituída — seguindo os parâmetros mínimos”</b> quando cumpre "
-            "cumulativamente três condições essenciais: (1) Possui ato normativo instituidor (M1-11 = Sim / Instituída); "
-            "(2) Atinge nota final igual ou superior a 70 pontos (nota-base somada ao bônus aplicado); e "
-            "(3) Atende ao piso mínimo regulamentar de 50% em cada uma das dimensões essenciais 02, 03, 04, 05 e 06.", body_style),
-        Spacer(1, 1 * mm),
-    ])
-
-    cls_table_data = [
-        ["Classificação Metodológica", "Regra Objetiva / Condições"],
-        ["Não instituída", "Não possui ato normativo de criação (M1-11 = Não)."],
-        ["Instituição não comprovada", "Ausência de comprovação do ato normativo de criação (M1-11 = Sem evidência)."],
-        ["Instituída — abaixo do mínimo em dimensão essencial", "Possui ato normativo, mas não atingiu 50% em uma ou mais dimensões essenciais (02 a 06)."],
-        ["Instituída — aderência global insuficiente", "Possui ato normativo e atendeu aos pisos dimensionais, mas a nota final ficou abaixo de 70 pontos."],
-        ["Instituída — seguindo os parâmetros mínimos", "Possui ato normativo, atendeu a todos os pisos dimensionais (≥ 50%) e alcançou nota final ≥ 70 pontos."],
-    ]
-    tc = Table(cls_table_data, colWidths=[68 * mm, 112 * mm])
-    tc.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#17365D")),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("FONTSIZE", (0, 0), (-1, -1), 6),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
-        ("VALIGN", (0, 0), (-1, -1), "TOP"),
-        ("ALIGN", (0, 0), (-1, 0), "CENTER"),
-        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-        ("FONTNAME", (0, 1), (0, -1), "Helvetica-Bold"),
-    ]))
-    flows.append(tc)
-    flows.append(Spacer(1, 1.5 * mm))
-
-    flows.extend([
-        Paragraph("<b>6. Rastreabilidade Documental e Limites da Metodologia</b>", h2_style),
-        Paragraph(
-            "Toda a análise baseia-se nas informações prestadas pelas Unidades Federativas no diagnóstico nacional (referência geral "
-            "<b>Doc. SEI 37070578</b>) e nos atos normativos, relatórios e documentos comprobatórios anexados a cada pergunta. "
-            "As pontuações, pesos e faixas de classificação constituem instrumento técnico e gerencial de monitoramento da ONASP/SENAPPEN "
-            "e não integram textualmente a Instrução Normativa nº 75/2026. A pontuação não constitui sanção, certificação jurídica "
-            "nem substitui a análise jurídica individualizada de cada ato normativo estadual.", body_style),
-        Spacer(1, 2.5 * mm),
-    ])
-
-    box_data = [[
-        Paragraph(
-            "<b>AVISO INSTITUCIONAL:</b> As pontuações, pesos e faixas de classificação constituem metodologia "
-            "de monitoramento da ONASP e não integram o texto da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026. "
-            "A avaliação deve ser interpretada em conjunto com as evidências registradas no sistema.", note_box_style)
-    ]]
-    tbox = Table(box_data, colWidths=[180 * mm])
-    tbox.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#F4F6F7")),
-        ("BOX", (0, 0), (-1, -1), 0.75, colors.HexColor("#103E49")),
-        ("PADDING", (0, 0), (-1, -1), 4),
-    ]))
-    flows.append(tbox)
-    return flows
+    return methodology_flow(styles, LOGO_PATH, SEI_PROCESSO_URL, IN_75_URL)
 
 
 def _table_style() -> TableStyle:
