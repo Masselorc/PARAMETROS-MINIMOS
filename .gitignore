@@ -30,3 +30,6 @@ DADOS_tmp_validacao.xlsx
 
 # Especificação do sistema (documento interno de trabalho)
 ESPECIFICACAO_SISTEMA_PARAMETROS_MINIMOS.md
+
+# Orquestração interna de agentes (transiente, nunca versionar)
+.agents/
