@@ -1076,27 +1076,17 @@ main {
    ========================================================================== */
 .qtabs {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
   border-bottom: 1px solid var(--line);
   margin-top: 6px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   padding-bottom: 8px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: #cdd8dd transparent;
+  overflow: visible; /* Elimina barra de rolagem horizontal */
   max-width: 100%;
 }
 .qtabs::-webkit-scrollbar {
-  height: 4px;
-}
-.qtabs::-webkit-scrollbar-track {
-  background: transparent;
-}
-.qtabs::-webkit-scrollbar-thumb {
-  background: #cdd8dd;
-  border-radius: 4px;
+  display: none;
 }
 .qtab {
   display: inline-flex;
