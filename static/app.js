@@ -311,6 +311,94 @@
         updateRangeSlider();
       }
 
+      // 2.1. Interação de clique nos cards de resumo (KPIs)
+      var statCards = document.querySelectorAll(".stats .stat[data-stat-filter]");
+      if (statCards.length > 0) {
+        statCards.forEach(function (card) {
+          function handleCardClick() {
+            var filterType = card.getAttribute("data-stat-filter");
+            var isAlreadyActive = card.classList.contains("is-active");
+
+            statCards.forEach(function (c) { c.classList.remove("is-active"); });
+
+            if (isAlreadyActive || filterType === "all") {
+              // Reset: marca todas as opções
+              form.querySelectorAll('.ms-dropdown input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+              if (rangeMin && rangeMax) {
+                rangeMin.value = "0";
+                rangeMax.value = "100";
+                updateRangeSlider();
+              }
+              if (!isAlreadyActive && filterType === "all") {
+                card.classList.add("is-active");
+              }
+            } else if (filterType === "instituidas") {
+              card.classList.add("is-active");
+              form.querySelectorAll('.ms-dropdown[data-filter-name="unidade"] input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+              form.querySelectorAll('.ms-dropdown[data-filter-name="classificacao"] input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+              form.querySelectorAll('.ms-dropdown[data-filter-name="situacao"] input[type="checkbox"]').forEach(function (cb) {
+                cb.checked = (cb.value === "Instituída");
+              });
+              if (rangeMin && rangeMax) {
+                rangeMin.value = "0";
+                rangeMax.value = "100";
+                updateRangeSlider();
+              }
+            } else {
+              // seguindo, abaixo_dimensao, global_insuficiente, nao_instituida
+              card.classList.add("is-active");
+              form.querySelectorAll('.ms-dropdown[data-filter-name="unidade"] input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+              form.querySelectorAll('.ms-dropdown[data-filter-name="situacao"] input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+              form.querySelectorAll('.ms-dropdown[data-filter-name="classificacao"] input[type="checkbox"]').forEach(function (cb) {
+                if (filterType === "nao_instituida") {
+                  cb.checked = (cb.value === "nao_instituida" || cb.value === "nao_comprovada");
+                } else {
+                  cb.checked = (cb.value === filterType);
+                }
+              });
+              if (rangeMin && rangeMax) {
+                rangeMin.value = "0";
+                rangeMax.value = "100";
+                updateRangeSlider();
+              }
+            }
+
+            // Atualiza triggers das dropdowns
+            dropdowns.forEach(function (dd) {
+              var trig = dd.querySelector(".ms-trigger");
+              var cbs = Array.from(dd.querySelectorAll('input[type="checkbox"]'));
+              var checkedCount = cbs.filter(function (c) { return c.checked; }).length;
+              var totalCount = cbs.length;
+              var textSpan = trig ? trig.querySelector(".ms-trigger-text") : null;
+              var name = dd.getAttribute("data-filter-name");
+              if (textSpan) {
+                if (checkedCount === totalCount) {
+                  textSpan.textContent = name === "unidade" ? "Todas as unidades" : name === "situacao" ? "Todas as situações" : "Todas as classificações";
+                } else if (checkedCount === 0) {
+                  textSpan.textContent = "Nenhum selecionado";
+                } else if (checkedCount === 1) {
+                  var sel = cbs.find(function (c) { return c.checked; });
+                  var lbl = sel ? sel.closest(".ms-option").querySelector(".ms-option-label") : null;
+                  textSpan.textContent = lbl ? lbl.textContent.trim() : "1 selecionado";
+                } else {
+                  textSpan.textContent = checkedCount + " selecionados";
+                }
+              }
+            });
+
+            form.dispatchEvent(new Event("filter-change"));
+          }
+
+          card.addEventListener("click", handleCardClick);
+          card.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleCardClick();
+            }
+          });
+        });
+      }
+
       // 3. Aplicação da Filtragem nas Linhas
       function applyAllFilters() {
         var isReportPage = form.id === "general-report-filters";
