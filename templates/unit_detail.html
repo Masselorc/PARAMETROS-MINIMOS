@@ -240,8 +240,16 @@
           <div class="eval-edit-box">
             <div class="eval-ctrl-bar">
               <div class="eval-status-group">
-                <label for="status-{{ q.occurrence_key|e }}" class="eval-lbl">Status</label>
-                <select id="status-{{ q.occurrence_key|e }}" data-status-select data-status-val="{{ q.status|e }}" class="select-compact {% if q.status in ['Atende', 'Sim'] %}status-good{% elif q.status in ['Parcial', 'Atende parcialmente'] %}status-warn{% elif q.status in ['Não atende', 'Não'] %}status-bad{% else %}status-neutral{% endif %}">
+                {% set st = (q.status or '')|trim %}
+                {% set st_norm = st|lower %}
+                {% set st_type = 'good' if (st in ['Atende', 'Sim'] or st_norm in ['atende', 'sim']) else ('warn' if (st in ['Parcial', 'Atende parcialmente'] or 'parcial' in st_norm) else ('bad' if (st in ['Não atende', 'Não', 'Nao atende', 'Nao'] or 'não' in st_norm or 'nao' in st_norm) else 'neutral')) %}
+                <select id="status-{{ q.occurrence_key|e }}"
+                        data-status-select
+                        data-status-val="{{ q.status|e }}"
+                        data-status-type="{{ st_type }}"
+                        class="select-compact status-{{ st_type }}"
+                        onchange="if(window.updateStatusSelectColor)window.updateStatusSelectColor(this);"
+                        oninput="if(window.updateStatusSelectColor)window.updateStatusSelectColor(this);">
                   {% for opt in q.status_options %}
                   <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
                   {% endfor %}
@@ -530,6 +538,39 @@
         }
       });
     }
+  });
+
+  function getStatusType(val) {
+    if (!val) return "neutral";
+    var clean = String(val).trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (clean === "atende" || clean === "sim") return "good";
+    if (clean === "parcial" || clean === "atende parcialmente") return "warn";
+    if (clean === "nao" || clean === "nao atende" || clean.indexOf("nao") !== -1) return "bad";
+    return "neutral";
+  }
+
+  function updateStatusSelectColor(sel) {
+    if (!sel) return;
+    var val = sel.value;
+    var type = getStatusType(val);
+    sel.setAttribute("data-status-val", val);
+    sel.setAttribute("data-status-type", type);
+    sel.classList.remove("status-good", "status-warn", "status-bad", "status-neutral");
+    sel.classList.add("status-" + type);
+  }
+  window.updateStatusSelectColor = updateStatusSelectColor;
+
+  document.querySelectorAll("[data-status-select]").forEach(function (sel) {
+    updateStatusSelectColor(sel);
+  });
+
+  document.addEventListener("change", function (e) {
+    var sel = e.target && e.target.closest ? e.target.closest("[data-status-select]") : null;
+    if (sel) updateStatusSelectColor(sel);
+  });
+  document.addEventListener("input", function (e) {
+    var sel = e.target && e.target.closest ? e.target.closest("[data-status-select]") : null;
+    if (sel) updateStatusSelectColor(sel);
   });
 
   window.addEventListener("hashchange", fromHash);

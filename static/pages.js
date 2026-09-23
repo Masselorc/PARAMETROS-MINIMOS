@@ -440,28 +440,44 @@
   }
 
   // Cores contextuais no seletor de status de avaliação
+  function getStatusType(val) {
+    if (!val) return "neutral";
+    var clean = String(val).trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (clean === "atende" || clean === "sim") return "good";
+    if (clean === "parcial" || clean === "atende parcialmente") return "warn";
+    if (clean === "nao" || clean === "nao atende" || clean.indexOf("nao") !== -1) return "bad";
+    return "neutral";
+  }
+
   function updateStatusSelectColor(sel) {
     if (!sel) return;
     var val = sel.value;
+    var type = getStatusType(val);
     sel.setAttribute("data-status-val", val);
+    sel.setAttribute("data-status-type", type);
     sel.classList.remove("status-good", "status-warn", "status-bad", "status-neutral");
-    if (val === "Atende" || val === "Sim") {
-      sel.classList.add("status-good");
-    } else if (val === "Parcial" || val === "Atende parcialmente") {
-      sel.classList.add("status-warn");
-    } else if (val === "Não atende" || val === "Não") {
-      sel.classList.add("status-bad");
-    } else {
-      sel.classList.add("status-neutral");
-    }
+    sel.classList.add("status-" + type);
   }
+  window.updateStatusSelectColor = updateStatusSelectColor;
 
   function initStatusSelects() {
     document.querySelectorAll("[data-status-select]").forEach(function (sel) {
       sel.addEventListener("change", function () {
         updateStatusSelectColor(sel);
       });
+      sel.addEventListener("input", function () {
+        updateStatusSelectColor(sel);
+      });
       updateStatusSelectColor(sel);
+    });
+
+    document.addEventListener("change", function (e) {
+      var sel = e.target && e.target.closest ? e.target.closest("[data-status-select]") : null;
+      if (sel) updateStatusSelectColor(sel);
+    });
+    document.addEventListener("input", function (e) {
+      var sel = e.target && e.target.closest ? e.target.closest("[data-status-select]") : null;
+      if (sel) updateStatusSelectColor(sel);
     });
   }
 
