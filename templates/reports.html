@@ -197,7 +197,7 @@
                 <th class="cell-center">Nota-base</th>
                 <th class="cell-center">Bônus</th>
                 <th class="cell-center">Nota final</th>
-                <th>Classificação</th>
+                <th class="col-classification cell-center">Classificação</th>
                 <th class="col-actions">Ações</th>
               </tr>
             </thead>
@@ -221,7 +221,7 @@
                 <td class="number cell-center"><strong>{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</strong></td>
                 <td class="number cell-center">+{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "0.0" }}</td>
                 <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
-                <td>
+                <td class="col-classification cell-center">
                   <span class="head-badge {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif r.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}" style="font-size:.75rem;padding:2px 8px;">
                     {{ r.classification|e }}
                   </span>

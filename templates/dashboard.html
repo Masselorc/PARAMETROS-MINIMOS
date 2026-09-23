@@ -266,7 +266,7 @@
           <th class="col-num" data-sort-type="number" data-sort-label="Nota-base" aria-label="Nota-base: soma das dimensões regulares (máximo 100 pontos)">Nota-base</th>
           <th class="col-num" data-sort-type="number" data-sort-label="Bônus" aria-label="Bônus de maturidade aplicado (máximo 10 pontos)">Bônus</th>
           <th class="col-score" data-sort-type="number" data-sort-label="Nota final /100" aria-label="Nota final representada em barra proporcional de 0 a 100">Nota final /100</th>
-          <th class="col-classification" data-sort-type="text">Classificação</th>
+          <th class="col-classification cell-center" data-sort-type="text">Classificação</th>
           <th class="col-actions" data-sort-type="text">Ações</th>
         </tr>
       </thead>
@@ -294,7 +294,7 @@
           <td class="number col-num" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}"><strong>{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</strong></td>
           <td class="number col-num" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">+{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "0.0" }}</td>
           <td class="col-score" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
-          <td class="col-classification">
+          <td class="col-classification cell-center">
             <span class="head-badge {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif r.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
               {{ r.classification|e }}
             </span>
