@@ -18,35 +18,113 @@
 </div>
 
 <section class="section" aria-label="Unidades avaliadas">
-  <form class="filters" method="get" action="/" data-static-filters>
-    <label class="search">Buscar
-      <input type="search" name="q" value="{{ filters.q|default('', true)|e }}" placeholder="UF ou unidade…">
-    </label>
-    <label>Situação institucional
-      <select name="situacao">
-        <option value=""{% if not filters.situacao %} selected{% endif %}>Todas</option>
-        <option value="Instituída"{% if filters.situacao == "Instituída" %} selected{% endif %}>Instituída</option>
-        <option value="Não instituída"{% if filters.situacao == "Não instituída" %} selected{% endif %}>Não instituída</option>
-        <option value="Instituição não comprovada"{% if filters.situacao == "Instituição não comprovada" %} selected{% endif %}>Instituição não comprovada</option>
-      </select>
-    </label>
-    <label>Classificação
-      <select name="classificacao">
-        <option value=""{% if not filters.classificacao %} selected{% endif %}>Todas</option>
-        <option value="seguindo"{% if filters.classificacao == "seguindo" %} selected{% endif %}>Seguindo os parâmetros mínimos</option>
-        <option value="abaixo_dimensao"{% if filters.classificacao == "abaixo_dimensao" %} selected{% endif %}>Abaixo do mínimo em dimensão essencial</option>
-        <option value="global_insuficiente"{% if filters.classificacao == "global_insuficiente" %} selected{% endif %}>Aderência global insuficiente</option>
-        <option value="nao_instituida"{% if filters.classificacao == "nao_instituida" %} selected{% endif %}>Não instituída</option>
-        <option value="nao_comprovada"{% if filters.classificacao == "nao_comprovada" %} selected{% endif %}>Instituição não comprovada</option>
-      </select>
-    </label>
-    <label class="col-num">Nota mín.
-      <input type="number" name="nota_min" min="0" max="100" step="0.1" value="{{ filters.nota_min|e }}" placeholder="0">
-    </label>
-    <label class="col-num">Nota máx.
-      <input type="number" name="nota_max" min="0" max="100" step="0.1" value="{{ filters.nota_max|e }}" placeholder="100">
-    </label>
-    <div class="filter-action"><button class="primary" type="submit">Filtrar</button></div>
+  <form class="filters-bar" method="get" action="/" id="dashboard-filters" data-static-filters>
+    <!-- Filtro 1: Unidade avaliada (Droplist com seleção múltipla) -->
+    <div class="filter-group group-unit ms-dropdown" data-filter-name="unidade">
+      <span class="filter-label">Unidade avaliada</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-unidade-dash">
+        <span class="ms-trigger-text">Todas as unidades</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-unidade-dash">
+        <div class="ms-search-wrap">
+          <input type="text" class="ms-search-input" placeholder="Pesquisar unidade..." autocomplete="off">
+        </div>
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
+          {% for r in rows %}
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="{{ r.entity_key|e }}" checked>
+            <span class="ms-option-uf">{{ r.uf|e }}</span>
+            <span class="ms-option-label">{{ r.unidade_label|e }}</span>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 2: Situação Institucional (Droplist com seleção múltipla) -->
+    <div class="filter-group group-situacao ms-dropdown" data-filter-name="situacao">
+      <span class="filter-label">Situação Institucional</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-situacao-dash">
+        <span class="ms-trigger-text">Todas as situações</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-situacao-dash">
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Instituída" checked>
+            <span class="ms-option-label">Instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Não instituída" checked>
+            <span class="ms-option-label">Não instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Instituição não comprovada" checked>
+            <span class="ms-option-label">Instituição não comprovada</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 3: Classificação (Droplist com seleção múltipla) -->
+    <div class="filter-group group-classif ms-dropdown" data-filter-name="classificacao">
+      <span class="filter-label">Classificação ONASP</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-classificacao-dash">
+        <span class="ms-trigger-text">Todas as classificações</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-classificacao-dash">
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="seguindo" checked>
+            <span class="ms-option-label">Seguindo os parâmetros mínimos</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="abaixo_dimensao" checked>
+            <span class="ms-option-label">Abaixo do mínimo em dimensão essencial</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="global_insuficiente" checked>
+            <span class="ms-option-label">Aderência global insuficiente</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="nao_instituida" checked>
+            <span class="ms-option-label">Não instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="nao_comprovada" checked>
+            <span class="ms-option-label">Instituição não comprovada</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 4: Faixa de Nota (Slider Duplo Horizontal [ o----------o ]) -->
+    <div class="filter-group group-score dual-range-filter">
+      <div class="range-header">
+        <span class="filter-label">Faixa de Nota</span>
+        <span class="range-values" id="range-display">0.0 — 100.0</span>
+      </div>
+      <div class="range-slider-wrap">
+        <div class="range-track"></div>
+        <div class="range-progress"></div>
+        <input type="range" class="range-input range-min" min="0" max="100" step="0.5" value="0" name="nota_min" aria-label="Nota mínima">
+        <input type="range" class="range-input range-max" min="0" max="100" step="0.5" value="100" name="nota_max" aria-label="Nota máxima">
+      </div>
+    </div>
   </form>
   <p class="muted" data-static-count>{{ rows|length }} unidades</p>
 
@@ -84,7 +162,7 @@
       <tbody>
         {% for r in rows %}
         {% set unit_url = r.static_page if read_only|default(false) else ('/unidades/' ~ r.entity_key) %}
-        <tr class="{% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}row-following-minimums{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}row-below-essential-minimum{% elif r.classification == 'Não instituída' %}row-not-instituted{% endif %}" data-sort-row data-entity="{{ r.entity_key|e }}" data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}" tabindex="0" aria-expanded="false" aria-controls="detail-{{ r.entity_key|e }}">
+        <tr data-sort-row data-entity="{{ r.entity_key|e }}" data-uf="{{ r.uf|e }}" data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}" tabindex="0" aria-expanded="false" aria-controls="detail-{{ r.entity_key|e }}">
           <td class="col-uf" data-sort-value="{{ r.uf|e }}">
             <div class="uf-col-wrapper">
               <button type="button" class="row-expand" aria-expanded="false" aria-controls="detail-{{ r.entity_key|e }}" aria-label="Expandir diagnóstico de {{ r.unidade_label|e }}" title="Expandir diagnóstico rápido">

@@ -52,119 +52,292 @@
   </div>
 </div>
 <section class="section" aria-label="Unidades avaliadas">
+  <form class="filters-bar" method="get" action="unidades.html" data-static-filters>
+    <!-- Filtro 1: Unidade avaliada (Droplist com seleção múltipla) -->
+    <div class="filter-group group-unit ms-dropdown" data-filter-name="unidade">
+      <span class="filter-label">Unidade avaliada</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-unidade-units">
+        <span class="ms-trigger-text">Todas as unidades</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-unidade-units">
+        <div class="ms-search-wrap">
+          <input type="text" class="ms-search-input" placeholder="Pesquisar unidade..." autocomplete="off">
+        </div>
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
 
-  <form class="filters" method="get" action="unidades.html" data-static-filters>
-    <label class="search">Buscar
-      <input type="search" name="q" placeholder="UF ou unidade…">
-    </label>
-    <label>Situação
-      <select name="situacao">
-        <option value="">Todas</option>
-        <option value="Instituída">Instituída</option>
-        <option value="Não instituída">Não instituída</option>
-        <option value="Instituição não comprovada">Instituição não comprovada</option>
-      </select>
-    </label>
-    <label>Classificação
-      <select name="classificacao">
-        <option value="">Todas</option>
-        <option value="seguindo">Seguindo os parâmetros mínimos</option>
-        <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
-        <option value="global_insuficiente">Aderência global insuficiente</option>
-        <option value="nao_instituida">Não instituída</option>
-        <option value="nao_comprovada">Instituição não comprovada</option>
-      </select>
-    </label>
-    <label class="col-num">Nota mín.
-      <input type="number" name="nota_min" min="0" max="100" step="0.1" placeholder="0">
-    </label>
-    <label class="col-num">Nota máx.
-      <input type="number" name="nota_max" min="0" max="100" step="0.1" placeholder="100">
-    </label>
-    <div class="filter-action"><button class="primary" type="submit">Filtrar</button></div>
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="CE" checked>
+            <span class="ms-option-uf">CE</span>
+            <span class="ms-option-label">Ceará</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="ES_PP" checked>
+            <span class="ms-option-uf">ES</span>
+            <span class="ms-option-label">Espírito Santo — Polícia Penal</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="GO" checked>
+            <span class="ms-option-uf">GO</span>
+            <span class="ms-option-label">Goiás</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="AM" checked>
+            <span class="ms-option-uf">AM</span>
+            <span class="ms-option-label">Amazonas</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="SP" checked>
+            <span class="ms-option-uf">SP</span>
+            <span class="ms-option-label">São Paulo</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="RR" checked>
+            <span class="ms-option-uf">RR</span>
+            <span class="ms-option-label">Roraima</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="PR" checked>
+            <span class="ms-option-uf">PR</span>
+            <span class="ms-option-label">Paraná</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="MT" checked>
+            <span class="ms-option-uf">MT</span>
+            <span class="ms-option-label">Mato Grosso</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="MG" checked>
+            <span class="ms-option-uf">MG</span>
+            <span class="ms-option-label">Minas Gerais</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="RJ" checked>
+            <span class="ms-option-uf">RJ</span>
+            <span class="ms-option-label">Rio de Janeiro</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="AC" checked>
+            <span class="ms-option-uf">AC</span>
+            <span class="ms-option-label">Acre</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="RN" checked>
+            <span class="ms-option-uf">RN</span>
+            <span class="ms-option-label">Rio Grande do Norte</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="DF" checked>
+            <span class="ms-option-uf">DF</span>
+            <span class="ms-option-label">Distrito Federal</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="BA" checked>
+            <span class="ms-option-uf">BA</span>
+            <span class="ms-option-label">Bahia</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="AP" checked>
+            <span class="ms-option-uf">AP</span>
+            <span class="ms-option-label">Amapá</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="PE" checked>
+            <span class="ms-option-uf">PE</span>
+            <span class="ms-option-label">Pernambuco</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="MA" checked>
+            <span class="ms-option-uf">MA</span>
+            <span class="ms-option-label">Maranhão</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="RS" checked>
+            <span class="ms-option-uf">RS</span>
+            <span class="ms-option-label">Rio Grande do Sul</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="MS" checked>
+            <span class="ms-option-uf">MS</span>
+            <span class="ms-option-label">Mato Grosso do Sul</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="PB" checked>
+            <span class="ms-option-uf">PB</span>
+            <span class="ms-option-label">Paraíba</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="ES_SEJUS" checked>
+            <span class="ms-option-uf">ES</span>
+            <span class="ms-option-label">Espírito Santo — SEJUS/ES</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="SC" checked>
+            <span class="ms-option-uf">SC</span>
+            <span class="ms-option-label">Santa Catarina</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="PI" checked>
+            <span class="ms-option-uf">PI</span>
+            <span class="ms-option-label">Piauí</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="AL" checked>
+            <span class="ms-option-uf">AL</span>
+            <span class="ms-option-label">Alagoas</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="SE" checked>
+            <span class="ms-option-uf">SE</span>
+            <span class="ms-option-label">Sergipe</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="PA" checked>
+            <span class="ms-option-uf">PA</span>
+            <span class="ms-option-label">Pará</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="RO" checked>
+            <span class="ms-option-uf">RO</span>
+            <span class="ms-option-label">Rondônia</span>
+          </label>
+
+          <label class="ms-option">
+            <input type="checkbox" name="unidade" value="TO" checked>
+            <span class="ms-option-uf">TO</span>
+            <span class="ms-option-label">Tocantins</span>
+          </label>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 2: Situação Institucional (Droplist com seleção múltipla) -->
+    <div class="filter-group group-situacao ms-dropdown" data-filter-name="situacao">
+      <span class="filter-label">Situação Institucional</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-situacao-units">
+        <span class="ms-trigger-text">Todas as situações</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-situacao-units">
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Instituída" checked>
+            <span class="ms-option-label">Instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Não instituída" checked>
+            <span class="ms-option-label">Não instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="situacao" value="Instituição não comprovada" checked>
+            <span class="ms-option-label">Instituição não comprovada</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 3: Classificação (Droplist com seleção múltipla) -->
+    <div class="filter-group group-classif ms-dropdown" data-filter-name="classificacao">
+      <span class="filter-label">Classificação ONASP</span>
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-classificacao-units">
+        <span class="ms-trigger-text">Todas as classificações</span>
+        <span class="ms-trigger-arrow">▾</span>
+      </button>
+      <div class="ms-menu" hidden aria-labelledby="trigger-classificacao-units">
+        <div class="ms-actions">
+          <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+          <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+        </div>
+        <div class="ms-options-list">
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="seguindo" checked>
+            <span class="ms-option-label">Seguindo os parâmetros mínimos</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="abaixo_dimensao" checked>
+            <span class="ms-option-label">Abaixo do mínimo em dimensão essencial</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="global_insuficiente" checked>
+            <span class="ms-option-label">Aderência global insuficiente</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="nao_instituida" checked>
+            <span class="ms-option-label">Não instituída</span>
+          </label>
+          <label class="ms-option">
+            <input type="checkbox" name="classificacao" value="nao_comprovada" checked>
+            <span class="ms-option-label">Instituição não comprovada</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro 4: Faixa de Nota (Slider Duplo Horizontal [ o----------o ]) -->
+    <div class="filter-group group-score dual-range-filter">
+      <div class="range-header">
+        <span class="filter-label">Faixa de Nota</span>
+        <span class="range-values" id="range-display-units">0.0 — 100.0</span>
+      </div>
+      <div class="range-slider-wrap">
+        <div class="range-track"></div>
+        <div class="range-progress"></div>
+        <input type="range" class="range-input range-min" min="0" max="100" step="0.5" value="0" name="nota_min" aria-label="Nota mínima">
+        <input type="range" class="range-input range-max" min="0" max="100" step="0.5" value="100" name="nota_max" aria-label="Nota máxima">
+      </div>
+    </div>
   </form>
   <p class="muted" data-static-count>28 unidades</p>
-
   <div class="table-wrap">
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th style="width:70px;" data-sort-type="text">UF</th>
-          <th data-sort-type="text">Unidade</th>
+          <th class="col-uf" style="width:70px;" data-sort-type="text">UF</th>
+          <th class="col-unit" data-sort-type="text">Unidade</th>
           <th data-sort-type="text">Situação</th>
-          <th class="cell-center" data-sort-type="number">Nota final</th>
-          <th data-sort-type="text">Classificação</th>
+          <th class="col-num cell-center" data-sort-type="number">Nota final</th>
+          <th class="col-classification" data-sort-type="text">Classificação</th>
           <th class="col-actions" data-sort-type="text">Ações</th>
         </tr>
       </thead>
       <tbody>
 
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="ac acre" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ac.svg" alt="Bandeira de Acre" loading="lazy"><span class="uf-code">AC</span></span></td>
-          <td><strong>Acre</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="AC"><a class="btn-detail" href="unidade-AC.html" aria-label="Detalhar avaliação de Acre">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="al alagoas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="74.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/al.svg" alt="Bandeira de Alagoas" loading="lazy"><span class="uf-code">AL</span></span></td>
-          <td><strong>Alagoas</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="74.5"><strong>74.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="AL"><a class="btn-detail" href="unidade-AL.html" aria-label="Detalhar avaliação de Alagoas">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="ap amapá" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ap.svg" alt="Bandeira de Amapá" loading="lazy"><span class="uf-code">AP</span></span></td>
-          <td><strong>Amapá</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="91.5"><strong>91.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="AP"><a class="btn-detail" href="unidade-AP.html" aria-label="Detalhar avaliação de Amapá">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="am amazonas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/am.svg" alt="Bandeira de Amazonas" loading="lazy"><span class="uf-code">AM</span></span></td>
-          <td><strong>Amazonas</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="100.0"><strong>100.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="AM"><a class="btn-detail" href="unidade-AM.html" aria-label="Detalhar avaliação de Amazonas">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="ba bahia" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="92.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ba.svg" alt="Bandeira de Bahia" loading="lazy"><span class="uf-code">BA</span></span></td>
-          <td><strong>Bahia</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="92.5"><strong>92.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="BA"><a class="btn-detail" href="unidade-BA.html" aria-label="Detalhar avaliação de Bahia">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="ce ceará" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+        <tr data-sort-row data-entity="CE" data-uf="CE" data-static-row data-static-search="ce ceará" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ce.svg" alt="Bandeira de Ceará" loading="lazy"><span class="uf-code">CE</span></span></td>
           <td><strong>Ceará</strong></td>
           <td>Instituída</td>
@@ -177,20 +350,7 @@
           <td class="col-actions" data-sort-value="CE"><a class="btn-detail" href="unidade-CE.html" aria-label="Detalhar avaliação de Ceará">Detalhar</a></td>
         </tr>
 
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="df distrito federal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="93.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/df.svg" alt="Bandeira de Distrito Federal" loading="lazy"><span class="uf-code">DF</span></span></td>
-          <td><strong>Distrito Federal</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="93.5"><strong>93.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="DF"><a class="btn-detail" href="unidade-DF.html" aria-label="Detalhar avaliação de Distrito Federal">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="es espírito santo — polícia penal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+        <tr data-sort-row data-entity="ES_PP" data-uf="ES" data-static-row data-static-search="es espírito santo — polícia penal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/es.svg" alt="Bandeira de Espírito Santo — Polícia Penal" loading="lazy"><span class="uf-code">ES</span></span></td>
           <td><strong>Espírito Santo — Polícia Penal</strong></td>
           <td>Instituída</td>
@@ -203,20 +363,7 @@
           <td class="col-actions" data-sort-value="ES_PP"><a class="btn-detail" href="unidade-ES_PP.html" aria-label="Detalhar avaliação de Espírito Santo — Polícia Penal">Detalhar</a></td>
         </tr>
 
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="es espírito santo — sejus/es" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="84.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/es.svg" alt="Bandeira de Espírito Santo — SEJUS/ES" loading="lazy"><span class="uf-code">ES</span></span></td>
-          <td><strong>Espírito Santo — SEJUS/ES</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="84.5"><strong>84.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="ES_SEJUS"><a class="btn-detail" href="unidade-ES_SEJUS.html" aria-label="Detalhar avaliação de Espírito Santo — SEJUS/ES">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="go goiás" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+        <tr data-sort-row data-entity="GO" data-uf="GO" data-static-row data-static-search="go goiás" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/go.svg" alt="Bandeira de Goiás" loading="lazy"><span class="uf-code">GO</span></span></td>
           <td><strong>Goiás</strong></td>
           <td>Instituída</td>
@@ -229,178 +376,9 @@
           <td class="col-actions" data-sort-value="GO"><a class="btn-detail" href="unidade-GO.html" aria-label="Detalhar avaliação de Goiás">Detalhar</a></td>
         </tr>
 
-        <tr class="row-below-essential-minimum" data-sort-row data-static-row data-static-search="ma maranhão" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="90.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ma.svg" alt="Bandeira de Maranhão" loading="lazy"><span class="uf-code">MA</span></span></td>
-          <td><strong>Maranhão</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="90.0"><strong>90.0</strong></td>
-          <td>
-            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — abaixo do mínimo em dimensão essencial
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="MA"><a class="btn-detail" href="unidade-MA.html" aria-label="Detalhar avaliação de Maranhão">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="mt mato grosso" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="97.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mt.svg" alt="Bandeira de Mato Grosso" loading="lazy"><span class="uf-code">MT</span></span></td>
-          <td><strong>Mato Grosso</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="97.0"><strong>97.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="MT"><a class="btn-detail" href="unidade-MT.html" aria-label="Detalhar avaliação de Mato Grosso">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="ms mato grosso do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="87.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ms.svg" alt="Bandeira de Mato Grosso do Sul" loading="lazy"><span class="uf-code">MS</span></span></td>
-          <td><strong>Mato Grosso do Sul</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="87.5"><strong>87.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="MS"><a class="btn-detail" href="unidade-MS.html" aria-label="Detalhar avaliação de Mato Grosso do Sul">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="mg minas gerais" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mg.svg" alt="Bandeira de Minas Gerais" loading="lazy"><span class="uf-code">MG</span></span></td>
-          <td><strong>Minas Gerais</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="95.5"><strong>95.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="MG"><a class="btn-detail" href="unidade-MG.html" aria-label="Detalhar avaliação de Minas Gerais">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-not-instituted" data-sort-row data-static-row data-static-search="pa pará" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pa.svg" alt="Bandeira de Pará" loading="lazy"><span class="uf-code">PA</span></span></td>
-          <td><strong>Pará</strong></td>
-          <td>Não instituída</td>
-          <td class="number cell-center" data-sort-value=""><strong>—</strong></td>
-          <td>
-            <span class="head-badge badge-bad" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Não instituída
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="PA"><a class="btn-detail" href="unidade-PA.html" aria-label="Detalhar avaliação de Pará">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-below-essential-minimum" data-sort-row data-static-row data-static-search="pb paraíba" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="85.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pb.svg" alt="Bandeira de Paraíba" loading="lazy"><span class="uf-code">PB</span></span></td>
-          <td><strong>Paraíba</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="85.0"><strong>85.0</strong></td>
-          <td>
-            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — abaixo do mínimo em dimensão essencial
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="PB"><a class="btn-detail" href="unidade-PB.html" aria-label="Detalhar avaliação de Paraíba">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="pr paraná" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="98.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pr.svg" alt="Bandeira de Paraná" loading="lazy"><span class="uf-code">PR</span></span></td>
-          <td><strong>Paraná</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="98.5"><strong>98.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="PR"><a class="btn-detail" href="unidade-PR.html" aria-label="Detalhar avaliação de Paraná">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="pe pernambuco" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pe.svg" alt="Bandeira de Pernambuco" loading="lazy"><span class="uf-code">PE</span></span></td>
-          <td><strong>Pernambuco</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="91.5"><strong>91.5</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="PE"><a class="btn-detail" href="unidade-PE.html" aria-label="Detalhar avaliação de Pernambuco">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-below-essential-minimum" data-sort-row data-static-row data-static-search="pi piauí" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="80.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pi.svg" alt="Bandeira de Piauí" loading="lazy"><span class="uf-code">PI</span></span></td>
-          <td><strong>Piauí</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="80.0"><strong>80.0</strong></td>
-          <td>
-            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — abaixo do mínimo em dimensão essencial
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="PI"><a class="btn-detail" href="unidade-PI.html" aria-label="Detalhar avaliação de Piauí">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="rj rio de janeiro" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rj.svg" alt="Bandeira de Rio de Janeiro" loading="lazy"><span class="uf-code">RJ</span></span></td>
-          <td><strong>Rio de Janeiro</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="RJ"><a class="btn-detail" href="unidade-RJ.html" aria-label="Detalhar avaliação de Rio de Janeiro">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="rn rio grande do norte" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rn.svg" alt="Bandeira de Rio Grande do Norte" loading="lazy"><span class="uf-code">RN</span></span></td>
-          <td><strong>Rio Grande do Norte</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="RN"><a class="btn-detail" href="unidade-RN.html" aria-label="Detalhar avaliação de Rio Grande do Norte">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="rs rio grande do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="88.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rs.svg" alt="Bandeira de Rio Grande do Sul" loading="lazy"><span class="uf-code">RS</span></span></td>
-          <td><strong>Rio Grande do Sul</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="88.0"><strong>88.0</strong></td>
-          <td>
-            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — seguindo os parâmetros mínimos
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="RS"><a class="btn-detail" href="unidade-RS.html" aria-label="Detalhar avaliação de Rio Grande do Sul">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-not-instituted" data-sort-row data-static-row data-static-search="ro rondônia" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ro.svg" alt="Bandeira de Rondônia" loading="lazy"><span class="uf-code">RO</span></span></td>
-          <td><strong>Rondônia</strong></td>
-          <td>Não instituída</td>
-          <td class="number cell-center" data-sort-value=""><strong>—</strong></td>
-          <td>
-            <span class="head-badge badge-bad" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Não instituída
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="RO"><a class="btn-detail" href="unidade-RO.html" aria-label="Detalhar avaliação de Rondônia">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="rr roraima" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rr.svg" alt="Bandeira de Roraima" loading="lazy"><span class="uf-code">RR</span></span></td>
-          <td><strong>Roraima</strong></td>
+        <tr data-sort-row data-entity="AM" data-uf="AM" data-static-row data-static-search="am amazonas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/am.svg" alt="Bandeira de Amazonas" loading="lazy"><span class="uf-code">AM</span></span></td>
+          <td><strong>Amazonas</strong></td>
           <td>Instituída</td>
           <td class="number cell-center" data-sort-value="100.0"><strong>100.0</strong></td>
           <td>
@@ -408,23 +386,10 @@
               Instituída — seguindo os parâmetros mínimos
             </span>
           </td>
-          <td class="col-actions" data-sort-value="RR"><a class="btn-detail" href="unidade-RR.html" aria-label="Detalhar avaliação de Roraima">Detalhar</a></td>
+          <td class="col-actions" data-sort-value="AM"><a class="btn-detail" href="unidade-AM.html" aria-label="Detalhar avaliação de Amazonas">Detalhar</a></td>
         </tr>
 
-        <tr class="row-below-essential-minimum" data-sort-row data-static-row data-static-search="sc santa catarina" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="82.5">
-          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/sc.svg" alt="Bandeira de Santa Catarina" loading="lazy"><span class="uf-code">SC</span></span></td>
-          <td><strong>Santa Catarina</strong></td>
-          <td>Instituída</td>
-          <td class="number cell-center" data-sort-value="82.5"><strong>82.5</strong></td>
-          <td>
-            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
-              Instituída — abaixo do mínimo em dimensão essencial
-            </span>
-          </td>
-          <td class="col-actions" data-sort-value="SC"><a class="btn-detail" href="unidade-SC.html" aria-label="Detalhar avaliação de Santa Catarina">Detalhar</a></td>
-        </tr>
-
-        <tr class="row-following-minimums" data-sort-row data-static-row data-static-search="sp são paulo" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+        <tr data-sort-row data-entity="SP" data-uf="SP" data-static-row data-static-search="sp são paulo" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/sp.svg" alt="Bandeira de São Paulo" loading="lazy"><span class="uf-code">SP</span></span></td>
           <td><strong>São Paulo</strong></td>
           <td>Instituída</td>
@@ -437,7 +402,254 @@
           <td class="col-actions" data-sort-value="SP"><a class="btn-detail" href="unidade-SP.html" aria-label="Detalhar avaliação de São Paulo">Detalhar</a></td>
         </tr>
 
-        <tr class="row-below-essential-minimum" data-sort-row data-static-row data-static-search="se sergipe" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="15.0">
+        <tr data-sort-row data-entity="RR" data-uf="RR" data-static-row data-static-search="rr roraima" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="100.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rr.svg" alt="Bandeira de Roraima" loading="lazy"><span class="uf-code">RR</span></span></td>
+          <td><strong>Roraima</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="100.0"><strong>100.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="RR"><a class="btn-detail" href="unidade-RR.html" aria-label="Detalhar avaliação de Roraima">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="PR" data-uf="PR" data-static-row data-static-search="pr paraná" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="98.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pr.svg" alt="Bandeira de Paraná" loading="lazy"><span class="uf-code">PR</span></span></td>
+          <td><strong>Paraná</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="98.5"><strong>98.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="PR"><a class="btn-detail" href="unidade-PR.html" aria-label="Detalhar avaliação de Paraná">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="MT" data-uf="MT" data-static-row data-static-search="mt mato grosso" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="97.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mt.svg" alt="Bandeira de Mato Grosso" loading="lazy"><span class="uf-code">MT</span></span></td>
+          <td><strong>Mato Grosso</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="97.0"><strong>97.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="MT"><a class="btn-detail" href="unidade-MT.html" aria-label="Detalhar avaliação de Mato Grosso">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="MG" data-uf="MG" data-static-row data-static-search="mg minas gerais" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/mg.svg" alt="Bandeira de Minas Gerais" loading="lazy"><span class="uf-code">MG</span></span></td>
+          <td><strong>Minas Gerais</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="95.5"><strong>95.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="MG"><a class="btn-detail" href="unidade-MG.html" aria-label="Detalhar avaliação de Minas Gerais">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="RJ" data-uf="RJ" data-static-row data-static-search="rj rio de janeiro" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rj.svg" alt="Bandeira de Rio de Janeiro" loading="lazy"><span class="uf-code">RJ</span></span></td>
+          <td><strong>Rio de Janeiro</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="RJ"><a class="btn-detail" href="unidade-RJ.html" aria-label="Detalhar avaliação de Rio de Janeiro">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="AC" data-uf="AC" data-static-row data-static-search="ac acre" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ac.svg" alt="Bandeira de Acre" loading="lazy"><span class="uf-code">AC</span></span></td>
+          <td><strong>Acre</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="AC"><a class="btn-detail" href="unidade-AC.html" aria-label="Detalhar avaliação de Acre">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="RN" data-uf="RN" data-static-row data-static-search="rn rio grande do norte" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="95.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rn.svg" alt="Bandeira de Rio Grande do Norte" loading="lazy"><span class="uf-code">RN</span></span></td>
+          <td><strong>Rio Grande do Norte</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="95.0"><strong>95.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="RN"><a class="btn-detail" href="unidade-RN.html" aria-label="Detalhar avaliação de Rio Grande do Norte">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="DF" data-uf="DF" data-static-row data-static-search="df distrito federal" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="93.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/df.svg" alt="Bandeira de Distrito Federal" loading="lazy"><span class="uf-code">DF</span></span></td>
+          <td><strong>Distrito Federal</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="93.5"><strong>93.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="DF"><a class="btn-detail" href="unidade-DF.html" aria-label="Detalhar avaliação de Distrito Federal">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="BA" data-uf="BA" data-static-row data-static-search="ba bahia" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="92.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ba.svg" alt="Bandeira de Bahia" loading="lazy"><span class="uf-code">BA</span></span></td>
+          <td><strong>Bahia</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="92.5"><strong>92.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="BA"><a class="btn-detail" href="unidade-BA.html" aria-label="Detalhar avaliação de Bahia">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="AP" data-uf="AP" data-static-row data-static-search="ap amapá" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ap.svg" alt="Bandeira de Amapá" loading="lazy"><span class="uf-code">AP</span></span></td>
+          <td><strong>Amapá</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="91.5"><strong>91.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="AP"><a class="btn-detail" href="unidade-AP.html" aria-label="Detalhar avaliação de Amapá">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="PE" data-uf="PE" data-static-row data-static-search="pe pernambuco" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="91.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pe.svg" alt="Bandeira de Pernambuco" loading="lazy"><span class="uf-code">PE</span></span></td>
+          <td><strong>Pernambuco</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="91.5"><strong>91.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="PE"><a class="btn-detail" href="unidade-PE.html" aria-label="Detalhar avaliação de Pernambuco">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="MA" data-uf="MA" data-static-row data-static-search="ma maranhão" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="90.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ma.svg" alt="Bandeira de Maranhão" loading="lazy"><span class="uf-code">MA</span></span></td>
+          <td><strong>Maranhão</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="90.0"><strong>90.0</strong></td>
+          <td>
+            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — abaixo do mínimo em dimensão essencial
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="MA"><a class="btn-detail" href="unidade-MA.html" aria-label="Detalhar avaliação de Maranhão">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="RS" data-uf="RS" data-static-row data-static-search="rs rio grande do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="88.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/rs.svg" alt="Bandeira de Rio Grande do Sul" loading="lazy"><span class="uf-code">RS</span></span></td>
+          <td><strong>Rio Grande do Sul</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="88.0"><strong>88.0</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="RS"><a class="btn-detail" href="unidade-RS.html" aria-label="Detalhar avaliação de Rio Grande do Sul">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="MS" data-uf="MS" data-static-row data-static-search="ms mato grosso do sul" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="87.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ms.svg" alt="Bandeira de Mato Grosso do Sul" loading="lazy"><span class="uf-code">MS</span></span></td>
+          <td><strong>Mato Grosso do Sul</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="87.5"><strong>87.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="MS"><a class="btn-detail" href="unidade-MS.html" aria-label="Detalhar avaliação de Mato Grosso do Sul">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="PB" data-uf="PB" data-static-row data-static-search="pb paraíba" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="85.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pb.svg" alt="Bandeira de Paraíba" loading="lazy"><span class="uf-code">PB</span></span></td>
+          <td><strong>Paraíba</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="85.0"><strong>85.0</strong></td>
+          <td>
+            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — abaixo do mínimo em dimensão essencial
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="PB"><a class="btn-detail" href="unidade-PB.html" aria-label="Detalhar avaliação de Paraíba">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="ES_SEJUS" data-uf="ES" data-static-row data-static-search="es espírito santo — sejus/es" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="84.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/es.svg" alt="Bandeira de Espírito Santo — SEJUS/ES" loading="lazy"><span class="uf-code">ES</span></span></td>
+          <td><strong>Espírito Santo — SEJUS/ES</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="84.5"><strong>84.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="ES_SEJUS"><a class="btn-detail" href="unidade-ES_SEJUS.html" aria-label="Detalhar avaliação de Espírito Santo — SEJUS/ES">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="SC" data-uf="SC" data-static-row data-static-search="sc santa catarina" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="82.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/sc.svg" alt="Bandeira de Santa Catarina" loading="lazy"><span class="uf-code">SC</span></span></td>
+          <td><strong>Santa Catarina</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="82.5"><strong>82.5</strong></td>
+          <td>
+            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — abaixo do mínimo em dimensão essencial
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="SC"><a class="btn-detail" href="unidade-SC.html" aria-label="Detalhar avaliação de Santa Catarina">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="PI" data-uf="PI" data-static-row data-static-search="pi piauí" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="80.0">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pi.svg" alt="Bandeira de Piauí" loading="lazy"><span class="uf-code">PI</span></span></td>
+          <td><strong>Piauí</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="80.0"><strong>80.0</strong></td>
+          <td>
+            <span class="head-badge badge-warn" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — abaixo do mínimo em dimensão essencial
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="PI"><a class="btn-detail" href="unidade-PI.html" aria-label="Detalhar avaliação de Piauí">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="AL" data-uf="AL" data-static-row data-static-search="al alagoas" data-static-situation="Instituída" data-static-classification="seguindo" data-static-score="74.5">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/al.svg" alt="Bandeira de Alagoas" loading="lazy"><span class="uf-code">AL</span></span></td>
+          <td><strong>Alagoas</strong></td>
+          <td>Instituída</td>
+          <td class="number cell-center" data-sort-value="74.5"><strong>74.5</strong></td>
+          <td>
+            <span class="head-badge badge-good" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Instituída — seguindo os parâmetros mínimos
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="AL"><a class="btn-detail" href="unidade-AL.html" aria-label="Detalhar avaliação de Alagoas">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="SE" data-uf="SE" data-static-row data-static-search="se sergipe" data-static-situation="Instituída" data-static-classification="abaixo_dimensao" data-static-score="15.0">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/se.svg" alt="Bandeira de Sergipe" loading="lazy"><span class="uf-code">SE</span></span></td>
           <td><strong>Sergipe</strong></td>
           <td>Instituída</td>
@@ -450,7 +662,33 @@
           <td class="col-actions" data-sort-value="SE"><a class="btn-detail" href="unidade-SE.html" aria-label="Detalhar avaliação de Sergipe">Detalhar</a></td>
         </tr>
 
-        <tr class="row-not-instituted" data-sort-row data-static-row data-static-search="to tocantins" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+        <tr data-sort-row data-entity="PA" data-uf="PA" data-static-row data-static-search="pa pará" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/pa.svg" alt="Bandeira de Pará" loading="lazy"><span class="uf-code">PA</span></span></td>
+          <td><strong>Pará</strong></td>
+          <td>Não instituída</td>
+          <td class="number cell-center" data-sort-value=""><strong>—</strong></td>
+          <td>
+            <span class="head-badge badge-bad" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Não instituída
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="PA"><a class="btn-detail" href="unidade-PA.html" aria-label="Detalhar avaliação de Pará">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="RO" data-uf="RO" data-static-row data-static-search="ro rondônia" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
+          <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/ro.svg" alt="Bandeira de Rondônia" loading="lazy"><span class="uf-code">RO</span></span></td>
+          <td><strong>Rondônia</strong></td>
+          <td>Não instituída</td>
+          <td class="number cell-center" data-sort-value=""><strong>—</strong></td>
+          <td>
+            <span class="head-badge badge-bad" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              Não instituída
+            </span>
+          </td>
+          <td class="col-actions" data-sort-value="RO"><a class="btn-detail" href="unidade-RO.html" aria-label="Detalhar avaliação de Rondônia">Detalhar</a></td>
+        </tr>
+
+        <tr data-sort-row data-entity="TO" data-uf="TO" data-static-row data-static-search="to tocantins" data-static-situation="Não instituída" data-static-classification="nao_instituida" data-static-score="">
           <td><span class="uf-cell"><img class="uf-flag" src="bandeiras/to.svg" alt="Bandeira de Tocantins" loading="lazy"><span class="uf-code">TO</span></span></td>
           <td><strong>Tocantins</strong></td>
           <td>Não instituída</td>

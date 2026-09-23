@@ -436,6 +436,15 @@ def read_summary() -> tuple[list[dict], dict]:
                 "dimensions_below_minimum": cls["dimensions_below_minimum"],
                 "classification": cls["classification"],
             })
+        # Ordenação padrão: da maior para a menor nota final (unidades sem nota ao final)
+        rows.sort(
+            key=lambda r: (
+                r["final_score"] is None,
+                -(r["final_score"] or 0.0),
+                -(r["base_score"] or 0.0),
+                r["uf"],
+            )
+        )
         cards = build_cards(rows)
         return rows, cards
     finally:

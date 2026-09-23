@@ -56,31 +56,275 @@
 <section class="section" aria-label="Relatório geral">
   <div class="section-head"><h2>Relatório geral</h2></div>
   <div class="section-body">
-    <form id="general-filters" class="filters" method="get" action="relatorios.html" style="border-bottom:0;padding-left:0;padding-right:0;">
-      <label>Situação institucional
-        <select name="situacao" id="filter-situacao">
-          <option value="">Todas as unidades</option>
-          <option value="Instituída">Apenas instituídas</option>
-          <option value="Não instituída">Apenas não instituídas</option>
-          <option value="Instituição não comprovada">Apenas instituição não comprovada</option>
-        </select>
-      </label>
-      <label>Classificação
-        <select name="classificacao" id="filter-classificacao">
-          <option value="">Todas</option>
-          <option value="seguindo">Seguindo os parâmetros mínimos</option>
-          <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
-          <option value="global_insuficiente">Aderência global insuficiente</option>
-          <option value="nao_instituida">Não instituída</option>
-          <option value="nao_comprovada">Instituição não comprovada</option>
-        </select>
-      </label>
-      <label class="col-num">Nota mín.
-        <input type="number" name="nota_min" id="filter-nota-min" min="0" max="100" step="0.1" placeholder="0">
-      </label>
-      <label class="col-num">Nota máx.
-        <input type="number" name="nota_max" id="filter-nota-max" min="0" max="100" step="0.1" placeholder="100">
-      </label>
+    <form class="filters-bar" id="general-report-filters" method="get" action="relatorios.html" style="margin-bottom:18px;">
+      <!-- Filtro 1: Unidade avaliada (Droplist com seleção múltipla) -->
+      <div class="filter-group group-unit ms-dropdown" data-filter-name="unidade">
+        <span class="filter-label">Unidade avaliada</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-unidade-rep">
+          <span class="ms-trigger-text">Todas as unidades</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-unidade-rep">
+          <div class="ms-search-wrap">
+            <input type="text" class="ms-search-input" placeholder="Pesquisar unidade..." autocomplete="off">
+          </div>
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="CE" checked>
+              <span class="ms-option-uf">CE</span>
+              <span class="ms-option-label">Ceará</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="ES_PP" checked>
+              <span class="ms-option-uf">ES</span>
+              <span class="ms-option-label">Espírito Santo — Polícia Penal</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="GO" checked>
+              <span class="ms-option-uf">GO</span>
+              <span class="ms-option-label">Goiás</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="AM" checked>
+              <span class="ms-option-uf">AM</span>
+              <span class="ms-option-label">Amazonas</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="SP" checked>
+              <span class="ms-option-uf">SP</span>
+              <span class="ms-option-label">São Paulo</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="RR" checked>
+              <span class="ms-option-uf">RR</span>
+              <span class="ms-option-label">Roraima</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="PR" checked>
+              <span class="ms-option-uf">PR</span>
+              <span class="ms-option-label">Paraná</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="MT" checked>
+              <span class="ms-option-uf">MT</span>
+              <span class="ms-option-label">Mato Grosso</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="MG" checked>
+              <span class="ms-option-uf">MG</span>
+              <span class="ms-option-label">Minas Gerais</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="RJ" checked>
+              <span class="ms-option-uf">RJ</span>
+              <span class="ms-option-label">Rio de Janeiro</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="AC" checked>
+              <span class="ms-option-uf">AC</span>
+              <span class="ms-option-label">Acre</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="RN" checked>
+              <span class="ms-option-uf">RN</span>
+              <span class="ms-option-label">Rio Grande do Norte</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="DF" checked>
+              <span class="ms-option-uf">DF</span>
+              <span class="ms-option-label">Distrito Federal</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="BA" checked>
+              <span class="ms-option-uf">BA</span>
+              <span class="ms-option-label">Bahia</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="AP" checked>
+              <span class="ms-option-uf">AP</span>
+              <span class="ms-option-label">Amapá</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="PE" checked>
+              <span class="ms-option-uf">PE</span>
+              <span class="ms-option-label">Pernambuco</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="MA" checked>
+              <span class="ms-option-uf">MA</span>
+              <span class="ms-option-label">Maranhão</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="RS" checked>
+              <span class="ms-option-uf">RS</span>
+              <span class="ms-option-label">Rio Grande do Sul</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="MS" checked>
+              <span class="ms-option-uf">MS</span>
+              <span class="ms-option-label">Mato Grosso do Sul</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="PB" checked>
+              <span class="ms-option-uf">PB</span>
+              <span class="ms-option-label">Paraíba</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="ES_SEJUS" checked>
+              <span class="ms-option-uf">ES</span>
+              <span class="ms-option-label">Espírito Santo — SEJUS/ES</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="SC" checked>
+              <span class="ms-option-uf">SC</span>
+              <span class="ms-option-label">Santa Catarina</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="PI" checked>
+              <span class="ms-option-uf">PI</span>
+              <span class="ms-option-label">Piauí</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="AL" checked>
+              <span class="ms-option-uf">AL</span>
+              <span class="ms-option-label">Alagoas</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="SE" checked>
+              <span class="ms-option-uf">SE</span>
+              <span class="ms-option-label">Sergipe</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="PA" checked>
+              <span class="ms-option-uf">PA</span>
+              <span class="ms-option-label">Pará</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="RO" checked>
+              <span class="ms-option-uf">RO</span>
+              <span class="ms-option-label">Rondônia</span>
+            </label>
+
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="TO" checked>
+              <span class="ms-option-uf">TO</span>
+              <span class="ms-option-label">Tocantins</span>
+            </label>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 2: Situação Institucional (Droplist com seleção múltipla) -->
+      <div class="filter-group group-situacao ms-dropdown" data-filter-name="situacao">
+        <span class="filter-label">Situação Institucional</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-situacao-rep">
+          <span class="ms-trigger-text">Todas as situações</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-situacao-rep">
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Instituída" checked>
+              <span class="ms-option-label">Instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Não instituída" checked>
+              <span class="ms-option-label">Não instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Instituição não comprovada" checked>
+              <span class="ms-option-label">Instituição não comprovada</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 3: Classificação (Droplist com seleção múltipla) -->
+      <div class="filter-group group-classif ms-dropdown" data-filter-name="classificacao">
+        <span class="filter-label">Classificação ONASP</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-classificacao-rep">
+          <span class="ms-trigger-text">Todas as classificações</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-classificacao-rep">
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="seguindo" checked>
+              <span class="ms-option-label">Seguindo os parâmetros mínimos</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="abaixo_dimensao" checked>
+              <span class="ms-option-label">Abaixo do mínimo em dimensão essencial</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="global_insuficiente" checked>
+              <span class="ms-option-label">Aderência global insuficiente</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="nao_instituida" checked>
+              <span class="ms-option-label">Não instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="nao_comprovada" checked>
+              <span class="ms-option-label">Instituição não comprovada</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 4: Faixa de Nota (Slider Duplo Horizontal [ o----------o ]) -->
+      <div class="filter-group group-score dual-range-filter">
+        <div class="range-header">
+          <span class="filter-label">Faixa de Nota</span>
+          <span class="range-values" id="range-display-rep">0.0 — 100.0</span>
+        </div>
+        <div class="range-slider-wrap">
+          <div class="range-track"></div>
+          <div class="range-progress"></div>
+          <input type="range" class="range-input range-min" min="0" max="100" step="0.5" value="0" name="nota_min" aria-label="Nota mínima">
+          <input type="range" class="range-input range-max" min="0" max="100" step="0.5" value="100" name="nota_max" aria-label="Nota máxima">
+        </div>
+      </div>
     </form>
 
     <div class="page-actions" style="margin-bottom: 20px;">
@@ -94,9 +338,10 @@
 
     <div class="report-document" id="report-geral-doc">
       <div class="report-doc-header">
+        <div class="report-doc-brand-bar">
+          <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+        </div>
         <div class="report-doc-inst-titles">
-          MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-          SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
           OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
         </div>
         <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -159,147 +404,7 @@
             <tbody>
 
 
-              <tr class="general-row" data-uf="AC" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ac.svg" alt="" loading="lazy">
-                    <span class="uf-code">AC</span>
-                  </span>
-                </td>
-                <td><strong>Acre</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.5</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">13.0</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">23.0</td>
-                <td class="number cell-center"><strong>86.0</strong></td>
-                <td class="number cell-center">+9.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-AC.html" aria-label="Detalhar avaliação de Acre">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="AL" data-situacao="Instituída" data-classificacao="seguindo" data-score="74.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/al.svg" alt="" loading="lazy">
-                    <span class="uf-code">AL</span>
-                  </span>
-                </td>
-                <td><strong>Alagoas</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">9.0</td>
-                <td class="number cell-center">8.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">14.5</td>
-                <td class="number cell-center"><strong>68.5</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">74.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-AL.html" aria-label="Detalhar avaliação de Alagoas">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="AP" data-situacao="Instituída" data-classificacao="seguindo" data-score="91.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ap.svg" alt="" loading="lazy">
-                    <span class="uf-code">AP</span>
-                  </span>
-                </td>
-                <td><strong>Amapá</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.5</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>85.5</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">91.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-AP.html" aria-label="Detalhar avaliação de Amapá">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="AM" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/am.svg" alt="" loading="lazy">
-                    <span class="uf-code">AM</span>
-                  </span>
-                </td>
-                <td><strong>Amazonas</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">25.0</td>
-                <td class="number cell-center"><strong>96.5</strong></td>
-                <td class="number cell-center">+3.5</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">100.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-AM.html" aria-label="Detalhar avaliação de Amazonas">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="BA" data-situacao="Instituída" data-classificacao="seguindo" data-score="92.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ba.svg" alt="" loading="lazy">
-                    <span class="uf-code">BA</span>
-                  </span>
-                </td>
-                <td><strong>Bahia</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>88.5</strong></td>
-                <td class="number cell-center">+4.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">92.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-BA.html" aria-label="Detalhar avaliação de Bahia">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="CE" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
+              <tr class="general-row" data-entity="CE" data-uf="CE" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/ce.svg" alt="" loading="lazy">
@@ -327,35 +432,7 @@
               </tr>
 
 
-              <tr class="general-row" data-uf="DF" data-situacao="Instituída" data-classificacao="seguindo" data-score="93.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/df.svg" alt="" loading="lazy">
-                    <span class="uf-code">DF</span>
-                  </span>
-                </td>
-                <td><strong>Distrito Federal</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">8.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">25.0</td>
-                <td class="number cell-center"><strong>90.5</strong></td>
-                <td class="number cell-center">+3.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">93.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-DF.html" aria-label="Detalhar avaliação de Distrito Federal">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="ES" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
+              <tr class="general-row" data-entity="ES_PP" data-uf="ES" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/es.svg" alt="" loading="lazy">
@@ -383,35 +460,7 @@
               </tr>
 
 
-              <tr class="general-row" data-uf="ES" data-situacao="Instituída" data-classificacao="seguindo" data-score="84.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/es.svg" alt="" loading="lazy">
-                    <span class="uf-code">ES</span>
-                  </span>
-                </td>
-                <td><strong>Espírito Santo — SEJUS/ES</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">7.5</td>
-                <td class="number cell-center">8.0</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">25.0</td>
-                <td class="number cell-center"><strong>80.5</strong></td>
-                <td class="number cell-center">+4.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">84.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-ES_SEJUS.html" aria-label="Detalhar avaliação de Espírito Santo — SEJUS/ES">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="GO" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
+              <tr class="general-row" data-entity="GO" data-uf="GO" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/go.svg" alt="" loading="lazy">
@@ -439,386 +488,22 @@
               </tr>
 
 
-              <tr class="general-row" data-uf="MA" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="90.0">
+              <tr class="general-row" data-entity="AM" data-uf="AM" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
                 <td>
                   <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ma.svg" alt="" loading="lazy">
-                    <span class="uf-code">MA</span>
+                    <img class="uf-flag" src="bandeiras/am.svg" alt="" loading="lazy">
+                    <span class="uf-code">AM</span>
                   </span>
                 </td>
-                <td><strong>Maranhão</strong></td>
+                <td><strong>Amazonas</strong></td>
                 <td class="number cell-center">15.0</td>
                 <td class="number cell-center">15.0</td>
                 <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.0</td>
-                <td class="number cell-center">5.0</td>
-                <td class="number cell-center">21.0</td>
-                <td class="number cell-center"><strong>84.0</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">90.0</td>
-                <td>
-                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — abaixo do mínimo em dimensão essencial
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-MA.html" aria-label="Detalhar avaliação de Maranhão">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="MT" data-situacao="Instituída" data-classificacao="seguindo" data-score="97.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/mt.svg" alt="" loading="lazy">
-                    <span class="uf-code">MT</span>
-                  </span>
-                </td>
-                <td><strong>Mato Grosso</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.0</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">19.0</td>
-                <td class="number cell-center"><strong>87.0</strong></td>
-                <td class="number cell-center">+10.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">97.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-MT.html" aria-label="Detalhar avaliação de Mato Grosso">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="MS" data-situacao="Instituída" data-classificacao="seguindo" data-score="87.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ms.svg" alt="" loading="lazy">
-                    <span class="uf-code">MS</span>
-                  </span>
-                </td>
-                <td><strong>Mato Grosso do Sul</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">8.0</td>
-                <td class="number cell-center">10.5</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">23.0</td>
-                <td class="number cell-center"><strong>78.5</strong></td>
-                <td class="number cell-center">+9.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">87.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-MS.html" aria-label="Detalhar avaliação de Mato Grosso do Sul">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="MG" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/mg.svg" alt="" loading="lazy">
-                    <span class="uf-code">MG</span>
-                  </span>
-                </td>
-                <td><strong>Minas Gerais</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>90.5</strong></td>
-                <td class="number cell-center">+5.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-MG.html" aria-label="Detalhar avaliação de Minas Gerais">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="PA" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/pa.svg" alt="" loading="lazy">
-                    <span class="uf-code">PA</span>
-                  </span>
-                </td>
-                <td><strong>Pará</strong></td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center"><strong>—</strong></td>
-                <td class="number cell-center">+0.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">—</td>
-                <td>
-                  <span class="head-badge badge-bad" style="font-size:.75rem;padding:2px 8px;">
-                    Não instituída
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-PA.html" aria-label="Detalhar avaliação de Pará">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="PB" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="85.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/pb.svg" alt="" loading="lazy">
-                    <span class="uf-code">PB</span>
-                  </span>
-                </td>
-                <td><strong>Paraíba</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">8.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">5.0</td>
-                <td class="number cell-center">21.0</td>
-                <td class="number cell-center"><strong>79.0</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">85.0</td>
-                <td>
-                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — abaixo do mínimo em dimensão essencial
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-PB.html" aria-label="Detalhar avaliação de Paraíba">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="PR" data-situacao="Instituída" data-classificacao="seguindo" data-score="98.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/pr.svg" alt="" loading="lazy">
-                    <span class="uf-code">PR</span>
-                  </span>
-                </td>
-                <td><strong>Paraná</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">10.5</td>
+                <td class="number cell-center">11.5</td>
                 <td class="number cell-center">15.0</td>
                 <td class="number cell-center">25.0</td>
-                <td class="number cell-center"><strong>92.5</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">98.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-PR.html" aria-label="Detalhar avaliação de Paraná">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="PE" data-situacao="Instituída" data-classificacao="seguindo" data-score="91.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/pe.svg" alt="" loading="lazy">
-                    <span class="uf-code">PE</span>
-                  </span>
-                </td>
-                <td><strong>Pernambuco</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">10.5</td>
-                <td class="number cell-center">10.0</td>
-                <td class="number cell-center">23.0</td>
-                <td class="number cell-center"><strong>85.5</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">91.5</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-PE.html" aria-label="Detalhar avaliação de Pernambuco">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="PI" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="80.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/pi.svg" alt="" loading="lazy">
-                    <span class="uf-code">PI</span>
-                  </span>
-                </td>
-                <td><strong>Piauí</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">9.5</td>
-                <td class="number cell-center">5.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>73.0</strong></td>
-                <td class="number cell-center">+7.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">80.0</td>
-                <td>
-                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — abaixo do mínimo em dimensão essencial
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-PI.html" aria-label="Detalhar avaliação de Piauí">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="RJ" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/rj.svg" alt="" loading="lazy">
-                    <span class="uf-code">RJ</span>
-                  </span>
-                </td>
-                <td><strong>Rio de Janeiro</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>89.0</strong></td>
-                <td class="number cell-center">+6.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-RJ.html" aria-label="Detalhar avaliação de Rio de Janeiro">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="RN" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/rn.svg" alt="" loading="lazy">
-                    <span class="uf-code">RN</span>
-                  </span>
-                </td>
-                <td><strong>Rio Grande do Norte</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">17.0</td>
-                <td class="number cell-center"><strong>85.0</strong></td>
-                <td class="number cell-center">+10.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-RN.html" aria-label="Detalhar avaliação de Rio Grande do Norte">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="RS" data-situacao="Instituída" data-classificacao="seguindo" data-score="88.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/rs.svg" alt="" loading="lazy">
-                    <span class="uf-code">RS</span>
-                  </span>
-                </td>
-                <td><strong>Rio Grande do Sul</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">12.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">13.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">16.5</td>
-                <td class="number cell-center"><strong>83.0</strong></td>
-                <td class="number cell-center">+5.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">88.0</td>
-                <td>
-                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — seguindo os parâmetros mínimos
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-RS.html" aria-label="Detalhar avaliação de Rio Grande do Sul">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="RO" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/ro.svg" alt="" loading="lazy">
-                    <span class="uf-code">RO</span>
-                  </span>
-                </td>
-                <td><strong>Rondônia</strong></td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">2.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center">0.0</td>
-                <td class="number cell-center"><strong>—</strong></td>
-                <td class="number cell-center">+0.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">—</td>
-                <td>
-                  <span class="head-badge badge-bad" style="font-size:.75rem;padding:2px 8px;">
-                    Não instituída
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-RO.html" aria-label="Detalhar avaliação de Rondônia">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="RR" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/rr.svg" alt="" loading="lazy">
-                    <span class="uf-code">RR</span>
-                  </span>
-                </td>
-                <td><strong>Roraima</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">11.5</td>
-                <td class="number cell-center">13.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">25.0</td>
-                <td class="number cell-center"><strong>94.5</strong></td>
-                <td class="number cell-center">+5.5</td>
+                <td class="number cell-center"><strong>96.5</strong></td>
+                <td class="number cell-center">+3.5</td>
                 <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">100.0</td>
                 <td>
                   <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
@@ -826,40 +511,12 @@
                   </span>
                 </td>
                 <td class="col-actions">
-                  <a class="btn-detail" href="unidade-RR.html" aria-label="Detalhar avaliação de Roraima">Detalhar</a>
+                  <a class="btn-detail" href="unidade-AM.html" aria-label="Detalhar avaliação de Amazonas">Detalhar</a>
                 </td>
               </tr>
 
 
-              <tr class="general-row" data-uf="SC" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="82.5">
-                <td>
-                  <span class="uf-cell">
-                    <img class="uf-flag" src="bandeiras/sc.svg" alt="" loading="lazy">
-                    <span class="uf-code">SC</span>
-                  </span>
-                </td>
-                <td><strong>Santa Catarina</strong></td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">13.5</td>
-                <td class="number cell-center">15.0</td>
-                <td class="number cell-center">4.0</td>
-                <td class="number cell-center"><strong>77.5</strong></td>
-                <td class="number cell-center">+5.0</td>
-                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">82.5</td>
-                <td>
-                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
-                    Instituída — abaixo do mínimo em dimensão essencial
-                  </span>
-                </td>
-                <td class="col-actions">
-                  <a class="btn-detail" href="unidade-SC.html" aria-label="Detalhar avaliação de Santa Catarina">Detalhar</a>
-                </td>
-              </tr>
-
-
-              <tr class="general-row" data-uf="SP" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
+              <tr class="general-row" data-entity="SP" data-uf="SP" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/sp.svg" alt="" loading="lazy">
@@ -887,7 +544,539 @@
               </tr>
 
 
-              <tr class="general-row" data-uf="SE" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="15.0">
+              <tr class="general-row" data-entity="RR" data-uf="RR" data-situacao="Instituída" data-classificacao="seguindo" data-score="100.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/rr.svg" alt="" loading="lazy">
+                    <span class="uf-code">RR</span>
+                  </span>
+                </td>
+                <td><strong>Roraima</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">13.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">25.0</td>
+                <td class="number cell-center"><strong>94.5</strong></td>
+                <td class="number cell-center">+5.5</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">100.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-RR.html" aria-label="Detalhar avaliação de Roraima">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="PR" data-uf="PR" data-situacao="Instituída" data-classificacao="seguindo" data-score="98.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/pr.svg" alt="" loading="lazy">
+                    <span class="uf-code">PR</span>
+                  </span>
+                </td>
+                <td><strong>Paraná</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">10.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">25.0</td>
+                <td class="number cell-center"><strong>92.5</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">98.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-PR.html" aria-label="Detalhar avaliação de Paraná">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="MT" data-uf="MT" data-situacao="Instituída" data-classificacao="seguindo" data-score="97.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/mt.svg" alt="" loading="lazy">
+                    <span class="uf-code">MT</span>
+                  </span>
+                </td>
+                <td><strong>Mato Grosso</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.0</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">19.0</td>
+                <td class="number cell-center"><strong>87.0</strong></td>
+                <td class="number cell-center">+10.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">97.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-MT.html" aria-label="Detalhar avaliação de Mato Grosso">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="MG" data-uf="MG" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/mg.svg" alt="" loading="lazy">
+                    <span class="uf-code">MG</span>
+                  </span>
+                </td>
+                <td><strong>Minas Gerais</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>90.5</strong></td>
+                <td class="number cell-center">+5.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-MG.html" aria-label="Detalhar avaliação de Minas Gerais">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="RJ" data-uf="RJ" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/rj.svg" alt="" loading="lazy">
+                    <span class="uf-code">RJ</span>
+                  </span>
+                </td>
+                <td><strong>Rio de Janeiro</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>89.0</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-RJ.html" aria-label="Detalhar avaliação de Rio de Janeiro">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="AC" data-uf="AC" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ac.svg" alt="" loading="lazy">
+                    <span class="uf-code">AC</span>
+                  </span>
+                </td>
+                <td><strong>Acre</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.5</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">13.0</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">23.0</td>
+                <td class="number cell-center"><strong>86.0</strong></td>
+                <td class="number cell-center">+9.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-AC.html" aria-label="Detalhar avaliação de Acre">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="RN" data-uf="RN" data-situacao="Instituída" data-classificacao="seguindo" data-score="95.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/rn.svg" alt="" loading="lazy">
+                    <span class="uf-code">RN</span>
+                  </span>
+                </td>
+                <td><strong>Rio Grande do Norte</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>85.0</strong></td>
+                <td class="number cell-center">+10.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">95.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-RN.html" aria-label="Detalhar avaliação de Rio Grande do Norte">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="DF" data-uf="DF" data-situacao="Instituída" data-classificacao="seguindo" data-score="93.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/df.svg" alt="" loading="lazy">
+                    <span class="uf-code">DF</span>
+                  </span>
+                </td>
+                <td><strong>Distrito Federal</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">8.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">25.0</td>
+                <td class="number cell-center"><strong>90.5</strong></td>
+                <td class="number cell-center">+3.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">93.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-DF.html" aria-label="Detalhar avaliação de Distrito Federal">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="BA" data-uf="BA" data-situacao="Instituída" data-classificacao="seguindo" data-score="92.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ba.svg" alt="" loading="lazy">
+                    <span class="uf-code">BA</span>
+                  </span>
+                </td>
+                <td><strong>Bahia</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>88.5</strong></td>
+                <td class="number cell-center">+4.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">92.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-BA.html" aria-label="Detalhar avaliação de Bahia">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="AP" data-uf="AP" data-situacao="Instituída" data-classificacao="seguindo" data-score="91.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ap.svg" alt="" loading="lazy">
+                    <span class="uf-code">AP</span>
+                  </span>
+                </td>
+                <td><strong>Amapá</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.5</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>85.5</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">91.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-AP.html" aria-label="Detalhar avaliação de Amapá">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="PE" data-uf="PE" data-situacao="Instituída" data-classificacao="seguindo" data-score="91.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/pe.svg" alt="" loading="lazy">
+                    <span class="uf-code">PE</span>
+                  </span>
+                </td>
+                <td><strong>Pernambuco</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">10.5</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">23.0</td>
+                <td class="number cell-center"><strong>85.5</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">91.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-PE.html" aria-label="Detalhar avaliação de Pernambuco">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="MA" data-uf="MA" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="90.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ma.svg" alt="" loading="lazy">
+                    <span class="uf-code">MA</span>
+                  </span>
+                </td>
+                <td><strong>Maranhão</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.0</td>
+                <td class="number cell-center">5.0</td>
+                <td class="number cell-center">21.0</td>
+                <td class="number cell-center"><strong>84.0</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">90.0</td>
+                <td>
+                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — abaixo do mínimo em dimensão essencial
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-MA.html" aria-label="Detalhar avaliação de Maranhão">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="RS" data-uf="RS" data-situacao="Instituída" data-classificacao="seguindo" data-score="88.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/rs.svg" alt="" loading="lazy">
+                    <span class="uf-code">RS</span>
+                  </span>
+                </td>
+                <td><strong>Rio Grande do Sul</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">13.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">16.5</td>
+                <td class="number cell-center"><strong>83.0</strong></td>
+                <td class="number cell-center">+5.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">88.0</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-RS.html" aria-label="Detalhar avaliação de Rio Grande do Sul">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="MS" data-uf="MS" data-situacao="Instituída" data-classificacao="seguindo" data-score="87.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ms.svg" alt="" loading="lazy">
+                    <span class="uf-code">MS</span>
+                  </span>
+                </td>
+                <td><strong>Mato Grosso do Sul</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">8.0</td>
+                <td class="number cell-center">10.5</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">23.0</td>
+                <td class="number cell-center"><strong>78.5</strong></td>
+                <td class="number cell-center">+9.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">87.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-MS.html" aria-label="Detalhar avaliação de Mato Grosso do Sul">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="PB" data-uf="PB" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="85.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/pb.svg" alt="" loading="lazy">
+                    <span class="uf-code">PB</span>
+                  </span>
+                </td>
+                <td><strong>Paraíba</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">8.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">5.0</td>
+                <td class="number cell-center">21.0</td>
+                <td class="number cell-center"><strong>79.0</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">85.0</td>
+                <td>
+                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — abaixo do mínimo em dimensão essencial
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-PB.html" aria-label="Detalhar avaliação de Paraíba">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="ES_SEJUS" data-uf="ES" data-situacao="Instituída" data-classificacao="seguindo" data-score="84.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/es.svg" alt="" loading="lazy">
+                    <span class="uf-code">ES</span>
+                  </span>
+                </td>
+                <td><strong>Espírito Santo — SEJUS/ES</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">7.5</td>
+                <td class="number cell-center">8.0</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">25.0</td>
+                <td class="number cell-center"><strong>80.5</strong></td>
+                <td class="number cell-center">+4.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">84.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-ES_SEJUS.html" aria-label="Detalhar avaliação de Espírito Santo — SEJUS/ES">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="SC" data-uf="SC" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="82.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/sc.svg" alt="" loading="lazy">
+                    <span class="uf-code">SC</span>
+                  </span>
+                </td>
+                <td><strong>Santa Catarina</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">13.5</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">4.0</td>
+                <td class="number cell-center"><strong>77.5</strong></td>
+                <td class="number cell-center">+5.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">82.5</td>
+                <td>
+                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — abaixo do mínimo em dimensão essencial
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-SC.html" aria-label="Detalhar avaliação de Santa Catarina">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="PI" data-uf="PI" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="80.0">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/pi.svg" alt="" loading="lazy">
+                    <span class="uf-code">PI</span>
+                  </span>
+                </td>
+                <td><strong>Piauí</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">11.5</td>
+                <td class="number cell-center">9.5</td>
+                <td class="number cell-center">5.0</td>
+                <td class="number cell-center">17.0</td>
+                <td class="number cell-center"><strong>73.0</strong></td>
+                <td class="number cell-center">+7.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">80.0</td>
+                <td>
+                  <span class="head-badge badge-warn" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — abaixo do mínimo em dimensão essencial
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-PI.html" aria-label="Detalhar avaliação de Piauí">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="AL" data-uf="AL" data-situacao="Instituída" data-classificacao="seguindo" data-score="74.5">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/al.svg" alt="" loading="lazy">
+                    <span class="uf-code">AL</span>
+                  </span>
+                </td>
+                <td><strong>Alagoas</strong></td>
+                <td class="number cell-center">15.0</td>
+                <td class="number cell-center">9.0</td>
+                <td class="number cell-center">8.0</td>
+                <td class="number cell-center">12.0</td>
+                <td class="number cell-center">10.0</td>
+                <td class="number cell-center">14.5</td>
+                <td class="number cell-center"><strong>68.5</strong></td>
+                <td class="number cell-center">+6.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">74.5</td>
+                <td>
+                  <span class="head-badge badge-good" style="font-size:.75rem;padding:2px 8px;">
+                    Instituída — seguindo os parâmetros mínimos
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-AL.html" aria-label="Detalhar avaliação de Alagoas">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="SE" data-uf="SE" data-situacao="Instituída" data-classificacao="abaixo_dimensao" data-score="15.0">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/se.svg" alt="" loading="lazy">
@@ -915,7 +1104,63 @@
               </tr>
 
 
-              <tr class="general-row" data-uf="TO" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
+              <tr class="general-row" data-entity="PA" data-uf="PA" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/pa.svg" alt="" loading="lazy">
+                    <span class="uf-code">PA</span>
+                  </span>
+                </td>
+                <td><strong>Pará</strong></td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center"><strong>—</strong></td>
+                <td class="number cell-center">+0.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">—</td>
+                <td>
+                  <span class="head-badge badge-bad" style="font-size:.75rem;padding:2px 8px;">
+                    Não instituída
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-PA.html" aria-label="Detalhar avaliação de Pará">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="RO" data-uf="RO" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
+                <td>
+                  <span class="uf-cell">
+                    <img class="uf-flag" src="bandeiras/ro.svg" alt="" loading="lazy">
+                    <span class="uf-code">RO</span>
+                  </span>
+                </td>
+                <td><strong>Rondônia</strong></td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">2.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center">0.0</td>
+                <td class="number cell-center"><strong>—</strong></td>
+                <td class="number cell-center">+0.0</td>
+                <td class="number cell-center" style="font-weight:700;color:var(--brand-dark);">—</td>
+                <td>
+                  <span class="head-badge badge-bad" style="font-size:.75rem;padding:2px 8px;">
+                    Não instituída
+                  </span>
+                </td>
+                <td class="col-actions">
+                  <a class="btn-detail" href="unidade-RO.html" aria-label="Detalhar avaliação de Rondônia">Detalhar</a>
+                </td>
+              </tr>
+
+
+              <tr class="general-row" data-entity="TO" data-uf="TO" data-situacao="Não instituída" data-classificacao="nao_instituida" data-score="">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="bandeiras/to.svg" alt="" loading="lazy">
@@ -964,59 +1209,59 @@
     <label for="unit-select">UF / unidade avaliada
       <select id="unit-select" name="entity_key">
 
-        <option value="AC" selected>AC — Acre</option>
-
-        <option value="AL" >AL — Alagoas</option>
-
-        <option value="AP" >AP — Amapá</option>
-
-        <option value="AM" >AM — Amazonas</option>
-
-        <option value="BA" >BA — Bahia</option>
-
-        <option value="CE" >CE — Ceará</option>
-
-        <option value="DF" >DF — Distrito Federal</option>
+        <option value="CE" selected>CE — Ceará</option>
 
         <option value="ES_PP" >ES — Espírito Santo — Polícia Penal</option>
 
-        <option value="ES_SEJUS" >ES — Espírito Santo — SEJUS/ES</option>
-
         <option value="GO" >GO — Goiás</option>
 
-        <option value="MA" >MA — Maranhão</option>
-
-        <option value="MT" >MT — Mato Grosso</option>
-
-        <option value="MS" >MS — Mato Grosso do Sul</option>
-
-        <option value="MG" >MG — Minas Gerais</option>
-
-        <option value="PA" >PA — Pará</option>
-
-        <option value="PB" >PB — Paraíba</option>
-
-        <option value="PR" >PR — Paraná</option>
-
-        <option value="PE" >PE — Pernambuco</option>
-
-        <option value="PI" >PI — Piauí</option>
-
-        <option value="RJ" >RJ — Rio de Janeiro</option>
-
-        <option value="RN" >RN — Rio Grande do Norte</option>
-
-        <option value="RS" >RS — Rio Grande do Sul</option>
-
-        <option value="RO" >RO — Rondônia</option>
-
-        <option value="RR" >RR — Roraima</option>
-
-        <option value="SC" >SC — Santa Catarina</option>
+        <option value="AM" >AM — Amazonas</option>
 
         <option value="SP" >SP — São Paulo</option>
 
+        <option value="RR" >RR — Roraima</option>
+
+        <option value="PR" >PR — Paraná</option>
+
+        <option value="MT" >MT — Mato Grosso</option>
+
+        <option value="MG" >MG — Minas Gerais</option>
+
+        <option value="RJ" >RJ — Rio de Janeiro</option>
+
+        <option value="AC" >AC — Acre</option>
+
+        <option value="RN" >RN — Rio Grande do Norte</option>
+
+        <option value="DF" >DF — Distrito Federal</option>
+
+        <option value="BA" >BA — Bahia</option>
+
+        <option value="AP" >AP — Amapá</option>
+
+        <option value="PE" >PE — Pernambuco</option>
+
+        <option value="MA" >MA — Maranhão</option>
+
+        <option value="RS" >RS — Rio Grande do Sul</option>
+
+        <option value="MS" >MS — Mato Grosso do Sul</option>
+
+        <option value="PB" >PB — Paraíba</option>
+
+        <option value="ES_SEJUS" >ES — Espírito Santo — SEJUS/ES</option>
+
+        <option value="SC" >SC — Santa Catarina</option>
+
+        <option value="PI" >PI — Piauí</option>
+
+        <option value="AL" >AL — Alagoas</option>
+
         <option value="SE" >SE — Sergipe</option>
+
+        <option value="PA" >PA — Pará</option>
+
+        <option value="RO" >RO — Rondônia</option>
 
         <option value="TO" >TO — Tocantins</option>
 
@@ -1025,8 +1270,8 @@
 
     <div class="page-actions" style="margin-top:16px;margin-bottom:16px;">
 
-      <a id="individual-pdf" href="relatorios/unidade-AC.pdf" download><button type="button" class="primary">Gerar PDF</button></a>
-      <a id="individual-xlsx" href="relatorios/unidade-AC.xlsx" download><button type="button">Gerar XLSX</button></a>
+      <a id="individual-pdf" href="relatorios/unidade-CE.pdf" download><button type="button" class="primary">Gerar PDF</button></a>
+      <a id="individual-xlsx" href="relatorios/unidade-CE.xlsx" download><button type="button">Gerar XLSX</button></a>
 
     </div>
     <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
@@ -1036,11 +1281,12 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-AC" >
+      <article class="report-document unit-report-paper" id="unit-report-AC" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -2586,9 +2832,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-AL" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -4134,9 +4381,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-AP" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -5682,9 +5930,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-AM" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -7230,9 +7479,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-BA" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -8776,11 +9026,12 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-CE" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-CE" >
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -10326,9 +10577,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-DF" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -11874,9 +12126,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-ES_PP" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -13422,9 +13675,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-ES_SEJUS" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -14970,9 +15224,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-GO" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -16518,9 +16773,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-MA" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -18066,9 +18322,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-MT" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -19614,9 +19871,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-MS" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -21162,9 +21420,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-MG" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -22710,9 +22969,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-PA" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -24258,9 +24518,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-PB" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -25806,9 +26067,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-PR" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -27354,9 +27616,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-PE" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -28902,9 +29165,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-PI" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -30450,9 +30714,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-RJ" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -31998,9 +32263,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-RN" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -33546,9 +33812,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-RS" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -35094,9 +35361,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-RO" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -36642,9 +36910,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-RR" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -38190,9 +38459,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-SC" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -39738,9 +40008,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-SP" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -41286,9 +41557,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-SE" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -42834,9 +43106,10 @@
 
       <article class="report-document unit-report-paper" id="unit-report-TO" hidden>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -44391,69 +44664,7 @@
 (function () {
   var isReadOnly = true;
 
-  // --- 1. Filtros interativos do Relatório Geral ---
-  var fSituacao = document.getElementById("filter-situacao");
-  var fClassif = document.getElementById("filter-classificacao");
-  var fNotaMin = document.getElementById("filter-nota-min");
-  var fNotaMax = document.getElementById("filter-nota-max");
-  var genPdf = document.getElementById("general-pdf");
-  var genXlsx = document.getElementById("general-xlsx");
-  var countEl = document.getElementById("general-table-count");
-  var emptyRow = document.getElementById("general-empty-row");
-  var rows = document.querySelectorAll(".general-row");
-
-  function buildQuery() {
-    var p = new URLSearchParams();
-    if (fSituacao && fSituacao.value) p.set("situacao", fSituacao.value);
-    if (fClassif && fClassif.value) p.set("classificacao", fClassif.value);
-    if (fNotaMin && fNotaMin.value) p.set("nota_min", fNotaMin.value);
-    if (fNotaMax && fNotaMax.value) p.set("nota_max", fNotaMax.value);
-    var q = p.toString();
-    return q ? ("?" + q) : "";
-  }
-
-  function applyGeneralFilters() {
-    var sit = fSituacao ? fSituacao.value.trim().toLowerCase() : "";
-    var cls = fClassif ? fClassif.value.trim().toLowerCase() : "";
-    var nmin = fNotaMin && fNotaMin.value !== "" ? parseFloat(fNotaMin.value) : null;
-    var nmax = fNotaMax && fNotaMax.value !== "" ? parseFloat(fNotaMax.value) : null;
-
-    var visibleCount = 0;
-    rows.forEach(function (row) {
-      var rSit = (row.getAttribute("data-situacao") || "").toLowerCase();
-      var rCls = (row.getAttribute("data-classificacao") || "").toLowerCase();
-      var rScoreRaw = row.getAttribute("data-score");
-      var rScore = rScoreRaw !== "" && rScoreRaw !== null ? parseFloat(rScoreRaw) : null;
-
-      var match = true;
-      if (sit && rSit !== sit) match = false;
-      if (cls && rCls !== cls) match = false;
-      if (nmin !== null && (rScore === null || rScore < nmin)) match = false;
-      if (nmax !== null && (rScore === null || rScore > nmax)) match = false;
-
-      row.hidden = !match;
-      if (match) visibleCount++;
-    });
-
-    if (countEl) countEl.textContent = "Exibindo " + visibleCount + " de " + rows.length + " unidades";
-    if (emptyRow) emptyRow.hidden = (visibleCount > 0);
-
-    // Atualiza links de exportação do relatório geral
-    if (!isReadOnly) {
-      var q = buildQuery();
-      if (genPdf) genPdf.href = "/api/relatorios/geral.pdf" + q;
-      if (genXlsx) genXlsx.href = "/api/relatorios/geral.xlsx" + q;
-    }
-  }
-
-  [fSituacao, fClassif, fNotaMin, fNotaMax].forEach(function (el) {
-    if (el) {
-      el.addEventListener("input", applyGeneralFilters);
-      el.addEventListener("change", applyGeneralFilters);
-    }
-  });
-
-  // --- 2. Troca dinâmica da UF do Relatório Individual ---
+  // --- Troca dinâmica da UF do Relatório Individual ---
   var sel = document.getElementById("unit-select");
   var indPdf = document.getElementById("individual-pdf");
   var indXlsx = document.getElementById("individual-xlsx");

@@ -15,31 +15,113 @@
 <section class="section" aria-label="Relatório geral">
   <div class="section-head"><h2>Relatório geral</h2></div>
   <div class="section-body">
-    <form id="general-filters" class="filters" method="get" action="{% if read_only|default(false) %}relatorios.html{% else %}/api/relatorios/geral.pdf{% endif %}" style="border-bottom:0;padding-left:0;padding-right:0;">
-      <label>Situação institucional
-        <select name="situacao" id="filter-situacao">
-          <option value="">Todas as unidades</option>
-          <option value="Instituída">Apenas instituídas</option>
-          <option value="Não instituída">Apenas não instituídas</option>
-          <option value="Instituição não comprovada">Apenas instituição não comprovada</option>
-        </select>
-      </label>
-      <label>Classificação
-        <select name="classificacao" id="filter-classificacao">
-          <option value="">Todas</option>
-          <option value="seguindo">Seguindo os parâmetros mínimos</option>
-          <option value="abaixo_dimensao">Abaixo do mínimo em dimensão essencial</option>
-          <option value="global_insuficiente">Aderência global insuficiente</option>
-          <option value="nao_instituida">Não instituída</option>
-          <option value="nao_comprovada">Instituição não comprovada</option>
-        </select>
-      </label>
-      <label class="col-num">Nota mín.
-        <input type="number" name="nota_min" id="filter-nota-min" min="0" max="100" step="0.1" placeholder="0">
-      </label>
-      <label class="col-num">Nota máx.
-        <input type="number" name="nota_max" id="filter-nota-max" min="0" max="100" step="0.1" placeholder="100">
-      </label>
+    <form class="filters-bar" id="general-report-filters" method="get" action="{% if read_only|default(false) %}relatorios.html{% else %}/api/relatorios/geral.pdf{% endif %}" style="margin-bottom:18px;">
+      <!-- Filtro 1: Unidade avaliada (Droplist com seleção múltipla) -->
+      <div class="filter-group group-unit ms-dropdown" data-filter-name="unidade">
+        <span class="filter-label">Unidade avaliada</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-unidade-rep">
+          <span class="ms-trigger-text">Todas as unidades</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-unidade-rep">
+          <div class="ms-search-wrap">
+            <input type="text" class="ms-search-input" placeholder="Pesquisar unidade..." autocomplete="off">
+          </div>
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+            {% for r in rows %}
+            <label class="ms-option">
+              <input type="checkbox" name="unidade" value="{{ r.entity_key|e }}" checked>
+              <span class="ms-option-uf">{{ r.uf|e }}</span>
+              <span class="ms-option-label">{{ r.unidade_label|e }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 2: Situação Institucional (Droplist com seleção múltipla) -->
+      <div class="filter-group group-situacao ms-dropdown" data-filter-name="situacao">
+        <span class="filter-label">Situação Institucional</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-situacao-rep">
+          <span class="ms-trigger-text">Todas as situações</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-situacao-rep">
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Instituída" checked>
+              <span class="ms-option-label">Instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Não instituída" checked>
+              <span class="ms-option-label">Não instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="situacao" value="Instituição não comprovada" checked>
+              <span class="ms-option-label">Instituição não comprovada</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 3: Classificação (Droplist com seleção múltipla) -->
+      <div class="filter-group group-classif ms-dropdown" data-filter-name="classificacao">
+        <span class="filter-label">Classificação ONASP</span>
+        <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false" id="trigger-classificacao-rep">
+          <span class="ms-trigger-text">Todas as classificações</span>
+          <span class="ms-trigger-arrow">▾</span>
+        </button>
+        <div class="ms-menu" hidden aria-labelledby="trigger-classificacao-rep">
+          <div class="ms-actions">
+            <button type="button" class="ms-action-btn ms-select-all">Marcar todas</button>
+            <button type="button" class="ms-action-btn ms-clear-all">Desmarcar</button>
+          </div>
+          <div class="ms-options-list">
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="seguindo" checked>
+              <span class="ms-option-label">Seguindo os parâmetros mínimos</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="abaixo_dimensao" checked>
+              <span class="ms-option-label">Abaixo do mínimo em dimensão essencial</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="global_insuficiente" checked>
+              <span class="ms-option-label">Aderência global insuficiente</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="nao_instituida" checked>
+              <span class="ms-option-label">Não instituída</span>
+            </label>
+            <label class="ms-option">
+              <input type="checkbox" name="classificacao" value="nao_comprovada" checked>
+              <span class="ms-option-label">Instituição não comprovada</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro 4: Faixa de Nota (Slider Duplo Horizontal [ o----------o ]) -->
+      <div class="filter-group group-score dual-range-filter">
+        <div class="range-header">
+          <span class="filter-label">Faixa de Nota</span>
+          <span class="range-values" id="range-display-rep">0.0 — 100.0</span>
+        </div>
+        <div class="range-slider-wrap">
+          <div class="range-track"></div>
+          <div class="range-progress"></div>
+          <input type="range" class="range-input range-min" min="0" max="100" step="0.5" value="0" name="nota_min" aria-label="Nota mínima">
+          <input type="range" class="range-input range-max" min="0" max="100" step="0.5" value="100" name="nota_max" aria-label="Nota máxima">
+        </div>
+      </div>
     </form>
 
     <div class="page-actions" style="margin-bottom: 20px;">
@@ -56,9 +138,10 @@
     {# VISUALIZAÇÃO EM TELA DO RELATÓRIO GERAL #}
     <div class="report-document" id="report-geral-doc">
       <div class="report-doc-header">
+        <div class="report-doc-brand-bar">
+          <img class="report-header-logo" src="{% if read_only|default(false) %}logos/logo_senappen_mjsp_gov_horizontal.png{% else %}{{ url_for('static', path='logos/logo_senappen_mjsp_gov_horizontal.png') }}{% endif %}" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+        </div>
         <div class="report-doc-inst-titles">
-          MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-          SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
           OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
         </div>
         <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -121,7 +204,7 @@
             <tbody>
               {% for r in rows %}
               {% set classification_key = "seguindo" if r.classification == "Instituída — seguindo os parâmetros mínimos" else ("abaixo_dimensao" if r.classification == "Instituída — abaixo do mínimo em dimensão essencial" else ("global_insuficiente" if r.classification == "Instituída — aderência global insuficiente" else ("nao_instituida" if r.classification == "Não instituída" else "nao_comprovada"))) %}
-              <tr class="general-row" data-uf="{{ r.uf|e }}" data-situacao="{{ r.situacao|e }}" data-classificacao="{{ classification_key }}" data-score="{{ r.final_score if r.final_score is not none else '' }}">
+              <tr class="general-row" data-entity="{{ r.entity_key|e }}" data-uf="{{ r.uf|e }}" data-situacao="{{ r.situacao|e }}" data-classificacao="{{ classification_key }}" data-score="{{ r.final_score if r.final_score is not none else '' }}">
                 <td>
                   <span class="uf-cell">
                     <img class="uf-flag" src="{% if read_only|default(false) %}bandeiras/{{ r.flag or 'br' }}.svg{% else %}{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}{% endif %}" alt="" loading="lazy">
@@ -195,9 +278,10 @@
       {% set res = detail.result %}
       <article class="report-document unit-report-paper" id="unit-report-{{ k|e }}" {% if k != selected_key %}hidden{% endif %}>
         <div class="report-doc-header">
+          <div class="report-doc-brand-bar">
+            <img class="report-header-logo" src="{% if read_only|default(false) %}logos/logo_senappen_mjsp_gov_horizontal.png{% else %}{{ url_for('static', path='logos/logo_senappen_mjsp_gov_horizontal.png') }}{% endif %}" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
+          </div>
           <div class="report-doc-inst-titles">
-            MINISTÉRIO DA JUSTIÇA E SEGURANÇA PÚBLICA<br>
-            SECRETARIA NACIONAL DE POLÍTICAS PENAIS<br>
             OUVIDORIA NACIONAL DE SERVIÇOS PENAIS
           </div>
           <div class="report-doc-system-title">MONITORAMENTO DOS PARÂMETROS MÍNIMOS DAS OUVIDORIAS DE SERVIÇOS PENAIS</div>
@@ -391,69 +475,7 @@
 (function () {
   var isReadOnly = {% if read_only|default(false) %}true{% else %}false{% endif %};
 
-  // --- 1. Filtros interativos do Relatório Geral ---
-  var fSituacao = document.getElementById("filter-situacao");
-  var fClassif = document.getElementById("filter-classificacao");
-  var fNotaMin = document.getElementById("filter-nota-min");
-  var fNotaMax = document.getElementById("filter-nota-max");
-  var genPdf = document.getElementById("general-pdf");
-  var genXlsx = document.getElementById("general-xlsx");
-  var countEl = document.getElementById("general-table-count");
-  var emptyRow = document.getElementById("general-empty-row");
-  var rows = document.querySelectorAll(".general-row");
-
-  function buildQuery() {
-    var p = new URLSearchParams();
-    if (fSituacao && fSituacao.value) p.set("situacao", fSituacao.value);
-    if (fClassif && fClassif.value) p.set("classificacao", fClassif.value);
-    if (fNotaMin && fNotaMin.value) p.set("nota_min", fNotaMin.value);
-    if (fNotaMax && fNotaMax.value) p.set("nota_max", fNotaMax.value);
-    var q = p.toString();
-    return q ? ("?" + q) : "";
-  }
-
-  function applyGeneralFilters() {
-    var sit = fSituacao ? fSituacao.value.trim().toLowerCase() : "";
-    var cls = fClassif ? fClassif.value.trim().toLowerCase() : "";
-    var nmin = fNotaMin && fNotaMin.value !== "" ? parseFloat(fNotaMin.value) : null;
-    var nmax = fNotaMax && fNotaMax.value !== "" ? parseFloat(fNotaMax.value) : null;
-
-    var visibleCount = 0;
-    rows.forEach(function (row) {
-      var rSit = (row.getAttribute("data-situacao") || "").toLowerCase();
-      var rCls = (row.getAttribute("data-classificacao") || "").toLowerCase();
-      var rScoreRaw = row.getAttribute("data-score");
-      var rScore = rScoreRaw !== "" && rScoreRaw !== null ? parseFloat(rScoreRaw) : null;
-
-      var match = true;
-      if (sit && rSit !== sit) match = false;
-      if (cls && rCls !== cls) match = false;
-      if (nmin !== null && (rScore === null || rScore < nmin)) match = false;
-      if (nmax !== null && (rScore === null || rScore > nmax)) match = false;
-
-      row.hidden = !match;
-      if (match) visibleCount++;
-    });
-
-    if (countEl) countEl.textContent = "Exibindo " + visibleCount + " de " + rows.length + " unidades";
-    if (emptyRow) emptyRow.hidden = (visibleCount > 0);
-
-    // Atualiza links de exportação do relatório geral
-    if (!isReadOnly) {
-      var q = buildQuery();
-      if (genPdf) genPdf.href = "/api/relatorios/geral.pdf" + q;
-      if (genXlsx) genXlsx.href = "/api/relatorios/geral.xlsx" + q;
-    }
-  }
-
-  [fSituacao, fClassif, fNotaMin, fNotaMax].forEach(function (el) {
-    if (el) {
-      el.addEventListener("input", applyGeneralFilters);
-      el.addEventListener("change", applyGeneralFilters);
-    }
-  });
-
-  // --- 2. Troca dinâmica da UF do Relatório Individual ---
+  // --- Troca dinâmica da UF do Relatório Individual ---
   var sel = document.getElementById("unit-select");
   var indPdf = document.getElementById("individual-pdf");
   var indXlsx = document.getElementById("individual-xlsx");

@@ -72,10 +72,16 @@ def _guard_startup():
 
 def _filters(request: Request) -> dict:
     q = (request.query_params.get("q") or "").strip().lower()
+    situacoes = [s for s in request.query_params.getlist("situacao") if s]
+    classificacoes = [c for c in request.query_params.getlist("classificacao") if c]
+    unidades = [u for u in request.query_params.getlist("unidade") if u]
     return {
         "q": request.query_params.get("q") or "",
-        "situacao": request.query_params.get("situacao") or "",
-        "classificacao": request.query_params.get("classificacao") or "",
+        "situacoes": situacoes,
+        "classificacoes": classificacoes,
+        "unidades": unidades,
+        "situacao": situacoes[0] if len(situacoes) == 1 else (request.query_params.get("situacao") or ""),
+        "classificacao": classificacoes[0] if len(classificacoes) == 1 else (request.query_params.get("classificacao") or ""),
         "nota_min": request.query_params.get("nota_min") or "",
         "nota_max": request.query_params.get("nota_max") or "",
         "_q": q,
@@ -115,13 +121,19 @@ def _apply_filters(rows: list[dict], f: dict) -> list[dict]:
         nmax = float(f["nota_max"]) if f["nota_max"] not in ("", None) else None
     except ValueError:
         nmax = None
+
+    wanted_situacoes = set(f.get("situacoes") or ([f["situacao"]] if f.get("situacao") else []))
+    raw_classifs = f.get("classificacoes") or ([f["classificacao"]] if f.get("classificacao") else [])
+    wanted_classificacoes = {CLASSIFICATION_ALIASES.get(c, c) for c in raw_classifs if c}
+    wanted_unidades = set(f.get("unidades") or [])
+
     for r in rows:
-        if f["situacao"] and r["situacao"] != f["situacao"]:
+        if wanted_situacoes and r["situacao"] not in wanted_situacoes:
             continue
-        if f["classificacao"]:
-            wanted = CLASSIFICATION_ALIASES.get(f["classificacao"], f["classificacao"])
-            if r["classification"] != wanted:
-                continue
+        if wanted_classificacoes and r["classification"] not in wanted_classificacoes:
+            continue
+        if wanted_unidades and r.get("entity_key") not in wanted_unidades and r.get("uf") not in wanted_unidades:
+            continue
         if nmin is not None and (r["final_score"] is None or r["final_score"] < nmin):
             continue
         if nmax is not None and (r["final_score"] is None or r["final_score"] > nmax):
