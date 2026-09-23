@@ -241,7 +241,7 @@
             <div class="eval-ctrl-bar">
               <div class="eval-status-group">
                 <label for="status-{{ q.occurrence_key|e }}" class="eval-lbl">Status</label>
-                <select id="status-{{ q.occurrence_key|e }}" data-status-select class="select-compact">
+                <select id="status-{{ q.occurrence_key|e }}" data-status-select data-status-val="{{ q.status|e }}" class="select-compact {% if q.status in ['Atende', 'Sim'] %}status-good{% elif q.status in ['Parcial', 'Atende parcialmente'] %}status-warn{% elif q.status in ['Não atende', 'Não'] %}status-bad{% else %}status-neutral{% endif %}">
                   {% for opt in q.status_options %}
                   <option value="{{ opt|e }}"{% if opt == q.status %} selected{% endif %}>{{ opt|e }}</option>
                   {% endfor %}

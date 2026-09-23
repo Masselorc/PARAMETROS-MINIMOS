@@ -1321,12 +1321,71 @@ main {
 .select-compact {
   min-height: 32px !important;
   height: 32px;
-  padding: 2px 8px !important;
+  padding: 2px 24px 2px 10px !important;
   font-size: .8125rem !important;
+  font-weight: 700;
   border: 1px solid #b9c8cd;
-  border-radius: 4px;
+  border-radius: 6px;
   margin: 0 !important;
   width: auto !important;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.select-compact.status-good,
+.select-compact[data-status-val="Atende"],
+.select-compact[data-status-val="Sim"] {
+  background-color: var(--good-bg) !important;
+  color: var(--good) !important;
+  border-color: #8eceaa !important;
+}
+.select-compact.status-warn,
+.select-compact[data-status-val="Parcial"],
+.select-compact[data-status-val="Atende parcialmente"] {
+  background-color: var(--warn-bg) !important;
+  color: var(--warn) !important;
+  border-color: #f1cf88 !important;
+}
+.select-compact.status-bad,
+.select-compact[data-status-val="Não atende"],
+.select-compact[data-status-val="Não"] {
+  background-color: var(--bad-bg) !important;
+  color: var(--bad) !important;
+  border-color: #f5b8c0 !important;
+}
+.select-compact.status-neutral,
+.select-compact[data-status-val="Sem evidência"],
+.select-compact[data-status-val="Não se aplica"],
+.select-compact[data-status-val=""] {
+  background-color: #edf2f4 !important;
+  color: var(--muted) !important;
+  border-color: #cbd7dc !important;
+}
+.select-compact option {
+  background-color: #ffffff;
+  color: var(--ink);
+  font-weight: 500;
+}
+.select-compact option[value="Atende"],
+.select-compact option[value="Sim"] {
+  background-color: var(--good-bg);
+  color: var(--good);
+  font-weight: 600;
+}
+.select-compact option[value="Parcial"],
+.select-compact option[value="Atende parcialmente"] {
+  background-color: var(--warn-bg);
+  color: var(--warn);
+  font-weight: 600;
+}
+.select-compact option[value="Não atende"],
+.select-compact option[value="Não"] {
+  background-color: var(--bad-bg);
+  color: var(--bad);
+  font-weight: 600;
+}
+.select-compact option[value="Sem evidência"] {
+  background-color: #edf2f4;
+  color: var(--muted);
 }
 .btn-compact-save {
   min-height: 32px !important;

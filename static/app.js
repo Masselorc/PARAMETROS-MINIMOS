@@ -23,6 +23,29 @@
     });
   });
 
+  function updateStatusSelectColor(sel) {
+    if (!sel) return;
+    var val = sel.value;
+    sel.setAttribute("data-status-val", val);
+    sel.classList.remove("status-good", "status-warn", "status-bad", "status-neutral");
+    if (val === "Atende" || val === "Sim") {
+      sel.classList.add("status-good");
+    } else if (val === "Parcial" || val === "Atende parcialmente") {
+      sel.classList.add("status-warn");
+    } else if (val === "Não atende" || val === "Não") {
+      sel.classList.add("status-bad");
+    } else {
+      sel.classList.add("status-neutral");
+    }
+  }
+
+  document.querySelectorAll("[data-status-select]").forEach(function (sel) {
+    sel.addEventListener("change", function () {
+      updateStatusSelectColor(sel);
+    });
+    updateStatusSelectColor(sel);
+  });
+
   document.querySelectorAll("[data-save]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var card = btn.closest("[data-occurrence]");
