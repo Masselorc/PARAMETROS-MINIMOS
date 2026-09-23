@@ -16,6 +16,14 @@ from .config import BASE_DIR
 from .workbook_service import read_methodology_matrix
 
 
+INK = colors.HexColor("#192E39")
+MUTED = colors.HexColor("#526572")
+BRAND = colors.HexColor("#155B67")
+LINE = colors.HexColor("#D9E1E5")
+TABLE_SHADE = colors.HexColor("#F8FAFB")
+INFO_SHADE = colors.HexColor("#EDF5F6")
+
+
 @dataclass
 class _Node:
     tag: str
@@ -79,6 +87,8 @@ def _inline(node: _Node | str) -> str:
         return "<br/>"
     if node.tag == "span" and node.has_class("cell-sub"):
         return f'<br/><font color="#526572">{content}</font>'
+    if node.tag == "span" and node.has_class("badge"):
+        return f'<font color="#526572" backcolor="#EDF1F3" size="7.2"><b>&#160;{content}&#160;</b></font>'
     if node.tag == "a" and node.attrs.get("href"):
         href = escape(node.attrs["href"], quote=True)
         return f'<a href="{href}" color="#155b67">{content}</a>'
@@ -106,7 +116,7 @@ def _table_flow(node: _Node, styles: dict) -> Table:
                 markup = _markup(cell) or " "
                 if cell.tag == "th":
                     markup = f"<b>{markup}</b>"
-                row.append(Paragraph(markup, styles["cell"]))
+                row.append(Paragraph(markup, styles["header_cell" if cell.tag == "th" else "cell"]))
                 colspan = max(1, int(cell.attrs.get("colspan", "1")))
                 row.extend([""] * (colspan - 1))
                 if colspan > 1:
@@ -128,7 +138,7 @@ def _table_flow(node: _Node, styles: dict) -> Table:
     elif columns == 3:
         widths = [22 * mm, 132 * mm, 26 * mm]
     commands = [
-        ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#C8D2D7")),
+        ("GRID", (0, 0), (-1, -1), 0.4, LINE),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 5),
         ("RIGHTPADDING", (0, 0), (-1, -1), 5),
@@ -137,11 +147,11 @@ def _table_flow(node: _Node, styles: dict) -> Table:
     ]
     if header_rows:
         commands.extend([
-            ("BACKGROUND", (0, 0), (-1, header_rows - 1), colors.HexColor("#EAF2F4")),
+            ("BACKGROUND", (0, 0), (-1, header_rows - 1), TABLE_SHADE),
             ("FONTNAME", (0, 0), (-1, header_rows - 1), "Helvetica-Bold"),
         ])
     for row_number in footer_rows:
-        commands.append(("BACKGROUND", (0, row_number), (-1, row_number), colors.HexColor("#F4F6F7")))
+        commands.append(("BACKGROUND", (0, row_number), (-1, row_number), TABLE_SHADE))
     for row_number, first, last in spans:
         commands.append(("SPAN", (first, row_number), (last, row_number)))
     result = Table(rows, colWidths=widths, repeatRows=header_rows, hAlign="LEFT")
@@ -163,9 +173,19 @@ def _block_flow(node: _Node, styles: dict) -> list:
         return [_table_flow(node, styles), Spacer(1, 1.5 * mm)]
     if node.tag == "div" and node.has_class("info"):
         paragraphs = _nodes(node, "p")
-        if paragraphs:
-            return [Paragraph(_markup(child), styles["note"]) for child in paragraphs]
-        return [Paragraph(_markup(node), styles["note"])]
+        content = [Paragraph(_markup(child), styles["note"]) for child in paragraphs] if paragraphs else [
+            Paragraph(_markup(node), styles["note"])
+        ]
+        box = Table([[content]], colWidths=[180 * mm], hAlign="LEFT")
+        box.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, -1), INFO_SHADE),
+            ("LINEBEFORE", (0, 0), (0, -1), 3, BRAND),
+            ("LEFTPADDING", (0, 0), (-1, -1), 8),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+            ("TOPPADDING", (0, 0), (-1, -1), 7),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+        ]))
+        return [Spacer(1, 2 * mm), box, Spacer(1, 2 * mm)]
     flows = []
     for child in _nodes(node):
         flows.extend(_block_flow(child, styles))
@@ -192,26 +212,28 @@ def methodology_flow(styles, logo_path, sei_processo_url: str, in_75_url: str) -
     pdf_styles = {
         "title": ParagraphStyle("MethodologyTitle", parent=styles["Normal"], alignment=TA_CENTER,
                                 fontName="Helvetica-Bold", fontSize=11, leading=14,
-                                textColor=colors.HexColor("#103E49")),
+                                textColor=INK),
         "reference": ParagraphStyle("MethodologyReference", parent=styles["Normal"], alignment=TA_CENTER,
-                                    fontSize=7, leading=10, textColor=colors.HexColor("#526572")),
+                                    fontSize=7, leading=10, textColor=MUTED),
         "heading": ParagraphStyle("MethodologyHeading", parent=styles["Heading2"], fontName="Helvetica-Bold",
                                   fontSize=10, leading=13, spaceBefore=4 * mm, spaceAfter=1.5 * mm,
-                                  keepWithNext=True, textColor=colors.HexColor("#103E49")),
+                                  keepWithNext=True, textColor=INK),
         "subheading": ParagraphStyle("MethodologySubheading", parent=styles["Heading3"], fontName="Helvetica-Bold",
                                      fontSize=8.5, leading=11, spaceBefore=2.5 * mm, spaceAfter=1 * mm,
-                                     keepWithNext=True, textColor=colors.HexColor("#103E49")),
+                                     keepWithNext=True, textColor=INK),
         "body": ParagraphStyle("MethodologyBody", parent=styles["Normal"], fontSize=8, leading=11,
                                spaceAfter=1.8 * mm, alignment=TA_JUSTIFY,
-                               textColor=colors.HexColor("#192E39")),
+                               textColor=INK),
         "list": ParagraphStyle("MethodologyList", parent=styles["Normal"], fontSize=8, leading=11,
                                leftIndent=8 * mm, firstLineIndent=-4 * mm, spaceAfter=1 * mm,
-                               textColor=colors.HexColor("#192E39")),
+                               textColor=INK),
         "cell": ParagraphStyle("MethodologyCell", parent=styles["Normal"], fontSize=7.2, leading=9.5,
-                               textColor=colors.HexColor("#192E39")),
+                               textColor=INK),
+        "header_cell": ParagraphStyle("MethodologyHeaderCell", parent=styles["Normal"],
+                                      fontName="Helvetica-Bold", fontSize=7.2, leading=9.5,
+                                      textColor=MUTED),
         "note": ParagraphStyle("MethodologyNote", parent=styles["Normal"], fontSize=7.5, leading=10.5,
-                               spaceBefore=1 * mm, spaceAfter=1 * mm, backColor=colors.HexColor("#EDF5F6"),
-                               borderPadding=5, textColor=colors.HexColor("#103E49")),
+                               spaceAfter=1 * mm, textColor=INK),
     }
     flows = [PageBreak()]
     if logo_path.exists():
