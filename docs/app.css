@@ -2338,6 +2338,8 @@ tr.row-summary-detail > td {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   padding-top: 4px;
 }
 .btn-open-full {
@@ -2379,6 +2381,9 @@ tr.row-summary-detail > td {
   }
   .expansion-footer {
     justify-content: stretch;
+  }
+  .expansion-footer > button {
+    width: 100%;
   }
   .btn-open-full {
     width: 100%;
@@ -2694,5 +2699,4 @@ tr.row-summary-detail > td {
   border-color: var(--stat-accent);
   background: linear-gradient(180deg, #ffffff 0%, var(--stat-icon-bg) 100%);
 }
-
 

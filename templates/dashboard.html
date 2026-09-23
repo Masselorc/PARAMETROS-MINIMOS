@@ -282,7 +282,7 @@
           </td>
           <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}">Detalhar</a>{% endif %}</td>
         </tr>
-        <tr class="row-summary-detail" data-detail-for="{{ r.entity_key|e }}" id="detail-{{ r.entity_key|e }}" hidden aria-hidden="true">
+        <tr class="row-summary-detail" data-detail-for="{{ r.entity_key|e }}" data-sei-unit="{{ r.unidade_label|e }}" data-sei-uf="{{ r.uf|e }}" data-sei-situation="{{ r.situacao|e }}" data-sei-base="{{ r.base_score if r.base_score is not none else '' }}" data-sei-bonus="{{ r.bonus_applied if r.bonus_applied is not none else '' }}" data-sei-final="{{ r.final_score if r.final_score is not none else '' }}" data-sei-classification="{{ r.classification|e }}" id="detail-{{ r.entity_key|e }}" hidden aria-hidden="true">
           <td colspan="13">
             <div class="expansion-wrap">
               <div class="expansion-header">
@@ -332,19 +332,19 @@
                   <div class="expansion-kpi">
                     <span class="kpi-label">Mínimo Global (70 pts)</span>
                     <div class="kpi-val">
-                      {% if r.base_score is not none and r.base_score >= 70 %}
+                      {% if r.final_score is not none and r.final_score >= 70 %}
                         <span class="status-tag pass">✓ Atendido</span>
-                      {% elif r.base_score is not none %}
+                      {% elif r.final_score is not none %}
                         <span class="status-tag fail">✗ Não atendido</span>
                       {% else %}
                         <span class="status-tag na">—</span>
                       {% endif %}
                     </div>
                     <span class="kpi-sub">
-                      {% if r.base_score is not none and r.base_score >= 70 %}
-                        Nota-base {{ ("%.1f"|format(r.base_score))|replace(".", ",") }} ≥ 70
-                      {% elif r.base_score is not none %}
-                        Déficit: {{ ("%.1f"|format(70.0 - r.base_score))|replace(".", ",") }} pts
+                      {% if r.final_score is not none and r.final_score >= 70 %}
+                        Nota final {{ ("%.1f"|format(r.final_score))|replace(".", ",") }} ≥ 70
+                      {% elif r.final_score is not none %}
+                        Déficit: {{ ("%.1f"|format(70.0 - r.final_score))|replace(".", ",") }} pts
                       {% else %}
                         Não se aplica
                       {% endif %}
@@ -353,9 +353,9 @@
                 </div>
               </div>
 
-              <!-- Bloco B: Dimensões e Pisos Regulamentares -->
+              <!-- Bloco B: Dimensões e pisos da metodologia -->
               <div class="expansion-section">
-                <span class="expansion-block-label">Dimensões e Pisos Regulamentares (IN nº 75/2026)</span>
+                <span class="expansion-block-label">Dimensões e pisos da metodologia ONASP</span>
                 <div class="expansion-dims">
                   <!-- 1. Institucionalização -->
                   <div class="dim-card {% if r.situacao == 'Instituída' %}dim-card-pass{% elif r.situacao == 'Não instituída' or r.situacao == 'Instituição não comprovada' %}dim-card-fail{% endif %}">
@@ -496,12 +496,12 @@
                 {% elif r.situacao == "Instituição não comprovada" %}
                   <p class="expansion-diag-text">Não há comprovação documental suficiente para atestar a instituição formal da Ouvidoria de Serviços Penais segundo o critério normativo M1-11.</p>
                 {% elif r.classification == "Instituída — seguindo os parâmetros mínimos" %}
-                  <p class="expansion-diag-text">Todas as dimensões essenciais atingem o piso mínimo regulamentar de 50% e a nota-base global é igual ou superior ao patamar mínimo de 70 pontos.</p>
+                  <p class="expansion-diag-text">Todas as dimensões essenciais atingem o piso mínimo de 50% e a nota final é igual ou superior ao patamar mínimo de 70 pontos.</p>
                 {% elif r.classification == "Instituída — abaixo do mínimo em dimensão essencial" %}
-                  {% if r.base_score is not none and r.base_score >= 70 %}
-                    <p class="expansion-diag-text">A unidade possui nota-base de <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts (suficiente para o mínimo global de 70), mas não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
+                  {% if r.final_score is not none and r.final_score >= 70 %}
+                    <p class="expansion-diag-text">A unidade possui nota final de <strong>{{ ("%.1f"|format(r.final_score))|replace(".", ",") }}</strong> pts (suficiente para o mínimo global de 70), mas não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
                   {% else %}
-                    <p class="expansion-diag-text">A unidade possui nota-base de <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts e não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
+                    <p class="expansion-diag-text">A unidade possui nota final de <strong>{{ ("%.1f"|format(r.final_score))|replace(".", ",") }}</strong> pts e não atende aos parâmetros mínimos porque uma ou mais dimensões essenciais estão abaixo do piso de 50%:</p>
                   {% endif %}
                   <ul class="expansion-diag-list">
                     {% if r.aut is not none and r.aut < 7.5 %}
@@ -521,7 +521,7 @@
                     {% endif %}
                   </ul>
                 {% elif r.classification == "Instituída — aderência global insuficiente" %}
-                  <p class="expansion-diag-text">As dimensões essenciais atingem os respectivos pisos mínimos de 50%, mas a nota-base global permanece abaixo do mínimo de 70 pontos (Nota-base: <strong>{{ ("%.1f"|format(r.base_score))|replace(".", ",") }}</strong> pts · <span class="deficit-tag">déficit global: {{ ("%.1f"|format(70.0 - r.base_score))|replace(".", ",") }} pt(s)</span>).</p>
+                  <p class="expansion-diag-text">As dimensões essenciais atingem os respectivos pisos mínimos de 50%, mas a nota final permanece abaixo do mínimo de 70 pontos (Nota final: <strong>{{ ("%.1f"|format(r.final_score))|replace(".", ",") }}</strong> pts · <span class="deficit-tag">déficit global: {{ ("%.1f"|format(70.0 - r.final_score))|replace(".", ",") }} pt(s)</span>).</p>
                 {% else %}
                   <p class="expansion-diag-text">{{ r.classification|e }}</p>
                 {% endif %}
@@ -529,6 +529,7 @@
 
               <!-- Bloco D: Ação Principal -->
               <div class="expansion-footer">
+                <button type="button" data-sei-copy="dashboard" title="No SEI, abra Código-Fonte e cole o conteúdo copiado">Copiar HTML para SEI</button>
                 <a class="btn-detail btn-open-full" href="{{ unit_url }}">
                   Abrir avaliação completa de {{ r.unidade_label|e }} →
                 </a>
@@ -544,4 +545,7 @@
     </table>
   </div>
 </section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', path='sei-copy.js') }}{% if not read_only|default(false) %}?v=20260923a{% endif %}" defer></script>
 {% endblock %}

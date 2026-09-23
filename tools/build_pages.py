@@ -131,6 +131,9 @@ def main() -> None:
     static_js = BASE / "static" / "pages.js"
     if static_js.exists():
         shutil.copy2(static_js, DOCS / "app.js")
+    sei_copy_js = BASE / "static" / "sei-copy.js"
+    if sei_copy_js.exists():
+        shutil.copy2(sei_copy_js, DOCS / "sei-copy.js")
     table_sort_js = BASE / "static" / "table-sort.js"
     if table_sort_js.exists():
         shutil.copy2(table_sort_js, DOCS / "table-sort.js")

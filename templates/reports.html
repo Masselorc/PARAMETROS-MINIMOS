@@ -132,8 +132,9 @@
       <a id="general-pdf" class="button" href="/api/relatorios/geral.pdf" target="_blank"><button type="button" class="primary">Gerar PDF</button></a>
       <a id="general-xlsx" class="button" href="/api/relatorios/geral.xlsx" download><button type="button">Gerar XLSX</button></a>
       {% endif %}
+      <button type="button" data-sei-copy="general" title="No SEI, abra Código-Fonte e cole o conteúdo copiado">Copiar HTML para SEI</button>
     </div>
-    <p class="source" style="margin-top:-10px;margin-bottom:16px;">Os botões acima exportam o relatório com os filtros selecionados.</p>
+    <p class="source" style="margin-top:-10px;margin-bottom:16px;">Os botões acima usam os filtros selecionados. Para colar o código HTML no SEI, abra a opção “Código-Fonte” do editor.</p>
 
     {# VISUALIZAÇÃO EM TELA DO RELATÓRIO GERAL #}
     <div class="report-document" id="report-geral-doc">
@@ -268,15 +269,16 @@
       <a id="individual-pdf" href="/api/relatorios/{{ selected_key|e }}.pdf" target="_blank"><button type="button" class="primary">Gerar PDF</button></a>
       <a id="individual-xlsx" href="/api/relatorios/{{ selected_key|e }}.xlsx" download><button type="button">Gerar XLSX</button></a>
       {% endif %}
+      <button type="button" data-sei-copy="individual" title="No SEI, abra Código-Fonte e cole o conteúdo copiado">Copiar HTML para SEI</button>
     </div>
-    <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
+    <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”. Para colar o HTML no SEI, abra “Código-Fonte” no editor.</p>
 
     {# VISUALIZAÇÃO EM TELA DOS RELATÓRIOS INDIVIDUAIS #}
     <div id="individual-reports-container">
       {% for k, detail in all_details.items() %}
       {% set ent = detail.entity %}
       {% set res = detail.result %}
-      <article class="report-document unit-report-paper" id="unit-report-{{ k|e }}" {% if k != selected_key %}hidden{% endif %}>
+      <article class="report-document unit-report-paper" id="unit-report-{{ k|e }}" data-sei-unit="{{ ent.unidade_label|e }}" data-sei-uf="{{ ent.uf|e }}" data-sei-situation="{{ res.situacao|e }}" data-sei-base="{{ res.base_score if res.base_score is not none else '' }}" data-sei-bonus="{{ res.bonus_applied if res.bonus_applied is not none else '' }}" data-sei-final="{{ res.final_score if res.final_score is not none else '' }}" data-sei-classification="{{ res.classification|e }}" {% if k != selected_key %}hidden{% endif %}>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="{% if read_only|default(false) %}logos/logo_senappen_mjsp_gov_horizontal.png{% else %}{{ url_for('static', path='logos/logo_senappen_mjsp_gov_horizontal.png') }}{% endif %}" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -331,7 +333,7 @@
           </div>
 
           {# Tabela de notas por dimensão vs piso mínimo #}
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -471,6 +473,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ url_for('static', path='sei-copy.js') }}{% if not read_only|default(false) %}?v=20260923a{% endif %}" defer></script>
 <script>
 (function () {
   var isReadOnly = {% if read_only|default(false) %}true{% else %}false{% endif %};

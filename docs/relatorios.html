@@ -331,8 +331,9 @@
       <a id="general-pdf" class="button" href="relatorios/geral.pdf" download><button type="button" class="primary">Gerar PDF</button></a>
       <a id="general-xlsx" class="button" href="relatorios/geral.xlsx" download><button type="button">Gerar XLSX</button></a>
 
+      <button type="button" data-sei-copy="general" title="No SEI, abra Código-Fonte e cole o conteúdo copiado">Copiar HTML para SEI</button>
     </div>
-    <p class="source" style="margin-top:-10px;margin-bottom:16px;">Os botões acima exportam o relatório com os filtros selecionados.</p>
+    <p class="source" style="margin-top:-10px;margin-bottom:16px;">Os botões acima usam os filtros selecionados. Para colar o código HTML no SEI, abra a opção “Código-Fonte” do editor.</p>
 
 
     <div class="report-document" id="report-geral-doc">
@@ -1272,15 +1273,16 @@
       <a id="individual-pdf" href="relatorios/unidade-AC.pdf" download><button type="button" class="primary">Gerar PDF</button></a>
       <a id="individual-xlsx" href="relatorios/unidade-AC.xlsx" download><button type="button">Gerar XLSX</button></a>
 
+      <button type="button" data-sei-copy="individual" title="No SEI, abra Código-Fonte e cole o conteúdo copiado">Copiar HTML para SEI</button>
     </div>
-    <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”.</p>
+    <p class="source" style="margin-top:-8px;margin-bottom:20px;">No ES, selecione separadamente “Espírito Santo — Polícia Penal” e “Espírito Santo — SEJUS/ES”. Para colar o HTML no SEI, abra “Código-Fonte” no editor.</p>
 
 
     <div id="individual-reports-container">
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-AC" >
+      <article class="report-document unit-report-paper" id="unit-report-AC" data-sei-unit="Acre" data-sei-uf="AC" data-sei-situation="Instituída" data-sei-base="86.0" data-sei-bonus="9.0" data-sei-final="95.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" >
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -1333,7 +1335,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -2829,7 +2831,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-AL" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-AL" data-sei-unit="Alagoas" data-sei-uf="AL" data-sei-situation="Instituída" data-sei-base="68.5" data-sei-bonus="6.0" data-sei-final="74.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -2882,7 +2884,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -4378,7 +4380,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-AP" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-AP" data-sei-unit="Amapá" data-sei-uf="AP" data-sei-situation="Instituída" data-sei-base="85.5" data-sei-bonus="6.0" data-sei-final="91.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -4431,7 +4433,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -5927,7 +5929,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-AM" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-AM" data-sei-unit="Amazonas" data-sei-uf="AM" data-sei-situation="Instituída" data-sei-base="96.5" data-sei-bonus="3.5" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -5980,7 +5982,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -7476,7 +7478,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-BA" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-BA" data-sei-unit="Bahia" data-sei-uf="BA" data-sei-situation="Instituída" data-sei-base="88.5" data-sei-bonus="4.0" data-sei-final="92.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -7529,7 +7531,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -9025,7 +9027,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-CE" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-CE" data-sei-unit="Ceará" data-sei-uf="CE" data-sei-situation="Instituída" data-sei-base="100.0" data-sei-bonus="0.0" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -9078,7 +9080,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -10574,7 +10576,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-DF" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-DF" data-sei-unit="Distrito Federal" data-sei-uf="DF" data-sei-situation="Instituída" data-sei-base="90.5" data-sei-bonus="3.0" data-sei-final="93.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -10627,7 +10629,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -12123,7 +12125,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-ES_PP" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-ES_PP" data-sei-unit="Espírito Santo — Polícia Penal" data-sei-uf="ES" data-sei-situation="Instituída" data-sei-base="100.0" data-sei-bonus="0.0" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -12176,7 +12178,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -13672,7 +13674,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-ES_SEJUS" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-ES_SEJUS" data-sei-unit="Espírito Santo — SEJUS/ES" data-sei-uf="ES" data-sei-situation="Instituída" data-sei-base="80.5" data-sei-bonus="4.0" data-sei-final="84.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -13725,7 +13727,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -15221,7 +15223,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-GO" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-GO" data-sei-unit="Goiás" data-sei-uf="GO" data-sei-situation="Instituída" data-sei-base="100.0" data-sei-bonus="0.0" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -15274,7 +15276,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -16770,7 +16772,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-MA" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-MA" data-sei-unit="Maranhão" data-sei-uf="MA" data-sei-situation="Instituída" data-sei-base="84.0" data-sei-bonus="6.0" data-sei-final="90.0" data-sei-classification="Instituída — abaixo do mínimo em dimensão essencial" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -16823,7 +16825,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -18319,7 +18321,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-MT" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-MT" data-sei-unit="Mato Grosso" data-sei-uf="MT" data-sei-situation="Instituída" data-sei-base="87.0" data-sei-bonus="10.0" data-sei-final="97.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -18372,7 +18374,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -19868,7 +19870,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-MS" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-MS" data-sei-unit="Mato Grosso do Sul" data-sei-uf="MS" data-sei-situation="Instituída" data-sei-base="78.5" data-sei-bonus="9.0" data-sei-final="87.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -19921,7 +19923,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -21417,7 +21419,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-MG" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-MG" data-sei-unit="Minas Gerais" data-sei-uf="MG" data-sei-situation="Instituída" data-sei-base="90.5" data-sei-bonus="5.0" data-sei-final="95.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -21470,7 +21472,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -22966,7 +22968,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-PA" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-PA" data-sei-unit="Pará" data-sei-uf="PA" data-sei-situation="Não instituída" data-sei-base="" data-sei-bonus="" data-sei-final="" data-sei-classification="Não instituída" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -23019,7 +23021,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -24515,7 +24517,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-PB" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-PB" data-sei-unit="Paraíba" data-sei-uf="PB" data-sei-situation="Instituída" data-sei-base="79.0" data-sei-bonus="6.0" data-sei-final="85.0" data-sei-classification="Instituída — abaixo do mínimo em dimensão essencial" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -24568,7 +24570,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -26064,7 +26066,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-PR" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-PR" data-sei-unit="Paraná" data-sei-uf="PR" data-sei-situation="Instituída" data-sei-base="92.5" data-sei-bonus="6.0" data-sei-final="98.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -26117,7 +26119,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -27613,7 +27615,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-PE" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-PE" data-sei-unit="Pernambuco" data-sei-uf="PE" data-sei-situation="Instituída" data-sei-base="85.5" data-sei-bonus="6.0" data-sei-final="91.5" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -27666,7 +27668,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -29162,7 +29164,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-PI" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-PI" data-sei-unit="Piauí" data-sei-uf="PI" data-sei-situation="Instituída" data-sei-base="73.0" data-sei-bonus="7.0" data-sei-final="80.0" data-sei-classification="Instituída — abaixo do mínimo em dimensão essencial" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -29215,7 +29217,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -30711,7 +30713,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-RJ" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-RJ" data-sei-unit="Rio de Janeiro" data-sei-uf="RJ" data-sei-situation="Instituída" data-sei-base="89.0" data-sei-bonus="6.0" data-sei-final="95.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -30764,7 +30766,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -32260,7 +32262,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-RN" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-RN" data-sei-unit="Rio Grande do Norte" data-sei-uf="RN" data-sei-situation="Instituída" data-sei-base="85.0" data-sei-bonus="10.0" data-sei-final="95.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -32313,7 +32315,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -33809,7 +33811,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-RS" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-RS" data-sei-unit="Rio Grande do Sul" data-sei-uf="RS" data-sei-situation="Instituída" data-sei-base="83.0" data-sei-bonus="5.0" data-sei-final="88.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -33862,7 +33864,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -35358,7 +35360,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-RO" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-RO" data-sei-unit="Rondônia" data-sei-uf="RO" data-sei-situation="Não instituída" data-sei-base="" data-sei-bonus="" data-sei-final="" data-sei-classification="Não instituída" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -35411,7 +35413,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -36907,7 +36909,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-RR" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-RR" data-sei-unit="Roraima" data-sei-uf="RR" data-sei-situation="Instituída" data-sei-base="94.5" data-sei-bonus="5.5" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -36960,7 +36962,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -38456,7 +38458,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-SC" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-SC" data-sei-unit="Santa Catarina" data-sei-uf="SC" data-sei-situation="Instituída" data-sei-base="77.5" data-sei-bonus="5.0" data-sei-final="82.5" data-sei-classification="Instituída — abaixo do mínimo em dimensão essencial" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -38509,7 +38511,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -40005,7 +40007,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-SP" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-SP" data-sei-unit="São Paulo" data-sei-uf="SP" data-sei-situation="Instituída" data-sei-base="96.0" data-sei-bonus="4.0" data-sei-final="100.0" data-sei-classification="Instituída — seguindo os parâmetros mínimos" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -40058,7 +40060,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -41554,7 +41556,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-SE" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-SE" data-sei-unit="Sergipe" data-sei-uf="SE" data-sei-situation="Instituída" data-sei-base="15.0" data-sei-bonus="0.0" data-sei-final="15.0" data-sei-classification="Instituída — abaixo do mínimo em dimensão essencial" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -41607,7 +41609,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -43103,7 +43105,7 @@
 
 
 
-      <article class="report-document unit-report-paper" id="unit-report-TO" hidden>
+      <article class="report-document unit-report-paper" id="unit-report-TO" data-sei-unit="Tocantins" data-sei-uf="TO" data-sei-situation="Não instituída" data-sei-base="" data-sei-bonus="" data-sei-final="" data-sei-classification="Não instituída" hidden>
         <div class="report-doc-header">
           <div class="report-doc-brand-bar">
             <img class="report-header-logo" src="logos/logo_senappen_mjsp_gov_horizontal.png" alt="Secretaria Nacional de Políticas Penais — Ministério da Justiça e Segurança Pública — Governo Federal" loading="eager">
@@ -43156,7 +43158,7 @@
           </div>
 
 
-          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Conformidade com Pisos Regulamentares</h4>
+          <h4 style="margin:0 0 10px;font-size:.95rem;color:var(--brand-dark);">Pontuação por Dimensão e Pisos da Metodologia ONASP</h4>
           <div class="table-wrap">
             <table class="report-dim-table">
               <thead>
@@ -44659,6 +44661,7 @@
 <script src="table-sort.js" defer></script>
 <script src="app.js" defer></script>
 
+<script src="sei-copy.js" defer></script>
 <script>
 (function () {
   var isReadOnly = true;
