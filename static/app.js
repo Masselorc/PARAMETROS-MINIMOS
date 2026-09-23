@@ -43,6 +43,110 @@
   }
   window.updateStatusSelectColor = updateStatusSelectColor;
 
+  function setCriterionState(id, passed) {
+    var item = document.getElementById(id);
+    if (!item) return;
+    item.classList.remove("crit-pass", "crit-fail");
+    item.classList.add(passed ? "crit-pass" : "crit-fail");
+    var icon = item.querySelector(".crit-icon");
+    if (icon) icon.textContent = passed ? "✓" : "✗";
+  }
+
+  function updateResultBadge(passed) {
+    var wrap = document.getElementById("result-badge-status");
+    if (!wrap) return;
+    var pill = wrap.querySelector(".status-pill-lg");
+    if (!pill) {
+      pill = document.createElement("span");
+      wrap.appendChild(pill);
+    }
+    pill.className = "status-pill-lg " + (passed ? "status-pass" : "status-fail");
+
+    var svg = pill.querySelector("svg");
+    if (!svg) svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "status-icon-svg");
+    svg.setAttribute("viewBox", "0 0 20 20");
+    svg.setAttribute("fill", "currentColor");
+    svg.setAttribute("width", "18");
+    svg.setAttribute("height", "18");
+    var path = svg.querySelector("path");
+    if (!path) path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("fill-rule", "evenodd");
+    path.setAttribute("clip-rule", "evenodd");
+    path.setAttribute("d", passed
+      ? "M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+      : "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.appendChild(path);
+    var label = document.createTextNode(passed
+      ? " Segue os Parâmetros Mínimos"
+      : " Abaixo dos Parâmetros Mínimos");
+    pill.replaceChildren(svg, label);
+  }
+
+  function updateResultSummary(data) {
+    var situation = data.situacao;
+    var situationPassed = situation === "Instituída";
+    var badge = document.getElementById("head-badge-situacao");
+    if (badge && situation) {
+      badge.textContent = situation;
+      badge.classList.remove("badge-good", "badge-bad", "badge-warn");
+      badge.classList.add(situationPassed ? "badge-good" : (situation === "Não instituída" ? "badge-bad" : "badge-warn"));
+    }
+
+    var classification = data.classification;
+    var classificationText = document.getElementById("classification");
+    if (classificationText && classification) classificationText.textContent = classification;
+    var classificationHead = document.getElementById("classification-head");
+    if (classificationHead && classification) classificationHead.textContent = classification;
+    var classificationCard = document.getElementById("result-classification-card");
+    if (classificationCard && classification) {
+      var cardClass = "class-bad";
+      if (classification === "Instituída — seguindo os parâmetros mínimos") cardClass = "class-good";
+      else if (classification === "Instituída — abaixo do mínimo em dimensão essencial") cardClass = "class-warn";
+      else if (classification === "Instituída — aderência global insuficiente") cardClass = "class-info";
+      classificationCard.classList.remove("class-good", "class-warn", "class-info", "class-bad");
+      classificationCard.classList.add(cardClass);
+    }
+
+    var globalPassed = Number(data.final_score) >= 70;
+    var dimensionsBelow = Array.isArray(data.dimensions_below_minimum) ? data.dimensions_below_minimum : null;
+    var dimensionsPassed = dimensionsBelow ? dimensionsBelow.length === 0 : false;
+    setCriterionState("criteria-item-situacao", situationPassed);
+    setCriterionState("criteria-item-piso", globalPassed);
+    if (dimensionsBelow) setCriterionState("criteria-item-dimensoes", dimensionsPassed);
+
+    var situationText = document.getElementById("criteria-text-situacao");
+    if (situationText && situation) {
+      situationText.textContent = situationPassed
+        ? "Ato normativo de criação comprovado (Situação: Instituída)"
+        : "Situação: " + situation + " (sem ato formal específico)";
+    }
+    var globalText = document.getElementById("criteria-text-piso");
+    var globalValue = globalText && globalText.querySelector("strong");
+    if (globalValue && data.final_score !== undefined) globalValue.textContent = fmt(data.final_score);
+    var dimensionsText = document.getElementById("criteria-text-dimensoes");
+    if (dimensionsText && dimensionsBelow) {
+      dimensionsText.textContent = dimensionsPassed
+        ? "Todas as 6 dimensões essenciais atingiram o piso mínimo"
+        : "Abaixo do piso em " + dimensionsBelow.length + " dimensão(ões) essencial(is)";
+    }
+
+    updateResultBadge(data.meets_minimum_parameters === true);
+    var meets = document.getElementById("meets-minimum");
+    if (meets) {
+      if (data.meets_minimum_parameters === true) {
+        meets.textContent = "Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%";
+      } else {
+        var reasons = [];
+        if (situation && !situationPassed) reasons.push("M1-11");
+        if (data.final_score !== null && data.final_score !== undefined && !globalPassed) reasons.push("nota final");
+        if (dimensionsBelow && dimensionsBelow.length) reasons.push("pisos dimensionais");
+        meets.textContent = "Não — verifique " + (reasons.length ? reasons.join(", ") : "os critérios obrigatórios") + ".";
+      }
+    }
+  }
+
   document.querySelectorAll("[data-status-select]").forEach(function (sel) {
     sel.addEventListener("change", function () {
       updateStatusSelectColor(sel);
@@ -140,16 +244,23 @@
               if (data.dimension_meets_minimum === true) floor.textContent = "Piso atendido";
               else if (data.dimension_meets_minimum === false) floor.textContent = "Abaixo do mínimo";
             }
+            var subscore = document.querySelector('[data-dim-subscore="' + dimName + '"]');
+            if (subscore && data.dimension_score !== undefined && data.dimension_score !== null) {
+              subscore.textContent = fmt(data.dimension_score);
+            }
           }
           var set = function (id, v) {
             var el = document.getElementById(id);
             if (el) el.textContent = fmt(v);
           };
           set("base-score", data.base_score);
+          set("base-score-head", data.base_score);
           set("bonus-avail", data.bonus_available);
           set("bonus-applied", data.bonus_applied);
           set("final-score", data.final_score);
           set("final-score-head", data.final_score);
+          var gaugeScore = document.getElementById("gauge-score-val");
+          if (gaugeScore) gaugeScore.textContent = fmt(data.final_score) + " / 100 pts";
           var finalBar = document.getElementById("final-score-fill");
           if (finalBar && data.final_score !== undefined && data.final_score !== null) {
             var pct = Math.min(100, Math.max(0, Number(data.final_score)));
@@ -162,15 +273,7 @@
               finalBar.classList.remove("gauge-fill-pass");
             }
           }
-          var cls = document.getElementById("classification");
-          if (cls && data.classification) cls.textContent = data.classification;
-          var clsHead = document.getElementById("classification-head");
-          if (clsHead && data.classification) clsHead.textContent = data.classification;
-          var meets = document.getElementById("meets-minimum");
-          if (meets) {
-            if (data.meets_minimum_parameters === true) meets.textContent = "Sim — M1-11 = Sim, nota final ≥ 70 e todas as dimensões essenciais ≥ 50%";
-            else if (data.meets_minimum_parameters === false) meets.textContent = "Não — ver pisos dimensionais e nota final abaixo";
-          }
+          updateResultSummary(data);
           if (sel) updateStatusSelectColor(sel);
           if (msg) { msg.textContent = "Alteração salva."; msg.style.color = "#16a34a"; }
           toast("Alteração salva.");
@@ -181,7 +284,7 @@
           if (err instanceof TypeError && (err.message === "Failed to fetch" || err.message === "NetworkError when attempting to fetch resource.")) {
             errMsg = "Servidor não acessível. Verifique se o servidor está rodando (uvicorn app:app --port 8000).";
           } else if (err && err.httpStatus === 409) {
-            errMsg = "Arquivo em uso por outro processo. Tente novamente em alguns segundos.";
+            errMsg = err.message || "DADOS.xlsx está aberto ou bloqueado. Feche a planilha no Excel e tente novamente.";
           } else if (err && err.httpStatus === 422) {
             errMsg = (err.message) ? err.message : "Dados inválidos. Verifique o status selecionado.";
           } else if (err && err.httpStatus === 400) {

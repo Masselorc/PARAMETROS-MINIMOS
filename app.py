@@ -21,6 +21,7 @@ from src.reports import (
 )
 from src.schemas import AssessmentPatch, CorrectDiagnostico
 from src.workbook_service import (
+    LOCKED_MSG,
     LockedError,
     WorkbookError,
     correct_diagnostico,
@@ -68,8 +69,16 @@ async def _ensure_dirs_middleware(request: Request, call_next):
 
 
 def _guard_startup():
-    if STARTUP_ERRORS:
-        raise HTTPException(status_code=500, detail="; ".join(STARTUP_ERRORS))
+    global STARTUP_ERRORS
+    if not STARTUP_ERRORS:
+        return
+    if any(LOCKED_MSG in error for error in STARTUP_ERRORS):
+        STARTUP_ERRORS = validate_startup()
+        if not STARTUP_ERRORS:
+            return
+        if any(LOCKED_MSG in error for error in STARTUP_ERRORS):
+            raise HTTPException(status_code=409, detail="; ".join(STARTUP_ERRORS))
+    raise HTTPException(status_code=500, detail="; ".join(STARTUP_ERRORS))
 
 
 def _filters(request: Request) -> dict:

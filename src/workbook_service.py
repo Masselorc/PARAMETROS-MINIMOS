@@ -171,23 +171,41 @@ def ensure_workbook_exists() -> Path:
     return WORKBOOK_PATH
 
 
+def get_sheet_by_name(wb, sheet_name: str):
+    if sheet_name in wb.sheetnames:
+        return wb[sheet_name]
+    norm = unicodedata.normalize("NFC", sheet_name)
+    for s in wb.sheetnames:
+        if unicodedata.normalize("NFC", s) == norm:
+            return wb[s]
+    raise WorkbookError(f"Aba '{sheet_name}' não encontrada.")
+
+
+def dimension_name_for_sheet(sheet_name: str) -> str:
+    norm = unicodedata.normalize("NFC", sheet_name)
+    for canonical, label in DIMENSION_NAMES.items():
+        if unicodedata.normalize("NFC", canonical) == norm:
+            return label
+    return sheet_name
+
+
+def _is_workbook_lock_error(exc: BaseException) -> bool:
+    message = str(exc).lower()
+    return (
+        isinstance(exc, PermissionError)
+        or getattr(exc, "winerror", None) in (5, 32)
+        or "being used" in message
+        or "used by another process" in message
+    )
+
+
 def open_workbook():
     ensure_workbook_exists()
     try:
         wb = openpyxl.load_workbook(str(WORKBOOK_PATH))
     except Exception as exc:  # noqa: BLE001
-        if isinstance(exc, PermissionError) or "Permission denied" in str(exc):
-            try:
-                import io
-                import subprocess
-
-                data = subprocess.check_output(
-                    ["git", "show", "HEAD:DADOS.xlsx"],
-                    cwd=str(WORKBOOK_PATH.parent),
-                )
-                return openpyxl.load_workbook(io.BytesIO(data))
-            except Exception:
-                pass
+        if _is_workbook_lock_error(exc):
+            raise LockedError(LOCKED_MSG) from exc
         raise WorkbookError(f"Não foi possível abrir DADOS.xlsx: {exc}") from exc
     return wb
 
@@ -196,9 +214,10 @@ def open_workbook():
 
 def parse_entities(wb) -> list[dict]:
     """Le entidades das linhas 7..34 da aba 01 (A=UF, B=rotulo)."""
-    if "01_Institucionalização" not in wb.sheetnames:
+    try:
+        ws = get_sheet_by_name(wb, "01_Institucionalização")
+    except WorkbookError:
         raise WorkbookError("Aba 01_Institucionalização não encontrada.")
-    ws = wb["01_Institucionalização"]
     entities: list[dict] = []
     seen: set[str] = set()
     for r in range(DATA_START_ROW, DATA_END_ROW + 1):
@@ -231,10 +250,16 @@ def parse_entities(wb) -> list[dict]:
 
 def parse_questions(wb, sheet_name: str) -> list[dict]:
     """Mapeia perguntas de uma aba pelo cabecalho da linha 5 (codigos M*-*)."""
-    ws = wb[sheet_name]
+    ws = get_sheet_by_name(wb, sheet_name)
+    actual_sheet_name = ws.title
+    norm_sheet = unicodedata.normalize("NFC", sheet_name)
+    canonical_sheet = next(
+        (s for s in DIMENSION_SHEETS if unicodedata.normalize("NFC", s) == norm_sheet),
+        actual_sheet_name,
+    )
     max_col = ws.max_column
-    is_bonus = sheet_name == "07_Maturidade"
-    is_institutional = sheet_name == "01_Institucionalização"
+    is_bonus = norm_sheet == "07_Maturidade"
+    is_institutional = norm_sheet == "01_Institucionalização"
     questions: list[dict] = []
     for c in range(1, max_col + 1):
         header = ws.cell(5, c).value
@@ -266,10 +291,10 @@ def parse_questions(wb, sheet_name: str) -> list[dict]:
             status_col, resposta_col, fundamento_col, pontos_col = c, c + 1, c + 2, c + 3
             status_options = list(ORDINARY_STATUSES)
             kind = "ordinary"
-        occurrence_key = f"{sheet_name}:{code}"
+        occurrence_key = f"{canonical_sheet}:{code}"
         questions.append({
-            "sheet_name": sheet_name,
-            "dimension_name": DIMENSION_NAMES.get(sheet_name, sheet_name),
+            "sheet_name": actual_sheet_name,
+            "dimension_name": DIMENSION_NAMES.get(canonical_sheet, canonical_sheet),
             "item_name": str(item).strip(),
             "question_code": code,
             "question_title": title,
@@ -290,9 +315,11 @@ def parse_questions(wb, sheet_name: str) -> list[dict]:
 def parse_all_questions(wb) -> dict[str, list[dict]]:
     result: dict[str, list[dict]] = {}
     for sheet in DIMENSION_SHEETS:
-        if sheet not in wb.sheetnames:
+        try:
+            ws = get_sheet_by_name(wb, sheet)
+        except WorkbookError:
             raise WorkbookError(f"Aba {sheet} não encontrada.")
-        result[sheet] = parse_questions(wb, sheet)
+        result[sheet] = parse_questions(wb, ws.title)
     return result
 
 
@@ -413,7 +440,7 @@ def read_summary() -> tuple[list[dict], dict]:
             inst_status = None
             bonus_available = 0.0
             for sheet in DIMENSION_SHEETS:
-                ws = wb[sheet]
+                ws = get_sheet_by_name(wb, sheet)
                 total = 0.0
                 for q in all_q[sheet]:
                     raw = ws.cell(ent["row"], q["status_col"]).value
@@ -526,7 +553,7 @@ def read_unit_detail(entity_key: str, wb=None) -> dict:
         inst_status = None
         bonus_available = 0.0
         for sheet in DIMENSION_SHEETS:
-            ws = wb[sheet]
+            ws = get_sheet_by_name(wb, sheet)
             sheet_ev_col = find_evidence_col(ws)
             sheet_ev_val = ws.cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
             sheet_ev_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else ""
@@ -615,7 +642,7 @@ def read_all_unit_details(wb=None) -> dict[str, dict]:
             inst_status = None
             bonus_available = 0.0
             for sheet in DIMENSION_SHEETS:
-                ws = wb[sheet]
+                ws = get_sheet_by_name(wb, sheet)
                 sheet_ev_col = find_evidence_col(ws)
                 sheet_ev_val = ws.cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
                 sheet_ev_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else ""
@@ -698,8 +725,9 @@ def ensure_aux_sheets(wb, entities: list[dict], all_q: dict[str, list[dict]]) ->
         nid = 1
         for ent in entities:
             for sheet in DIMENSION_SHEETS:
-                sheet_ev_col = find_evidence_col(wb[sheet])
-                sheet_ev_val = wb[sheet].cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
+                ws_dim = get_sheet_by_name(wb, sheet)
+                sheet_ev_col = find_evidence_col(ws_dim)
+                sheet_ev_val = ws_dim.cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
                 init_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else EVIDENCE_INITIAL_TEXT
                 for q in all_q[sheet]:
                     ws.append([
@@ -773,7 +801,7 @@ def upsert_evidence(wb, entity_key, uf, label, q: dict, text: str) -> tuple[str,
         nid = ws.max_row
     ws.append([
         nid, entity_key, uf, label, q["sheet_name"],
-        DIMENSION_NAMES.get(q["sheet_name"], q["sheet_name"]), q["item_name"],
+        dimension_name_for_sheet(q["sheet_name"]), q["item_name"],
         q["question_code"], q["occurrence_key"], text,
         datetime.now().isoformat(timespec="seconds"),
     ])
@@ -784,6 +812,9 @@ def upsert_evidence(wb, entity_key, uf, label, q: dict, text: str) -> tuple[str,
 
 def create_backup() -> Path:
     ensure_dirs()
+    import shutil
+    import time
+
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     dest = BACKUPS_DIR / f"DADOS_{stamp}.xlsx"
     if dest.exists():
@@ -791,22 +822,41 @@ def create_backup() -> Path:
         while (BACKUPS_DIR / f"DADOS_{stamp}_{i}.xlsx").exists():
             i += 1
         dest = BACKUPS_DIR / f"DADOS_{stamp}_{i}.xlsx"
-    import shutil
-    shutil.copy2(str(WORKBOOK_PATH), str(dest))
+
+    last_err = None
+    for attempt in range(4):
+        try:
+            shutil.copy2(str(WORKBOOK_PATH), str(dest))
+            return dest
+        except (PermissionError, OSError) as err:
+            last_err = err
+            if attempt < 3:
+                time.sleep(0.1 * (2 ** attempt))
+    if last_err:
+        if _is_workbook_lock_error(last_err):
+            raise LockedError(LOCKED_MSG) from last_err
+        raise WorkbookError(f"Falha ao criar cópia de segurança de DADOS.xlsx: {last_err}") from last_err
     return dest
 
 
 def save_atomic(wb) -> None:
-    tmp = WORKBOOK_PATH.parent / "DADOS_tmp_validacao.xlsx"
+    ensure_dirs()
+    import os
+    import time
+    import uuid
+
+    tmp = WORKBOOK_PATH.parent / f"DADOS_tmp_{os.getpid()}_{uuid.uuid4().hex[:8]}.xlsx"
     try:
         wb.save(str(tmp))
-    except PermissionError as exc:
-        raise LockedError(LOCKED_MSG) from exc
     except OSError as exc:
-        # OneDrive/Excel bloqueio costuma virar PermissionError; trata igual
-        if "Permission" in str(type(exc).__name__) or "being used" in str(exc):
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        if _is_workbook_lock_error(exc):
             raise LockedError(LOCKED_MSG) from exc
         raise WorkbookError(f"Falha ao salvar temporário: {exc}") from exc
+
     # reabrir para validar que e XLSX legivel
     try:
         check = openpyxl.load_workbook(str(tmp))
@@ -817,21 +867,26 @@ def save_atomic(wb) -> None:
         except Exception:  # noqa: BLE001
             pass
         raise WorkbookError(f"Arquivo temporário inválido, gravação abortada: {exc}") from exc
-    import time
+
+    delays = [0.1, 0.25, 0.5, 1.0, 2.0]
     last_exc = None
-    for attempt in range(5):
+    for attempt in range(len(delays) + 1):
         try:
             tmp.replace(WORKBOOK_PATH)
             return
         except (PermissionError, OSError) as exc:
             last_exc = exc
-            if attempt < 4:
-                time.sleep(0.25)
+            if not _is_workbook_lock_error(exc):
+                break
+            if attempt < len(delays):
+                time.sleep(delays[attempt])
     try:
         tmp.unlink(missing_ok=True)
     except Exception:  # noqa: BLE001
         pass
-    raise LockedError(LOCKED_MSG) from last_exc
+    if last_exc and _is_workbook_lock_error(last_exc):
+        raise LockedError(LOCKED_MSG) from last_exc
+    raise WorkbookError(f"Falha ao substituir DADOS.xlsx: {last_exc}") from last_exc
 
 
 def _acquire_lock() -> FileLock:
@@ -844,11 +899,14 @@ def find_question(wb, occurrence_key: str) -> dict:
         raise WorkbookError(f"occurrence_key inválida: {occurrence_key}")
     sheet, code = occurrence_key.split(":", 1)
     sheet_norm = unicodedata.normalize("NFC", sheet)
-    matched_sheet = next((s for s in DIMENSION_SHEETS if unicodedata.normalize("NFC", s) == sheet_norm), None)
+    code_norm = unicodedata.normalize("NFC", code).strip()
+    matched_sheet = next((s for s in wb.sheetnames if unicodedata.normalize("NFC", s) == sheet_norm), None)
+    if not matched_sheet:
+        matched_sheet = next((s for s in DIMENSION_SHEETS if unicodedata.normalize("NFC", s) == sheet_norm), None)
     if not matched_sheet:
         raise WorkbookError(f"Aba inválida em occurrence_key: {sheet}")
     for q in parse_questions(wb, matched_sheet):
-        if q["question_code"] == code:
+        if unicodedata.normalize("NFC", q["question_code"]).strip() == code_norm:
             return q
     raise WorkbookError(f"Pergunta {occurrence_key} não encontrada.")
 
@@ -873,17 +931,24 @@ def update_assessment(entity_key: str, occurrence_key: str,
                     raise WorkbookError(f"Unidade {entity_key} não encontrada.")
                 q = find_question(wb, occurrence_key)
                 if status is not None:
-                    if status not in q["status_options"]:
+                    status_norm = unicodedata.normalize("NFC", status).strip()
+                    matched_status = next(
+                        (opt for opt in q["status_options"] if unicodedata.normalize("NFC", opt).strip() == status_norm),
+                        None
+                    )
+                    if not matched_status:
                         raise WorkbookError(
                             f"Status inválido '{status}'. "
                             f"Esperado um de: {', '.join(q['status_options'])}"
                         )
-                ws = wb[q["sheet_name"]]
+                    status = matched_status
+                ws = get_sheet_by_name(wb, q["sheet_name"])
                 old_status = ws.cell(ent["row"], q["status_col"]).value
                 old_status_s = str(old_status).strip() if old_status not in (None, "") else "Sem evidência"
                 all_q = parse_all_questions(wb)
                 ensure_aux_sheets(wb, entities, all_q)
-                if status is not None and str(status) != str(old_status_s):
+                old_status_norm = unicodedata.normalize("NFC", old_status_s).strip()
+                if status is not None and unicodedata.normalize("NFC", str(status)).strip() != old_status_norm:
                     ws.cell(ent["row"], q["status_col"]).value = status
                     append_audit(wb, entity_key, q["sheet_name"], q["question_code"],
                                  occurrence_key, "status", old_status_s, status,
@@ -913,17 +978,22 @@ def update_assessment(entity_key: str, occurrence_key: str,
         raise
     except PermissionError as exc:
         raise LockedError(LOCKED_MSG) from exc
+
     # recalcula fora do lock
     detail = read_unit_detail(entity_key)
     # localiza pergunta atualizada
+    target_occ_norm = unicodedata.normalize("NFC", occurrence_key)
     score = dim_total = dim_min = dim_meets = None
     for dim in detail["dimensions"]:
         for qq in dim["questions"]:
-            if qq["occurrence_key"] == occurrence_key:
+            if unicodedata.normalize("NFC", qq["occurrence_key"]) == target_occ_norm:
                 score = qq["score"]
                 dim_total = dim["total"]
                 dim_min = dim.get("minimum")
                 dim_meets = dim.get("meets_minimum")
+                break
+        if score is not None:
+            break
     r = detail["result"]
     return {
         "ok": True,
@@ -940,6 +1010,7 @@ def update_assessment(entity_key: str, occurrence_key: str,
         "meets_minimum_parameters": r["meets_minimum_parameters"],
         "dimensions_below_minimum": r["dimensions_below_minimum"],
         "classification": r["classification"],
+        "situacao": r["situacao"],
     }
 
 
@@ -959,7 +1030,7 @@ def correct_diagnostico(entity_key: str, occurrence_key: str, new_value: str):
                 if ent is None:
                     raise WorkbookError(f"Unidade {entity_key} não encontrada.")
                 q = find_question(wb, occurrence_key)
-                ws = wb[q["sheet_name"]]
+                ws = get_sheet_by_name(wb, q["sheet_name"])
                 old = ws.cell(ent["row"], q["resposta_col"]).value or ""
                 all_q = parse_all_questions(wb)
                 ensure_aux_sheets(wb, entities, all_q)
@@ -997,7 +1068,8 @@ def validate_startup() -> list[str]:
         return [str(exc)]
     try:
         for s in EXPECTED_SHEETS:
-            if s not in wb.sheetnames:
+            s_norm = unicodedata.normalize("NFC", s)
+            if not any(unicodedata.normalize("NFC", actual) == s_norm for actual in wb.sheetnames):
                 errors.append(f"Aba ausente: {s}")
         if errors:
             return errors
@@ -1029,7 +1101,7 @@ def validate_startup() -> list[str]:
 
         # pesos conferidos contra 00_Metodologia
         try:
-            ws0 = wb["00_Metodologia"]
+            ws0 = get_sheet_by_name(wb, "00_Metodologia")
             for r in range(5, 11):
                 dim_label = str(ws0.cell(r, 1).value or "")
                 peso = str(ws0.cell(r, 2).value or "").strip()
