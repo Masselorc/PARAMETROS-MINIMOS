@@ -95,17 +95,21 @@
               <span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span>
             </div>
           </td>
-          <td class="col-unit">{{ r.unidade_label|e }}</td>
+          <td class="col-unit"><strong>{{ r.unidade_label|e }}</strong></td>
           <td class="number col-dim" data-sort-value="{{ r.inst if r.inst is not none else '' }}">{{ "%.1f"|format(r.inst) if r.inst is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.aut if r.aut is not none else '' }}">{{ "%.1f"|format(r.aut) if r.aut is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.imp if r.imp is not none else '' }}">{{ "%.1f"|format(r.imp) if r.imp is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.aces if r.aces is not none else '' }}">{{ "%.1f"|format(r.aces) if r.aces is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.trans if r.trans is not none else '' }}">{{ "%.1f"|format(r.trans) if r.trans is not none else "—" }}</td>
           <td class="number col-dim" data-sort-value="{{ r.integ if r.integ is not none else '' }}">{{ "%.1f"|format(r.integ) if r.integ is not none else "—" }}</td>
-          <td class="number col-num" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}">{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</td>
-          <td class="number col-num" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "—" }}</td>
+          <td class="number col-num" data-sort-value="{{ r.base_score if r.base_score is not none else '' }}"><strong>{{ "%.1f"|format(r.base_score) if r.base_score is not none else "—" }}</strong></td>
+          <td class="number col-num" data-sort-value="{{ r.bonus_applied if r.bonus_applied is not none else '' }}">+{{ "%.1f"|format(r.bonus_applied) if r.bonus_applied is not none else "0.0" }}</td>
           <td class="col-score" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{% if r.final_score is not none %}<span class="score-cell"><span class="score-bar" role="img" aria-label="Nota final {{ "%.1f"|format(r.final_score) }} de 100"><span class="score-fill" style="width:{{ (r.final_score if r.final_score <= 100 else 100)|round(1) }}%"></span></span><span class="score-value">{{ "%.1f"|format(r.final_score) }}</span></span>{% else %}—{% endif %}</td>
-          <td class="col-classification">{{ r.classification|e }}</td>
+          <td class="col-classification">
+            <span class="head-badge {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif r.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              {{ r.classification|e }}
+            </span>
+          </td>
           <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}">Detalhar</a>{% endif %}</td>
         </tr>
         <tr class="row-summary-detail" data-detail-for="{{ r.entity_key|e }}" id="detail-{{ r.entity_key|e }}" hidden aria-hidden="true">

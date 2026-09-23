@@ -43,13 +43,13 @@
   <p class="muted" data-static-count>{{ rows|length }} unidades</p>
   {% endif %}
   <div class="table-wrap">
-    <table>
+    <table class="dashboard-table">
       <thead>
         <tr>
-          <th data-sort-type="text">UF</th>
+          <th style="width:70px;" data-sort-type="text">UF</th>
           <th data-sort-type="text">Unidade</th>
           <th data-sort-type="text">Situação</th>
-          <th data-sort-type="number">Nota final</th>
+          <th class="cell-center" data-sort-type="number">Nota final</th>
           <th data-sort-type="text">Classificação</th>
           <th class="col-actions" data-sort-type="text">Ações</th>
         </tr>
@@ -58,10 +58,14 @@
         {% for r in rows %}
         <tr class="{% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}row-following-minimums{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}row-below-essential-minimum{% elif r.classification == 'Não instituída' %}row-not-instituted{% endif %}" data-sort-row data-static-row data-static-search="{{ (r.uf ~ ' ' ~ r.unidade_label)|lower|e }}" data-static-situation="{{ r.situacao|e }}" data-static-classification="{{ r.classification_key|default('')|e }}" data-static-score="{{ r.final_score if r.final_score is not none else '' }}">
           <td><span class="uf-cell"><img class="uf-flag" src="{{ url_for('static', path='bandeiras/' + (r.flag or 'br') + '.svg') }}" alt="Bandeira de {{ r.unidade_label|e }}" loading="lazy"><span class="uf-code">{{ r.uf|e }}</span></span></td>
-          <td>{{ r.unidade_label|e }}</td>
+          <td><strong>{{ r.unidade_label|e }}</strong></td>
           <td>{{ r.situacao|e }}</td>
-          <td class="number" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}">{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</td>
-          <td>{{ r.classification|e }}</td>
+          <td class="number cell-center" data-sort-value="{{ r.final_score if r.final_score is not none else '' }}"><strong>{{ "%.1f"|format(r.final_score) if r.final_score is not none else "—" }}</strong></td>
+          <td>
+            <span class="head-badge {% if r.classification == 'Instituída — seguindo os parâmetros mínimos' %}badge-good{% elif r.classification == 'Instituída — abaixo do mínimo em dimensão essencial' %}badge-warn{% elif r.classification == 'Instituída — aderência global insuficiente' %}badge-info{% else %}badge-bad{% endif %}" style="font-size:.75rem;padding:3px 8px;display:inline-block;line-height:1.35;">
+              {{ r.classification|e }}
+            </span>
+          </td>
           <td class="col-actions" data-sort-value="{{ r.entity_key|e }}">{% if read_only|default(false) %}<a class="btn-detail" href="{{ r.static_page|e }}" aria-label="Detalhar avaliação de {{ r.unidade_label|e }}">Detalhar</a>{% else %}<a class="btn-detail" href="/unidades/{{ r.entity_key|e }}" aria-label="Detalhar avaliação de {{ r.unidade_label|e }}">Detalhar</a>{% endif %}</td>
         </tr>
         {% else %}
