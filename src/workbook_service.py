@@ -802,10 +802,21 @@ def save_atomic(wb) -> None:
         except Exception:  # noqa: BLE001
             pass
         raise WorkbookError(f"Arquivo temporário inválido, gravação abortada: {exc}") from exc
+    import time
+    last_exc = None
+    for attempt in range(5):
+        try:
+            tmp.replace(WORKBOOK_PATH)
+            return
+        except (PermissionError, OSError) as exc:
+            last_exc = exc
+            if attempt < 4:
+                time.sleep(0.25)
     try:
-        tmp.replace(WORKBOOK_PATH)
-    except PermissionError as exc:
-        raise LockedError(LOCKED_MSG) from exc
+        tmp.unlink(missing_ok=True)
+    except Exception:  # noqa: BLE001
+        pass
+    raise LockedError(LOCKED_MSG) from last_exc
 
 
 def _acquire_lock() -> FileLock:
@@ -817,9 +828,11 @@ def find_question(wb, occurrence_key: str) -> dict:
     if ":" not in occurrence_key:
         raise WorkbookError(f"occurrence_key inválida: {occurrence_key}")
     sheet, code = occurrence_key.split(":", 1)
-    if sheet not in DIMENSION_SHEETS:
+    sheet_norm = unicodedata.normalize("NFC", sheet)
+    matched_sheet = next((s for s in DIMENSION_SHEETS if unicodedata.normalize("NFC", s) == sheet_norm), None)
+    if not matched_sheet:
         raise WorkbookError(f"Aba inválida em occurrence_key: {sheet}")
-    for q in parse_questions(wb, sheet):
+    for q in parse_questions(wb, matched_sheet):
         if q["question_code"] == code:
             return q
     raise WorkbookError(f"Pergunta {occurrence_key} não encontrada.")

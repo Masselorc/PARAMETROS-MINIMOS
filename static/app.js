@@ -48,13 +48,12 @@
 
   document.querySelectorAll("[data-save]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var card = btn.closest("[data-occurrence]");
-      if (!card) return;
-      var occurrence = card.getAttribute("data-occurrence");
+      var card = btn.closest(".qcard") || btn.closest("[data-q-panel]");
+      var occurrence = btn.getAttribute("data-occurrence") || (card ? card.getAttribute("data-occurrence") : "");
       var entity = btn.getAttribute("data-entity");
-      var sel = card.querySelector("[data-status-select]");
-      var ev = card.querySelector("[data-evidence]");
-      var msg = card.querySelector("[data-msg]");
+      var sel = card ? card.querySelector("[data-status-select]") : (occurrence ? document.getElementById("status-" + occurrence) : null);
+      var ev = card ? card.querySelector("[data-evidence]") : (occurrence ? document.getElementById("evidence-" + occurrence) : null);
+      var msg = card ? card.querySelector("[data-msg]") : null;
       var payload = {
         status: sel ? sel.value : null,
         evidence_text: ev ? ev.value : null,
@@ -70,24 +69,30 @@
         }
       )
         .then(function (resp) {
-          if (!resp.ok) throw new Error("HTTP " + resp.status);
+          if (!resp.ok) {
+            return resp.json().catch(function () { return {}; }).then(function (errData) {
+              var detail = (errData && errData.detail) ? errData.detail : ("Erro HTTP " + resp.status);
+              throw new Error(detail);
+            });
+          }
           return resp.json();
         })
         .then(function (data) {
-          var scoreEl = card.querySelector('[data-score-for]');
+          var scoreEl = card ? card.querySelector('[data-score-for]') : null;
           if (scoreEl && data.score !== undefined && data.score !== null) {
             var maxTxt = scoreEl.textContent.split("/")[1] || "";
             scoreEl.textContent = fmt(data.score) + " /" + maxTxt;
           }
           // Sincroniza a nota exibida na sub-aba da pergunta ativa
-          var qtabScore = document.querySelector('[data-qtab-score="' + occurrence + '"]');
+          var escOcc = (window.CSS && CSS.escape) ? CSS.escape(occurrence) : occurrence;
+          var qtabScore = document.querySelector('[data-qtab-score="' + escOcc + '"]') || document.querySelector('[data-qtab-score="' + occurrence + '"]');
           if (qtabScore && data.score !== undefined && data.score !== null) {
             var qParts = qtabScore.textContent.split("/");
             var qMax = qParts[1] ? qParts[1].trim() : "";
             qtabScore.textContent = fmt(data.score) + " / " + qMax;
           }
           // total da dimensao: soma client-side a partir dos cartoes visiveis
-          var panel = card.closest("[data-dim-panel]");
+          var panel = card ? card.closest("[data-dim-panel]") : null;
           if (panel) {
             var dimName = panel.getAttribute("data-dim-panel");
             var badge = document.querySelector('[data-dim-total="' + dimName + '"]');
@@ -131,9 +136,10 @@
           if (msg) msg.textContent = "Alteração salva.";
           toast("Alteração salva.");
         })
-        .catch(function () {
-          if (msg) msg.textContent = "Não foi possível salvar. Nenhuma alteração foi gravada.";
-          toast("Não foi possível salvar. Nenhuma alteração foi gravada.", true);
+        .catch(function (err) {
+          var errMsg = (err && err.message) ? err.message : "Não foi possível salvar. Nenhuma alteração foi gravada.";
+          if (msg) msg.textContent = errMsg;
+          toast(errMsg, true);
         })
         .finally(function () { btn.disabled = false; });
     });

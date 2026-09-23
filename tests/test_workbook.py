@@ -66,3 +66,26 @@ def test_persistencia_status_backup(tmp_path, monkeypatch):
     wb2 = openpyxl.load_workbook(str(dest))
     assert wb2["02_Autonomia"].cell(7, 3).value == "Atende"
     wb2.close()
+
+
+def test_api_patch_assessment_flow(tmp_path, monkeypatch):
+    dest = _copy_real_to(tmp_path, monkeypatch)
+    from urllib.parse import quote
+    from starlette.testclient import TestClient
+    from app import app
+    client = TestClient(app)
+
+    # 1. Sem status e sem evidencia -> 422 com mensagem clara
+    occ = quote("01_Institucionalização:M1-11")
+    resp_empty = client.patch(f"/api/unidades/AC/avaliacoes/{occ}", json={"status": None, "evidence_text": None})
+    assert resp_empty.status_code == 422
+    assert "Informe status e/ou evidence_text" in resp_empty.json()["detail"]
+
+    # 2. Com status "Não" e evidencia
+    resp = client.patch(f"/api/unidades/AC/avaliacoes/{occ}", json={"status": "Não", "evidence_text": "Doc. SEI 37070578"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["ok"] is True
+    assert data["score"] == 0.0
+    assert data["classification"] == "Não instituída"
+
