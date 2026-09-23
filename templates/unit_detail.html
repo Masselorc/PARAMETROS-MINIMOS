@@ -268,6 +268,12 @@
           <summary>Fundamentação e critério</summary>
           <div class="qmeta-body">
             <p><strong>Fundamentação:</strong> {% if q.fundamentacao %}<a href="https://sei.mj.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=38337209&amp;id_documento=39918839" target="_blank" rel="noopener noreferrer" title="Consultar dispositivo na IN nº 75/2026 no SEI/MJSP">{{ q.fundamentacao|e }}</a>{% else %}—{% endif %}</p>
+            {% if q.fundamentacao_teor %}
+            <div class="fundamentacao-teor-box">
+              <span class="fundamentacao-teor-label">Teor do dispositivo legal:</span>
+              <div class="fundamentacao-teor-text">{{ q.fundamentacao_teor|safe }}</div>
+            </div>
+            {% endif %}
             <p><strong>Critério:</strong> {{ q.criterio|e or "—" }}</p>
           </div>
         </details>

@@ -413,10 +413,15 @@ def generate_unit_pdf(entity_key: str) -> Path:
                 fund_link = f"<a href='{IN_75_URL}' color='#155b67'><u>{escaped_fund}</u></a>"
             else:
                 fund_link = "—"
+            teor_plain = (q.get("fundamentacao_teor_plain") or "").strip()
+            teor_flow = ""
+            if teor_plain:
+                escaped_teor = teor_plain[:600].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\n", "<br/>")
+                teor_flow = f"<br/><font color='#526572' size='6.5'><b>Teor:</b> {escaped_teor}</font>"
             qdata.append([
                 Paragraph(f"<b>{q['question_code']}</b><br/>{q['question_title'][:200]}"
                           f"<br/>Item: {q['item_name'][:120]}", styles["Normal"]),
-                Paragraph(f"Resp: {(q['resposta'] or '')[:500]}<br/>Fund: {fund_link}"
+                Paragraph(f"Resp: {(q['resposta'] or '')[:500]}<br/>Fund: {fund_link}{teor_flow}"
                           f"<br/>Aval: {q['status']} ({q['score']}/{q['max_display']})"
                           f"<br/>Evid: {(q['evidence_text'] or '')[:500]}"
                           f"<br/>Docs: {docs[:300]}", styles["Normal"]),

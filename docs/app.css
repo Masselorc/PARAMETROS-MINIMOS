@@ -1880,4 +1880,52 @@ tr.row-summary-detail > td {
   .unit-report-paper[hidden] { display: none !important; }
 }
 
+/* Bloco de Transcrição do Teor do Dispositivo Legal (IN nº 75/2026) */
+.fundamentacao-teor-box {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  background-color: #f7fafb;
+  border-left: 3px solid var(--brand);
+  border-radius: 0 6px 6px 0;
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.fundamentacao-teor-label {
+  display: block;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--brand-dark);
+  margin-bottom: 6px;
+}
+.fundamentacao-teor-text p {
+  margin: 0 0 6px 0;
+}
+.fundamentacao-teor-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Na visualização de relatório individual */
+.report-teor-row {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background-color: #f7fafb;
+  border-left: 2px solid var(--brand);
+  border-radius: 0 4px 4px 0;
+}
+.report-teor-val {
+  font-size: .75rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.report-teor-val p {
+  margin: 0 0 4px 0;
+}
+.report-teor-val p:last-child {
+  margin-bottom: 0;
+}
+
 

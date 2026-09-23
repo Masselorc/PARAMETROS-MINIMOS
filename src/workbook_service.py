@@ -51,6 +51,7 @@ from .scoring import (
     score_ordinary,
     situacao_from_status,
 )
+from .legal_texts import get_fundamentacao_teor_html, get_fundamentacao_teor_plain
 
 CODE_RE = re.compile(r"M\d+-\d+")
 WEIGHT_RE = re.compile(r"([\d]+(?:[.,]\d+)?)")
@@ -307,6 +308,20 @@ def validate_question_uniqueness(all_questions: dict[str, list[dict]]) -> list[s
     return errors
 
 
+def find_evidence_col(ws) -> int | None:
+    """Localiza a coluna 'Evidências / observações' na aba de dimensão."""
+    for c in range(1, ws.max_column + 1):
+        val = ws.cell(5, c).value
+        if val and re.search(r"evid[êe]ncias?.*observa", str(val), re.IGNORECASE):
+            return c
+    for r in (4, 6):
+        for c in range(1, ws.max_column + 1):
+            val = ws.cell(r, c).value
+            if val and re.search(r"evid[êe]ncias?.*observa", str(val), re.IGNORECASE):
+                return c
+    return None
+
+
 def evidences_map(wb) -> dict[tuple[str, str], str]:
     """(entity_key, occurrence_key) -> evidence_text (DB_EVIDENCIAS)."""
     if "DB_EVIDENCIAS" not in wb.sheetnames:
@@ -488,6 +503,9 @@ def read_unit_detail(entity_key: str, wb=None) -> dict:
         bonus_available = 0.0
         for sheet in DIMENSION_SHEETS:
             ws = wb[sheet]
+            sheet_ev_col = find_evidence_col(ws)
+            sheet_ev_val = ws.cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
+            sheet_ev_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else ""
             qs: list[dict] = []
             total = 0.0
             for q in all_q[sheet]:
@@ -502,13 +520,21 @@ def read_unit_detail(entity_key: str, wb=None) -> dict:
                 if sheet == "07_Maturidade":
                     bonus_available += sc
                 occ = q["occurrence_key"]
+                if (entity_key, occ) in ev_map and ev_map[(entity_key, occ)] != EVIDENCE_INITIAL_TEXT:
+                    ev_text = ev_map[(entity_key, occ)]
+                elif sheet_ev_text:
+                    ev_text = sheet_ev_text
+                else:
+                    ev_text = ev_map.get((entity_key, occ), EVIDENCE_INITIAL_TEXT)
                 qs.append({
                     **q,
                     "status": status,
                     "resposta": "" if resposta is None else str(resposta),
                     "fundamentacao": "" if fundamento is None else str(fundamento),
+                    "fundamentacao_teor": get_fundamentacao_teor_html(occ),
+                    "fundamentacao_teor_plain": get_fundamentacao_teor_plain(occ),
                     "score": round(sc, 2),
-                    "evidence_text": ev_map.get((entity_key, occ), EVIDENCE_INITIAL_TEXT),
+                    "evidence_text": ev_text,
                     "attachments": att_map.get((entity_key, occ), []),
                 })
             if sheet != "07_Maturidade":
@@ -566,6 +592,9 @@ def read_all_unit_details(wb=None) -> dict[str, dict]:
             bonus_available = 0.0
             for sheet in DIMENSION_SHEETS:
                 ws = wb[sheet]
+                sheet_ev_col = find_evidence_col(ws)
+                sheet_ev_val = ws.cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
+                sheet_ev_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else ""
                 qs: list[dict] = []
                 total = 0.0
                 for q in all_q[sheet]:
@@ -580,13 +609,21 @@ def read_all_unit_details(wb=None) -> dict[str, dict]:
                     if sheet == "07_Maturidade":
                         bonus_available += sc
                     occ = q["occurrence_key"]
+                    if (entity_key, occ) in ev_map and ev_map[(entity_key, occ)] != EVIDENCE_INITIAL_TEXT:
+                        ev_text = ev_map[(entity_key, occ)]
+                    elif sheet_ev_text:
+                        ev_text = sheet_ev_text
+                    else:
+                        ev_text = ev_map.get((entity_key, occ), EVIDENCE_INITIAL_TEXT)
                     qs.append({
                         **q,
                         "status": status,
                         "resposta": "" if resposta is None else str(resposta),
                         "fundamentacao": "" if fundamento is None else str(fundamento),
+                        "fundamentacao_teor": get_fundamentacao_teor_html(occ),
+                        "fundamentacao_teor_plain": get_fundamentacao_teor_plain(occ),
                         "score": round(sc, 2),
-                        "evidence_text": ev_map.get((entity_key, occ), EVIDENCE_INITIAL_TEXT),
+                        "evidence_text": ev_text,
                         "attachments": att_map.get((entity_key, occ), []),
                     })
                 if sheet != "07_Maturidade":
@@ -637,12 +674,15 @@ def ensure_aux_sheets(wb, entities: list[dict], all_q: dict[str, list[dict]]) ->
         nid = 1
         for ent in entities:
             for sheet in DIMENSION_SHEETS:
+                sheet_ev_col = find_evidence_col(wb[sheet])
+                sheet_ev_val = wb[sheet].cell(ent["row"], sheet_ev_col).value if sheet_ev_col else None
+                init_text = str(sheet_ev_val).strip() if sheet_ev_val is not None and str(sheet_ev_val).strip() else EVIDENCE_INITIAL_TEXT
                 for q in all_q[sheet]:
                     ws.append([
                         nid, ent["entity_key"], ent["uf"], ent["unidade_label"],
                         sheet, DIMENSION_NAMES.get(sheet, sheet), q["item_name"],
                         q["question_code"], q["occurrence_key"],
-                        EVIDENCE_INITIAL_TEXT, now,
+                        init_text, now,
                     ])
                     nid += 1
         try:
@@ -815,6 +855,9 @@ def update_assessment(entity_key: str, occurrence_key: str,
                 if evidence_text is not None:
                     old_ev, new_evidence = upsert_evidence(
                         wb, entity_key, ent["uf"], ent["unidade_label"], q, evidence_text)
+                    ev_col = find_evidence_col(ws)
+                    if ev_col:
+                        ws.cell(ent["row"], ev_col).value = evidence_text
                     if old_ev != evidence_text:
                         append_audit(wb, entity_key, q["sheet_name"], q["question_code"],
                                      occurrence_key, "evidence_text", old_ev, evidence_text,
