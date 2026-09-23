@@ -67,14 +67,33 @@
       var card = btn.closest(".qcard") || btn.closest("[data-q-panel]");
       var occurrence = btn.getAttribute("data-occurrence") || (card ? card.getAttribute("data-occurrence") : "");
       var entity = btn.getAttribute("data-entity");
-      var sel = card ? card.querySelector("[data-status-select]") : (occurrence ? document.getElementById("status-" + occurrence) : null);
-      var ev = card ? card.querySelector("[data-evidence]") : (occurrence ? document.getElementById("evidence-" + occurrence) : null);
-      var msg = card ? card.querySelector("[data-msg]") : null;
+      /* Busca o select e textarea: primeiro dentro do card, depois por ID como fallback */
+      var sel = null;
+      var ev = null;
+      if (card) {
+        sel = card.querySelector("[data-status-select]");
+        ev = card.querySelector("[data-evidence]");
+      }
+      if (!sel && occurrence) sel = document.getElementById("status-" + occurrence);
+      if (!ev && occurrence) ev = document.getElementById("evidence-" + occurrence);
+      /* Fallback extra: busca pela classe do edit-box mais próxima ao botão */
+      if (!sel) {
+        var editBox = btn.closest(".eval-edit-box") || btn.closest(".eval-ctrl-bar");
+        if (editBox) sel = editBox.querySelector("[data-status-select]");
+      }
+      var msg = card ? card.querySelector("[data-msg]") : (btn.parentElement ? btn.parentElement.querySelector("[data-msg]") : null);
+      if (!sel) {
+        console.error("[Salvar] select de status não encontrado. occurrence=" + occurrence + ", entity=" + entity);
+        toast("Erro interno: campo de status não encontrado.", true);
+        return;
+      }
       var payload = {
         status: sel ? sel.value : null,
         evidence_text: ev ? ev.value : null,
       };
+      console.log("[Salvar] Enviando PATCH:", entity, occurrence, payload);
       btn.disabled = true;
+      if (msg) { msg.textContent = "Salvando…"; msg.style.color = ""; }
       fetch(
         "/api/unidades/" + encodeURIComponent(entity) +
         "/avaliacoes/" + encodeURIComponent(occurrence),
@@ -88,12 +107,15 @@
           if (!resp.ok) {
             return resp.json().catch(function () { return {}; }).then(function (errData) {
               var detail = (errData && errData.detail) ? errData.detail : ("Erro HTTP " + resp.status);
-              throw new Error(detail);
+              var httpErr = new Error(detail);
+              httpErr.httpStatus = resp.status;
+              throw httpErr;
             });
           }
           return resp.json();
         })
         .then(function (data) {
+          console.log("[Salvar] Resposta OK:", data);
           var scoreEl = card ? card.querySelector('[data-score-for]') : null;
           if (scoreEl && data.score !== undefined && data.score !== null) {
             var maxTxt = scoreEl.textContent.split("/")[1] || "";
@@ -150,12 +172,24 @@
             else if (data.meets_minimum_parameters === false) meets.textContent = "Não — ver pisos dimensionais e nota final abaixo";
           }
           if (sel) updateStatusSelectColor(sel);
-          if (msg) msg.textContent = "Alteração salva.";
+          if (msg) { msg.textContent = "Alteração salva."; msg.style.color = "#16a34a"; }
           toast("Alteração salva.");
         })
         .catch(function (err) {
-          var errMsg = (err && err.message) ? err.message : "Não foi possível salvar. Nenhuma alteração foi gravada.";
-          if (msg) msg.textContent = errMsg;
+          console.error("[Salvar] Erro:", err);
+          var errMsg;
+          if (err instanceof TypeError && (err.message === "Failed to fetch" || err.message === "NetworkError when attempting to fetch resource.")) {
+            errMsg = "Servidor não acessível. Verifique se o servidor está rodando (uvicorn app:app --port 8000).";
+          } else if (err && err.httpStatus === 409) {
+            errMsg = "Arquivo em uso por outro processo. Tente novamente em alguns segundos.";
+          } else if (err && err.httpStatus === 422) {
+            errMsg = (err.message) ? err.message : "Dados inválidos. Verifique o status selecionado.";
+          } else if (err && err.httpStatus === 400) {
+            errMsg = (err.message) ? err.message : "Erro na validação dos dados.";
+          } else {
+            errMsg = (err && err.message) ? err.message : "Não foi possível salvar. Nenhuma alteração foi gravada.";
+          }
+          if (msg) { msg.textContent = errMsg; msg.style.color = "#dc2626"; }
           toast(errMsg, true);
         })
         .finally(function () { btn.disabled = false; });

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
 <title>{% block title %}Parâmetros Mínimos das Ouvidorias de Serviços Penais{% endblock %}</title>
-<link rel="stylesheet" href="{{ url_for('static', path='app.css') }}{% if not read_only %}?v=20260923c{% endif %}">
+<link rel="stylesheet" href="{{ url_for('static', path='app.css') }}{% if not read_only %}?v=20260923d{% endif %}">
 </head>
 <body>
 <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -50,8 +50,8 @@
     {% block content %}{% endblock %}
   </main>
 </div>
-<script src="{{ url_for('static', path='table-sort.js') }}{% if not read_only %}?v=20260923c{% endif %}" defer></script>
-<script src="{{ url_for('static', path='app.js') }}{% if not read_only %}?v=20260923c{% endif %}" defer></script>
+<script src="{{ url_for('static', path='table-sort.js') }}{% if not read_only %}?v=20260923d{% endif %}" defer></script>
+<script src="{{ url_for('static', path='app.js') }}{% if not read_only %}?v=20260923d{% endif %}" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
