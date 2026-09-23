@@ -604,6 +604,35 @@ main {
   width: 100%;
 }
 
+.methodology-dimension + .methodology-dimension {
+  margin-top: 28px;
+}
+
+.methodology-dimension h3 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.methodology-matrix th:first-child {
+  width: 90px;
+}
+
+.methodology-matrix th.number {
+  text-align: center;
+}
+
+.methodology-matrix td:nth-child(2) {
+  min-width: 240px;
+}
+
+.methodology-matrix tfoot th,
+.methodology-matrix tfoot td {
+  background: #f8fafb;
+}
+
 /* ==========================================================================
    Novo Sistema de Filtros Avançados (Multi-Select Droplists e Dual Range Slider)
    ========================================================================== */
@@ -2665,6 +2694,5 @@ tr.row-summary-detail > td {
   border-color: var(--stat-accent);
   background: linear-gradient(180deg, #ffffff 0%, var(--stat-icon-bg) 100%);
 }
-
 
 

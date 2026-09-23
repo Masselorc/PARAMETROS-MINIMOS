@@ -29,6 +29,7 @@ from src.workbook_service import (
     open_workbook,
     parse_entities,
     read_all_unit_details,
+    read_methodology_matrix,
     read_summary,
     read_unit_detail,
     sort_pt_filter,
@@ -220,7 +221,10 @@ def reports_page(request: Request):
 
 @app.get("/metodologia", response_class=HTMLResponse)
 def methodology(request: Request):
-    return templates.TemplateResponse(request, "methodology.html", {})
+    _guard_startup()
+    return templates.TemplateResponse(request, "methodology.html", {
+        "methodology_dimensions": read_methodology_matrix(),
+    })
 
 
 # ---------------------------------------------------------------- API leitura

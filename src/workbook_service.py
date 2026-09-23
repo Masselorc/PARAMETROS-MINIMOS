@@ -323,6 +323,25 @@ def parse_all_questions(wb) -> dict[str, list[dict]]:
     return result
 
 
+def read_methodology_matrix() -> list[dict]:
+    """Lê a organização e os pesos da matriz exibida na metodologia."""
+    wb = open_workbook()
+    try:
+        all_questions = parse_all_questions(wb)
+        return [
+            {
+                "number": index,
+                "name": DIMENSION_NAMES[sheet],
+                "max": BASE_WEIGHTS.get(sheet, BONUS_MAX),
+                "is_bonus": sheet == DIMENSION_SHEETS[-1],
+                "questions": all_questions[sheet],
+            }
+            for index, sheet in enumerate(DIMENSION_SHEETS, start=1)
+        ]
+    finally:
+        wb.close()
+
+
 def validate_question_uniqueness(all_questions: dict[str, list[dict]]) -> list[str]:
     """Retorna erros claros para codigos usados mais de uma vez na matriz."""
     locations: dict[str, list[str]] = defaultdict(list)

@@ -112,6 +112,7 @@ def main() -> None:
     from src.config import BASE_WEIGHTS, DIMENSION_MINIMUMS
     from src.workbook_service import (
         read_all_unit_details,
+        read_methodology_matrix,
         read_summary,
         read_unit_detail,
         sort_pt_filter,
@@ -205,7 +206,12 @@ def main() -> None:
             "base_weights": BASE_WEIGHTS,
             "dimension_minimums": DIMENSION_MINIMUMS,
         }),
-        "metodologia.html": ("methodology.html", {"request": Req("/metodologia"), "static_page": "metodologia.html", "read_only": True}),
+        "metodologia.html": ("methodology.html", {
+            "request": Req("/metodologia"),
+            "static_page": "metodologia.html",
+            "read_only": True,
+            "methodology_dimensions": read_methodology_matrix(),
+        }),
     }
     for fname, (tpl, ctx) in pages.items():
         _render(env, tpl, ctx, DOCS / fname, stamp)

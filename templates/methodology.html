@@ -325,5 +325,36 @@
     <div class="info">As pontuações, pesos e faixas de classificação constituem metodologia de monitoramento da ONASP e não integram o texto da Instrução Normativa GABSEC/SENAPPEN/MJSP nº 75/2026. A avaliação deve ser interpretada em conjunto com as evidências registradas no sistema.</div>
   </div>
 </section>
+
+<section class="section" aria-label="Quadro completo das dimensões, perguntas e pontuações">
+  <div class="section-head"><h2>20. Quadro completo das dimensões, perguntas e pontuações</h2></div>
+  <div class="section-body">
+    <p>O quadro abaixo reúne as 30 perguntas da matriz de monitoramento, organizadas nas seis dimensões de pontuação-base e na dimensão de maturidade. Cada valor indica a pontuação máxima da pergunta. Nos critérios ordinários, a avaliação “Atende” recebe o valor integral, “Parcial” recebe metade e “Não atende” ou “Sem evidência” recebem zero. A pergunta M1-11 é binária.</p>
+    {% for dimension in methodology_dimensions %}
+    <div class="methodology-dimension">
+      <h3>{{ "%02d"|format(dimension.number) }}. {{ dimension.name }} <span class="badge">{% if dimension.is_bonus %}Até {% endif %}{{ dimension.max }} pontos{% if dimension.is_bonus %} de bônus{% endif %}</span></h3>
+      <div class="table-wrap">
+        <table class="methodology-matrix">
+          <thead><tr><th scope="col">Código</th><th scope="col">Pergunta</th><th scope="col" class="number">Pontuação máxima</th></tr></thead>
+          <tbody>
+            {% for question in dimension.questions %}
+            <tr>
+              <td><strong>{{ question.question_code }}</strong></td>
+              <td>{{ question.question_title }}<span class="cell-sub">{{ question.item_name }}</span></td>
+              <td class="number">{{ question.weight|int }}{% if dimension.is_bonus %} bônus{% else %} pontos{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot><tr><th colspan="2" scope="row">{% if dimension.is_bonus %}Bônus disponível{% else %}Total da dimensão{% endif %}</th><td class="number"><strong>{{ dimension.max }} pontos</strong></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+    {% endfor %}
+    <div class="info">
+      <p><strong>Leitura do cálculo:</strong> as dimensões 01 a 06 somam até 100 pontos-base. A dimensão 07 oferece até 10 pontos de bônus. O bônus aplicado é o menor valor entre o bônus disponível e a diferença de 100 pontos para a nota-base. A nota final é a soma da nota-base com o bônus aplicado, limitada a 100 pontos.</p>
+      <p>A classificação exige, além da instituição formal (M1-11 = Sim), nota final de pelo menos 70 pontos e o atendimento dos pisos de 50% em cada uma das dimensões essenciais 02 a 06. O bônus pode completar a nota global, mas não substitui os pisos dimensionais.</p>
+    </div>
+  </div>
+</section>
 </div>
 {% endblock %}
