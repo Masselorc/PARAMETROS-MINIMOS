@@ -115,7 +115,7 @@
                 <th class="cell-center">Bônus</th>
                 <th class="cell-center">Nota final</th>
                 <th>Classificação</th>
-                <th class="cell-center">Ação</th>
+                <th class="col-actions">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -143,8 +143,8 @@
                     {{ r.classification|e }}
                   </span>
                 </td>
-                <td class="cell-center">
-                  <a class="btn-link" href="{% if read_only|default(false) %}unidade-{{ r.entity_key|e }}.html{% else %}/unidades/{{ r.entity_key|e }}{% endif %}">Abrir</a>
+                <td class="col-actions">
+                  <a class="btn-detail" href="{% if read_only|default(false) %}unidade-{{ r.entity_key|e }}.html{% else %}/unidades/{{ r.entity_key|e }}{% endif %}" aria-label="Detalhar avaliação de {{ r.unidade_label|e }}">Detalhar</a>
                 </td>
               </tr>
               {% endfor %}
